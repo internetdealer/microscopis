@@ -1,0 +1,27 @@
+{% load static %}
+<header class="fixed top-0 left-0 right-0 z-50">
+  <div class="mx-4 mt-4">
+    <div class="flex items-center justify-between gap-4 px-6 py-3 bg-background/70 backdrop-blur-xl rounded-2xl border border-border/50 shadow-header">
+      <a href="{% url 'home' %}" class="flex items-center gap-3 group">
+        <div class="relative w-8 h-8 shrink-0">
+          <svg viewBox="0 0 32 32" class="w-full h-full transition-transform duration-500 group-hover:rotate-180" aria-hidden="true">
+            <polygon points="16,2 30,28 2,28" fill="none" stroke="currentColor" stroke-width="2" class="text-muted-foreground"></polygon>
+          </svg>
+        </div>
+        <span class="text-lg font-semibold tracking-tight text-foreground">microscopis</span>
+      </a>
+
+      {% if show_search %}
+      <div class="hidden md:block flex-1 max-w-md mx-4">
+        {% include "core/partials/search_bar.html" with size="small" form_id="header-search" %}
+      </div>
+      {% endif %}
+
+      <nav class="flex items-center gap-1">
+        <a href="{% url 'search' %}" class="px-4 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors">Explore</a>
+        <div class="w-px h-4 bg-border mx-1"></div>
+        <a href="#" class="px-4 py-2 text-sm font-medium rounded-xl bg-foreground text-background hover:opacity-90 transition-opacity">Sign In</a>
+      </nav>
+    </div>
+  </div>
+</header>

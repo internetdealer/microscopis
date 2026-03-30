@@ -1,0 +1,13 @@
+<a href="{% if site.website_slug == 'verso' %}{% url 'verso:home' %}{% else %}{% url 'site_detail' site.website_slug %}{% endif %}" class="group relative block" style="animation-delay: {% widthratio index|default:0 1 100 %}ms">
+  <div class="website-card-inner relative overflow-hidden rounded-2xl p-6 h-full bg-background/60 backdrop-blur-sm border border-border/50 transition-all duration-500 ease-out hover:bg-background hover:border-foreground/20 hover:-translate-y-1">
+    <div class="inline-flex items-center px-3 py-1 mb-4 text-xs font-medium rounded-full bg-secondary text-muted-foreground group-hover:bg-foreground group-hover:text-background transition-all duration-300">
+      {{ site.topic }}
+    </div>
+    <h3 class="text-xl font-semibold mb-2 text-foreground transition-colors">{{ site.website_name }}</h3>
+    <p class="text-sm text-muted-foreground leading-relaxed line-clamp-2">{{ site.description }}</p>
+    <div class="website-card-icon-wrap absolute bottom-6 right-6 w-10 h-10 rounded-full flex items-center justify-center bg-secondary/50 text-muted-foreground transition-all duration-300 ease-out group-hover:bg-foreground group-hover:text-background">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="website-card-arrow transition-transform duration-300"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+    </div>
+    <div class="website-card-corner absolute -top-8 -right-8 w-16 h-16 border-2 border-border/20 transition-all duration-500"></div>
+  </div>
+</a>

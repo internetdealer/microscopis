@@ -1,0 +1,42 @@
+<footer class="verso-footer verso-mono">
+  <div class="verso-footer-grid">
+    <div style="grid-column: span 4;">
+      <span style="font-size:12px;letter-spacing:0.3em;text-transform:uppercase">VERSO</span>
+      <p style="font-size:10px;letter-spacing:0.05em;line-height:1.6;margin-top:1rem;opacity:0.5;max-width:20rem">
+        Essays on artificial intelligence, autonomous agents, and the human judgment that must sit alongside them.
+      </p>
+    </div>
+    <div style="grid-column: 7 / span 2;">
+      <span style="font-size:10px;letter-spacing:0.2em;text-transform:uppercase;opacity:0.5">Navigate</span>
+      <div style="display:flex;flex-direction:column;gap:0.5rem;margin-top:1rem">
+        <a href="{% url 'verso:home' %}" style="font-size:10px;opacity:0.8;text-decoration:none;color:inherit">Index</a>
+        {% for c in nav_categories %}
+        <a href="{% url 'verso:category' c.slug %}" style="font-size:10px;opacity:0.8;text-decoration:none;color:inherit">{{ c.name }}</a>
+        {% endfor %}
+      </div>
+    </div>
+    <div style="grid-column: span 2;">
+      <span style="font-size:10px;letter-spacing:0.2em;text-transform:uppercase;opacity:0.5">Info</span>
+      <div style="display:flex;flex-direction:column;gap:0.5rem;margin-top:1rem">
+        <a href="{% url 'verso:about' %}" style="font-size:10px;opacity:0.8;text-decoration:none;color:inherit">About</a>
+        <span style="font-size:10px;opacity:0.6">Contact</span>
+        <span style="font-size:10px;opacity:0.6">Subscribe</span>
+      </div>
+    </div>
+    <div style="grid-column: span 2;">
+      <span style="font-size:10px;letter-spacing:0.2em;text-transform:uppercase;opacity:0.5">Social</span>
+      <div style="display:flex;flex-direction:column;gap:0.5rem;margin-top:1rem">
+        <span style="font-size:10px;opacity:0.6">Twitter/X</span>
+        <span style="font-size:10px;opacity:0.6">Instagram</span>
+        <span style="font-size:10px;opacity:0.6">LinkedIn</span>
+      </div>
+    </div>
+  </div>
+  <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;padding:2rem 1rem;border-top:1px solid var(--border);gap:1rem">
+    <span style="font-size:10px;opacity:0.5">&copy; {% now "Y" %} VERSO. All rights reserved.</span>
+    <div style="display:flex;gap:1.5rem">
+      <span style="font-size:10px;opacity:0.5;cursor:pointer">Privacy</span>
+      <span style="font-size:10px;opacity:0.5;cursor:pointer">Terms</span>
+    </div>
+  </div>
+</footer>

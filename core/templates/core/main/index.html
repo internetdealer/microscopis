@@ -1,0 +1,98 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block body %}
+<div id="triangle-bg-container" class="triangle-bg fixed inset-0 -z-10 pointer-events-none min-h-screen w-full overflow-hidden" aria-hidden="true"></div>
+
+<main class="relative min-h-screen">
+  {% include "core/partials/header.html" with show_search=False %}
+
+  <section class="relative pt-40 pb-20 px-4">
+    <div class="max-w-4xl mx-auto text-center">
+      <div class="inline-flex items-center gap-2 px-4 py-2 mb-8 rounded-full bg-secondary/50 backdrop-blur-sm border border-border/50">
+        <span class="w-2 h-2 rounded-full bg-foreground"></span>
+        <span class="text-sm text-muted-foreground">100% AI-Generated Websites</span>
+      </div>
+
+      <h1 class="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-foreground mb-6 text-balance">
+        Discover the future
+        <br />
+        <span class="relative">
+          of the web
+          <svg class="absolute -bottom-2 left-0 w-full h-3 text-foreground/20" viewBox="0 0 200 12" preserveAspectRatio="none">
+            <path d="M0,6 Q50,0 100,6 T200,6" fill="none" stroke="currentColor" stroke-width="2" />
+          </svg>
+        </span>
+      </h1>
+
+      <p class="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto mb-12 text-pretty">
+        Explore a new dimension of AI-generated websites.
+        Search, discover, and experience content created entirely by artificial intelligence.
+      </p>
+
+      {% include "core/partials/search_bar.html" with size="large" %}
+    </div>
+  </section>
+
+  <section class="py-16 px-4">
+    <div class="max-w-4xl mx-auto">
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-8">
+        <div class="text-center">
+          <div class="text-3xl sm:text-4xl font-bold text-foreground mb-1">1</div>
+          <div class="text-sm text-muted-foreground">AI Website</div>
+        </div>
+        <div class="text-center">
+          <div class="text-3xl sm:text-4xl font-bold text-foreground mb-1">1</div>
+          <div class="text-sm text-muted-foreground">Topic</div>
+        </div>
+        <div class="text-center">
+          <div class="text-3xl sm:text-4xl font-bold text-foreground mb-1">∞</div>
+          <div class="text-sm text-muted-foreground">Possibilities</div>
+        </div>
+        <div class="text-center">
+          <div class="text-3xl sm:text-4xl font-bold text-foreground mb-1">0</div>
+          <div class="text-sm text-muted-foreground">Human Writers</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-16 px-4">
+    <div class="w-full max-w-6xl mx-auto px-4">
+      <div class="flex items-center justify-between mb-8">
+        <div>
+          <h2 class="text-2xl font-semibold text-foreground">Featured Sites</h2>
+          <p class="text-sm text-muted-foreground mt-1">Explore AI-generated websites across various topics</p>
+        </div>
+        <div class="hidden sm:flex items-center gap-2 text-sm text-muted-foreground">
+          <span class="w-2 h-2 rounded-full bg-foreground animate-pulse"></span>
+          <span>{{ featured_sites|length }} sites featured</span>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {% for site in featured_sites %}
+          {% include "core/partials/website_card.html" with site=site index=forloop.counter0 %}
+        {% empty %}
+          <p class="text-muted-foreground col-span-full text-center py-8">No featured sites yet. Run the seed command.</p>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <footer class="py-12 px-4 border-t border-border/50">
+    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <svg viewBox="0 0 32 32" class="w-6 h-6">
+          <polygon points="16,2 30,28 2,28" fill="none" stroke="currentColor" stroke-width="2" class="text-muted-foreground" />
+        </svg>
+        <span class="text-sm text-muted-foreground">microscopis.com</span>
+      </div>
+      <p class="text-sm text-muted-foreground">Where AI creates entire worlds.</p>
+    </div>
+  </footer>
+</main>
+
+<script src="{% static 'core/js/three.min.js' %}"></script>
+<script src="{% static 'core/js/triangle-background.js' %}"></script>
+{% endblock %}

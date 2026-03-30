@@ -1,0 +1,11 @@
+<article class="search-result-item">
+  <h2 class="search-result-title">
+    {% if site.website_slug == 'verso' %}
+    <a href="{% url 'verso:home' %}">{{ site.website_name }}</a>
+    {% else %}
+    <a href="{% url 'site_detail' site.website_slug %}">{{ site.website_name }}</a>
+    {% endif %}
+  </h2>
+  <p class="search-result-url">{{ site.result_display_url }}</p>
+  <p class="search-result-snippet">{{ site.description }}</p>
+</article>

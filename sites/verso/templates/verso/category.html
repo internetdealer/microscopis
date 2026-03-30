@@ -1,0 +1,51 @@
+{% extends "verso/base.html" %}
+
+{% block title %}{{ category_name }} — VERSO{% endblock %}
+
+{% block content %}
+<main style="min-height:100vh;padding-top:4rem">
+  <section class="verso-border-b">
+    <div style="display:grid;grid-template-columns:1fr;min-height:auto">
+      <div style="border-bottom:1px solid var(--border);padding:2rem 1rem">
+        <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem">
+          <span class="verso-mono" style="font-size:10px;letter-spacing:0.2em;text-transform:uppercase;opacity:0.5">Category</span>
+          <div style="height:1px;flex:1;background:var(--border)"></div>
+        </div>
+        <h1 style="font-size:clamp(2.5rem,8vw,5rem);line-height:1;margin-bottom:1rem">{{ category_name }}</h1>
+        <p class="verso-mono" style="font-size:11px;line-height:1.7;opacity:0.6;max-width:36rem">{{ category_description }}</p>
+      </div>
+      <div style="padding:1.5rem 1rem;border-bottom:1px solid var(--border);display:flex;flex-wrap:wrap;gap:0.75rem">
+        {% for c in all_categories %}
+        <a href="{% url 'verso:category' c.slug %}" class="verso-mono verso-cat-link{% if c.slug == category %} is-active{% endif %}" style="font-size:10px;text-transform:uppercase;letter-spacing:0.15em">
+          {{ c.name }}
+        </a>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="verso-border-b verso-container" style="padding-top:1rem;padding-bottom:1rem">
+      <span class="verso-mono" style="font-size:10px;letter-spacing:0.2em;text-transform:uppercase;opacity:0.5">{{ articles|length }} article{{ articles|length|pluralize }}</span>
+    </div>
+    {% for article in articles %}
+    <a href="{% url 'verso:article' article.id %}" class="verso-border-b" style="display:block;padding:1.5rem 1rem;text-decoration:none;color:inherit">
+      <div style="display:flex;flex-wrap:wrap;gap:1rem;align-items:flex-start">
+        {% if article.image_url %}
+        <img src="{{ article.image_url }}" alt="" class="verso-thumb" width="88" height="88" loading="lazy" decoding="async">
+        {% endif %}
+        <span class="verso-mono" style="font-size:10px;opacity:0.35">{{ article.date }}</span>
+        <div style="flex:1;min-width:12rem">
+          <span class="verso-mono" style="font-size:9px;text-transform:uppercase;opacity:0.5;display:block;margin-bottom:0.5rem">{{ article.category_name }} · {{ article.readTime }}</span>
+          <h2 style="font-size:1.25rem;line-height:1.25;margin-bottom:0.5rem">{{ article.title }}</h2>
+          <p class="verso-mono verso-line-clamp-2" style="font-size:10px;opacity:0.5">{{ article.excerpt }}</p>
+        </div>
+        <span class="verso-mono" style="font-size:10px;opacity:0.45">{{ article.author }}</span>
+      </div>
+    </a>
+    {% empty %}
+    <p class="verso-mono verso-container" style="padding:2rem 1rem;font-size:11px;opacity:0.5">No articles in this category yet.</p>
+    {% endfor %}
+  </section>
+</main>
+{% endblock %}

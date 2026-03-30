@@ -1,0 +1,144 @@
+{% extends "verso/base.html" %}
+
+{% block title %}About — VERSO{% endblock %}
+
+{% block content %}
+<main style="min-height:100vh;padding-top:4rem">
+  <section class="verso-border-b">
+    <div style="display:grid;grid-template-columns:1fr;min-height:auto">
+      <div style="border-bottom:1px solid var(--border);padding:2rem;display:grid;grid-template-columns:1fr;gap:0">
+        <div class="verso-border-b" style="padding:2rem 1rem;display:grid;grid-template-columns:1fr;min-height:12rem">
+          <div style="display:flex;align-items:center;gap:1rem;margin-bottom:2rem">
+            <span class="verso-mono" style="font-size:10px;letter-spacing:0.2em;text-transform:uppercase;opacity:0.5">About</span>
+            <div style="height:1px;flex:1;background:var(--border)"></div>
+          </div>
+          <h1 style="font-size:clamp(2rem,6vw,4rem);line-height:1.1;margin-bottom:1.5rem;max-width:24ch">
+            Ideas that endure in a world of noise
+          </h1>
+          <p class="verso-mono" style="font-size:11px;line-height:1.7;opacity:0.6;max-width:36rem">
+            VERSO is an independent editorial platform focused on how artificial intelligence and autonomous systems intersect with human judgment. We publish essays on models, agents, labor, and governance—work designed to inform and outlast the hype cycle.
+          </p>
+        </div>
+        <div style="padding:2rem 1rem;display:flex;flex-direction:column;justify-content:flex-end;gap:1.5rem;border-left:0">
+          <div>
+            <span class="verso-mono" style="font-size:9px;letter-spacing:0.2em;text-transform:uppercase;opacity:0.3;display:block;margin-bottom:0.5rem">Founded</span>
+            <span style="font-size:2rem;font-family:Instrument Serif,serif">2024</span>
+          </div>
+          <div>
+            <span class="verso-mono" style="font-size:9px;letter-spacing:0.2em;text-transform:uppercase;opacity:0.3;display:block;margin-bottom:0.5rem">Based</span>
+            <span class="verso-mono" style="font-size:11px">New York, NY</span>
+          </div>
+          <div>
+            <span class="verso-mono" style="font-size:9px;letter-spacing:0.2em;text-transform:uppercase;opacity:0.3;display:block;margin-bottom:0.5rem">Contact</span>
+            <span class="verso-mono" style="font-size:11px">hello@verso.pub</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="verso-border-b">
+    <div class="verso-container" style="padding-top:2rem;padding-bottom:2rem">
+      <span class="verso-mono" style="font-size:10px;letter-spacing:0.2em;text-transform:uppercase;opacity:0.5;display:block;margin-bottom:1rem">Our Mission</span>
+      <p style="font-size:clamp(1.125rem,2.5vw,1.5rem);line-height:1.6;max-width:42rem">
+        In an age of algorithmic feeds and attention economics, VERSO stands for something different: journalism that respects your intelligence, your time, and your capacity for sustained thought. We exist to slow down the conversation—to create space for ideas that deserve more than a scroll.
+      </p>
+    </div>
+  </section>
+
+  <section class="verso-border-b">
+    <div class="verso-border-b verso-container" style="padding-top:1rem;padding-bottom:1rem">
+      <span class="verso-mono" style="font-size:10px;letter-spacing:0.2em;text-transform:uppercase">Our Principles</span>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr">
+      <div class="verso-border-b" style="padding:2rem 1rem;display:grid;grid-template-columns:1fr;gap:2rem">
+        <div style="display:flex;gap:1.5rem">
+          <span class="verso-mono" style="font-size:10px;opacity:0.3">01</span>
+          <div>
+            <h2 style="font-size:1.25rem;margin-bottom:0.75rem">Depth Over Speed</h2>
+            <p class="verso-mono" style="font-size:11px;line-height:1.7;opacity:0.6">
+              We believe understanding matters more than being first. Our pieces are researched, considered, and crafted to endure.
+            </p>
+          </div>
+        </div>
+        <div style="display:flex;gap:1.5rem">
+          <span class="verso-mono" style="font-size:10px;opacity:0.3">02</span>
+          <div>
+            <h2 style="font-size:1.25rem;margin-bottom:0.75rem">Independence</h2>
+            <p class="verso-mono" style="font-size:11px;line-height:1.7;opacity:0.6">
+              VERSO accepts no advertising and answers to no corporate parent. Our only obligation is to our readers and the truth.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div style="padding:2rem 1rem;display:grid;grid-template-columns:1fr;gap:2rem">
+        <div style="display:flex;gap:1.5rem">
+          <span class="verso-mono" style="font-size:10px;opacity:0.3">03</span>
+          <div>
+            <h2 style="font-size:1.25rem;margin-bottom:0.75rem">Clarity</h2>
+            <p class="verso-mono" style="font-size:11px;line-height:1.7;opacity:0.6">
+              Complex ideas deserve clear expression. We reject jargon, posturing, and the inflation of simplicity into obscurity.
+            </p>
+          </div>
+        </div>
+        <div style="display:flex;gap:1.5rem">
+          <span class="verso-mono" style="font-size:10px;opacity:0.3">04</span>
+          <div>
+            <h2 style="font-size:1.25rem;margin-bottom:0.75rem">Perspective</h2>
+            <p class="verso-mono" style="font-size:11px;line-height:1.7;opacity:0.6">
+              We seek viewpoints that challenge assumptions—including our own. Intellectual diversity is not weakness; it is strength.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="verso-border-b">
+    <div class="verso-border-b verso-container" style="padding-top:1rem;padding-bottom:1rem;display:flex;justify-content:space-between;align-items:center">
+      <span class="verso-mono" style="font-size:10px;letter-spacing:0.2em;text-transform:uppercase">Editorial Team</span>
+      <span class="verso-mono" style="font-size:10px;opacity:0.5">4 members</span>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr;gap:0">
+      <div class="verso-border-b" style="padding:2rem 1rem">
+        <span class="verso-mono" style="font-size:9px;letter-spacing:0.2em;text-transform:uppercase;opacity:0.3;display:block;margin-bottom:0.5rem">Editor-in-Chief</span>
+        <h3 style="font-size:1.25rem;margin-bottom:0.5rem">Alexandra Reed</h3>
+        <p class="verso-mono" style="font-size:10px;line-height:1.6;opacity:0.5">Former editor at The Atlantic. Focuses on cultural criticism and long-form narrative.</p>
+      </div>
+      <div class="verso-border-b" style="padding:2rem 1rem">
+        <span class="verso-mono" style="font-size:9px;letter-spacing:0.2em;text-transform:uppercase;opacity:0.3;display:block;margin-bottom:0.5rem">Technology Editor</span>
+        <h3 style="font-size:1.25rem;margin-bottom:0.5rem">Marcus Chen</h3>
+        <p class="verso-mono" style="font-size:10px;line-height:1.6;opacity:0.5">Previously at Wired and MIT Technology Review. Covers emerging tech and digital ethics.</p>
+      </div>
+      <div class="verso-border-b" style="padding:2rem 1rem">
+        <span class="verso-mono" style="font-size:9px;letter-spacing:0.2em;text-transform:uppercase;opacity:0.3;display:block;margin-bottom:0.5rem">Culture Editor</span>
+        <h3 style="font-size:1.25rem;margin-bottom:0.5rem">Sofia Hernandez</h3>
+        <p class="verso-mono" style="font-size:10px;line-height:1.6;opacity:0.5">Art critic and essayist. Writes on contemporary art, design, and creative practice.</p>
+      </div>
+      <div style="padding:2rem 1rem">
+        <span class="verso-mono" style="font-size:9px;letter-spacing:0.2em;text-transform:uppercase;opacity:0.3;display:block;margin-bottom:0.5rem">Politics Editor</span>
+        <h3 style="font-size:1.25rem;margin-bottom:0.5rem">David Okonkwo</h3>
+        <p class="verso-mono" style="font-size:10px;line-height:1.6;opacity:0.5">Political analyst with bylines in Foreign Affairs and The Economist.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="verso-border-b">
+    <div style="display:grid;grid-template-columns:1fr;min-height:12rem">
+      <div class="verso-border-b" style="padding:3rem 1rem;display:flex;align-items:center;justify-content:center;border-right:0">
+        <span style="font-size:clamp(3rem,12vw,6rem);font-family:Instrument Serif,serif;line-height:1">V</span>
+      </div>
+      <div style="padding:2rem 1rem;display:flex;flex-direction:column;justify-content:center">
+        <h2 style="font-size:clamp(1.5rem,3vw,2rem);line-height:1.2;margin-bottom:1rem">Want to contribute?</h2>
+        <p class="verso-mono" style="font-size:11px;line-height:1.7;opacity:0.6;max-width:28rem;margin-bottom:1.5rem">
+          VERSO is always seeking exceptional voices. If you have a story that demands telling, we want to hear from you.
+        </p>
+        <div style="display:flex;flex-wrap:wrap;gap:1rem">
+          <span class="verso-btn verso-mono" style="cursor:default;opacity:0.7">Submit a Pitch</span>
+          <span class="verso-btn verso-mono" style="cursor:default;opacity:0.4">View Guidelines</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+{% endblock %}

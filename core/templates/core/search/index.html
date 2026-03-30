@@ -1,0 +1,67 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block title %}Search — microscopis{% endblock %}
+
+{% block body %}
+<main class="min-h-screen bg-background">
+  {% include "core/partials/header.html" with show_search=True %}
+
+  <section class="pt-28 pb-6 px-4 border-b border-border/50">
+    <div class="max-w-2xl mx-auto">
+      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-6">
+        <div>
+          <h1 class="text-2xl sm:text-3xl font-normal text-foreground mb-1">
+            {% if query %}
+              <span class="text-muted-foreground">Results for</span>
+              <span class="text-foreground">&ldquo;{{ query }}&rdquo;</span>
+            {% else %}
+              Explore all sites
+            {% endif %}
+          </h1>
+          <p class="text-sm text-muted-foreground">About {{ result_count }} result{% if result_count != 1 %}s{% endif %}</p>
+        </div>
+        <div class="md:hidden">
+          {% include "core/partials/search_bar.html" with size="small" form_id="mobile-search" %}
+        </div>
+      </div>
+
+      <div class="flex items-center gap-3 overflow-x-auto pb-1 scrollbar-hide">
+        <div class="flex items-center gap-2 text-xs text-muted-foreground shrink-0">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-3.5 h-3.5 opacity-70"><line x1="4" x2="4" y1="21" y2="14"/><line x1="4" x2="4" y1="10" y2="3"/><line x1="12" x2="12" y1="21" y2="12"/><line x1="12" x2="12" y1="8" y2="3"/><line x1="20" x2="20" y1="21" y2="16"/><line x1="20" x2="20" y1="12" y2="3"/><line x1="2" x2="6" y1="14" y2="14"/><line x1="10" x2="14" y1="8" y2="8"/><line x1="18" x2="22" y1="16" y2="16"/></svg>
+          <span>Topic</span>
+        </div>
+        <div class="flex items-center gap-1.5">
+          {% for topic in topics %}
+          <a
+            href="{% url 'search' %}?q={{ query|urlencode }}&topic={{ topic|urlencode }}"
+            class="px-3 py-1.5 text-xs rounded-full whitespace-nowrap transition-all duration-200 {% if topic_filter == topic %}bg-foreground text-background{% else %}bg-secondary/40 text-muted-foreground hover:bg-secondary hover:text-foreground{% endif %}"
+          >{{ topic }}</a>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-4 px-4 pb-16">
+    <div class="max-w-2xl mx-auto">
+      {% if results %}
+      <div class="search-results-list">
+        {% for site in results %}
+          {% include "core/partials/search_result_item.html" with site=site %}
+        {% endfor %}
+      </div>
+      {% else %}
+      <div class="flex flex-col items-center justify-center py-24 text-center">
+        <div class="w-16 h-16 rounded-full bg-secondary/50 flex items-center justify-center mb-6">
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-muted-foreground"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        </div>
+        <h2 class="text-xl font-semibold text-foreground mb-2">No results found</h2>
+        <p class="text-muted-foreground max-w-md mb-8">We couldn&rsquo;t find any websites matching your search. Try different keywords or browse all sites.</p>
+        <a href="{% url 'search' %}" class="px-6 py-3 bg-foreground text-background rounded-xl font-medium hover:opacity-90 transition-opacity">Browse All Sites</a>
+      </div>
+      {% endif %}
+    </div>
+  </section>
+</main>
+{% endblock %}

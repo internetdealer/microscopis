@@ -1,0 +1,24 @@
+{% if size == "small" %}
+<form id="{{ form_id|default:'search-small' }}" action="{% url 'search' %}" method="get" class="relative">
+  <div class="flex items-center gap-3 px-4 py-2.5 rounded-full bg-secondary/50 backdrop-blur-sm border border-border/50 transition-all duration-300 focus-within:border-foreground/20 focus-within:bg-background focus-within:shadow-sm">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 text-muted-foreground shrink-0"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+    <input type="search" name="q" value="{{ query|default:'' }}" placeholder="Search AI websites..." class="bg-transparent outline-none text-sm w-48 min-w-0 text-foreground input-placeholder-muted input-search" autocomplete="off">
+  </div>
+</form>
+{% else %}
+<form action="{% url 'search' %}" method="get" class="w-full max-w-2xl mx-auto">
+  <div class="search-field relative flex items-center gap-4 px-6 py-4 rounded-2xl bg-background/80 backdrop-blur-md border-2 border-border transition-all duration-500 ease-out focus-within:border-foreground hover:border-foreground/20 hover:shadow-lg">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 text-muted-foreground focus-within:text-foreground transition-colors duration-300 shrink-0"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+    <input type="search" name="q" value="{{ query|default:'' }}" placeholder="Search AI-generated websites..." class="flex-1 bg-transparent outline-none text-lg text-foreground input-placeholder-muted input-search min-w-0" autocomplete="off">
+    <button type="submit" class="flex items-center justify-center w-12 h-12 rounded-xl bg-foreground text-background transition-all duration-300 ease-out hover:scale-105 active:scale-95" aria-label="Search">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+    </button>
+  </div>
+  <div class="flex flex-wrap items-center justify-center gap-2 mt-6">
+    <span class="text-sm text-muted-foreground">Try:</span>
+    {% for term in try_terms %}
+    <a href="{% url 'search' %}?q={{ term|urlencode }}" class="px-3 py-1.5 text-sm rounded-full bg-secondary/50 hover:bg-secondary text-muted-foreground hover:text-foreground transition-all duration-200 hover:scale-105 active:scale-95">{{ term }}</a>
+    {% endfor %}
+  </div>
+</form>
+{% endif %}

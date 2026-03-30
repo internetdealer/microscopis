@@ -1,0 +1,14 @@
+{% load static %}
+<header class="verso-nav">
+  <nav class="verso-nav-inner verso-mono">
+    <a href="{% url 'verso:home' %}" class="verso-logo">VERSO</a>
+    <div class="verso-nav-links">
+      <a href="{% url 'verso:home' %}" class="verso-nav-link {% if nav_active == 'index' %}is-active{% endif %}">Index</a>
+      {% for c in nav_categories %}
+      <a href="{% url 'verso:category' c.slug %}" class="verso-nav-link {% if nav_active == c.slug %}is-active{% endif %}">{{ c.name }}</a>
+      {% endfor %}
+      <a href="{% url 'verso:about' %}" class="verso-nav-link {% if nav_active == 'about' %}is-active{% endif %}">About</a>
+    </div>
+    <span class="verso-mono" style="font-size:10px;opacity:0.5">Menu</span>
+  </nav>
+</header>

@@ -1,0 +1,17 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}VERSO — Independent Editorial{% endblock %}</title>
+  <meta name="description" content="VERSO publishes essays on artificial intelligence, autonomous agents, and human judgment in an age of machine inference.">
+  <link rel="stylesheet" href="{% static 'verso/verso.css' %}">
+  {% block extra_head %}{% endblock %}
+</head>
+<body class="verso-root">
+  {% include "verso/partials/nav.html" %}
+  {% block content %}{% endblock %}
+  {% include "verso/partials/footer.html" %}
+</body>
+</html>

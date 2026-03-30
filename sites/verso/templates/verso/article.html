@@ -1,0 +1,96 @@
+{% extends "verso/base.html" %}
+
+{% block title %}{{ article.title }} — VERSO{% endblock %}
+
+{% block content %}
+<main style="min-height:100vh;padding-top:4rem">
+  <article>
+    <div class="verso-border-b">
+      <div class="verso-container" style="padding-top:0.75rem;padding-bottom:0.75rem;display:flex;flex-wrap:wrap;align-items:center;gap:0.5rem 1rem">
+        <a href="{% url 'verso:home' %}" class="verso-mono" style="font-size:10px;opacity:0.5;text-decoration:none;color:inherit">Index</a>
+        <span class="verso-mono" style="font-size:10px;opacity:0.25">/</span>
+        <a href="{% url 'verso:category' article.category %}" class="verso-mono" style="font-size:10px;letter-spacing:0.15em;text-transform:uppercase;opacity:0.5;text-decoration:none;color:inherit">{{ article.category_name }}</a>
+        <span class="verso-mono" style="font-size:10px;opacity:0.25">/</span>
+        <span class="verso-mono" style="font-size:10px;opacity:0.45;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ article.title }}</span>
+      </div>
+    </div>
+
+    <div class="verso-article-page-grid">
+      <div class="verso-border-b verso-article-sidebar" style="padding:2rem 1rem">
+        <div style="position:sticky;top:5rem">
+          <span class="verso-mono" style="font-size:9px;letter-spacing:0.2em;text-transform:uppercase;opacity:0.5;display:block;margin-bottom:1rem">{{ article.category_name }}</span>
+          <div style="display:flex;flex-direction:column;gap:1.25rem;margin-bottom:2rem">
+            <div>
+              <span class="verso-mono" style="font-size:9px;letter-spacing:0.2em;text-transform:uppercase;opacity:0.3;display:block;margin-bottom:0.25rem">Author</span>
+              <span class="verso-mono" style="font-size:11px">{{ article.author }}</span>
+            </div>
+            <div>
+              <span class="verso-mono" style="font-size:9px;letter-spacing:0.2em;text-transform:uppercase;opacity:0.3;display:block;margin-bottom:0.25rem">Published</span>
+              <span class="verso-mono" style="font-size:11px">{{ article.date }}</span>
+            </div>
+            <div>
+              <span class="verso-mono" style="font-size:9px;letter-spacing:0.2em;text-transform:uppercase;opacity:0.3;display:block;margin-bottom:0.25rem">Reading Time</span>
+              <span class="verso-mono" style="font-size:11px">{{ article.readTime }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div style="padding:2rem 1rem 0">
+          <h1 style="font-size:clamp(1.75rem,4vw,3rem);line-height:1.1;margin-bottom:1rem">{{ article.title }}</h1>
+          <p class="verso-mono" style="font-size:0.875rem;line-height:1.6;opacity:0.6;max-width:40rem;margin-bottom:2rem">{{ article.excerpt }}</p>
+        </div>
+        {% if article.image_url %}
+        <figure style="margin:0 1rem 2rem;border:1px solid var(--border);overflow:hidden;background:rgba(20,20,20,0.03)">
+          <div style="aspect-ratio:16/9;position:relative">
+            <img src="{{ article.image_url }}" alt="{{ article.title }}" class="verso-article-hero-img" width="1600" height="900" loading="eager" decoding="async" fetchpriority="high">
+          </div>
+          {% if article.image_credit %}
+          <figcaption class="verso-mono" style="font-size:9px;letter-spacing:0.02em;opacity:0.45;padding:0.5rem 0.75rem;border-top:1px solid var(--border)">{{ article.image_credit }}</figcaption>
+          {% endif %}
+        </figure>
+        {% else %}
+        <div style="margin:0 1rem 2rem;aspect-ratio:16/9;background:rgba(20,20,20,0.05);display:flex;align-items:center;justify-content:center;border:1px solid var(--border)">
+          <span class="verso-mono" style="font-size:10px;letter-spacing:0.3em;text-transform:uppercase;opacity:0.2">Article Image</span>
+        </div>
+        {% endif %}
+        <div class="verso-article-body verso-container" style="padding-bottom:3rem">
+          {% for p in paragraphs %}
+          <p class="verso-article-p">{{ p }}</p>
+          {% endfor %}
+          <div style="margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--border);display:flex;flex-wrap:wrap;align-items:center;gap:1rem">
+            <span class="verso-mono" style="font-size:9px;letter-spacing:0.2em;text-transform:uppercase;opacity:0.3">Tags</span>
+            <span class="verso-mono" style="font-size:10px;border:1px solid var(--border);padding:0.25rem 0.75rem">{{ article.category_name }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {% if related %}
+    <section class="verso-border-t">
+      <div class="verso-border-b verso-container" style="padding-top:1rem;padding-bottom:1rem">
+        <span class="verso-mono" style="font-size:10px;letter-spacing:0.2em;text-transform:uppercase">Related</span>
+      </div>
+      <div class="verso-related-grid">
+        {% for r in related %}
+        <a href="{% url 'verso:article' r.id %}" class="verso-border-b" style="display:block;padding:2rem 1rem;text-decoration:none;color:inherit">
+          <div style="display:flex;gap:1rem;align-items:flex-start">
+            {% if r.image_url %}
+            <img src="{{ r.image_url }}" alt="" class="verso-thumb" width="88" height="88" loading="lazy" decoding="async">
+            {% endif %}
+            <div style="flex:1;min-width:0">
+          <span class="verso-mono" style="font-size:9px;letter-spacing:0.2em;text-transform:uppercase;opacity:0.5;display:block;margin-bottom:0.75rem">{{ r.category_name }}</span>
+          <h3 style="font-size:1.25rem;line-height:1.25;margin-bottom:0.75rem">{{ r.title }}</h3>
+          <p class="verso-mono verso-line-clamp-2" style="font-size:10px;opacity:0.5;margin-bottom:1rem">{{ r.excerpt }}</p>
+          <span class="verso-mono" style="font-size:10px;opacity:0.45">{{ r.author }} — {{ r.readTime }}</span>
+            </div>
+          </div>
+        </a>
+        {% endfor %}
+      </div>
+    </section>
+    {% endif %}
+  </article>
+</main>
+{% endblock %}
