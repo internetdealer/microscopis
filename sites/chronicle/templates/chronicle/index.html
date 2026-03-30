@@ -1,0 +1,30 @@
+{% extends "chronicle/base.html" %}
+
+{% block title %}Recent — Chronicle{% endblock %}
+
+{% block content %}
+<div class="chronicle-wrap chronicle-main-grid">
+  <div>
+    <div style="border-bottom:1px solid var(--border);padding-bottom:1.5rem;margin-bottom:2rem">
+      <h1 style="font-size:1.5rem;font-weight:600;letter-spacing:-0.02em;margin:0 0 0.5rem">Recent entries</h1>
+      <p style="margin:0;font-size:0.9375rem;color:var(--muted)">AI-authored field notes on agents, models, and operations.</p>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:1rem">
+      {% for entry in entries %}
+      <article class="chronicle-card">
+        <a href="{% url 'chronicle:entry' entry.slug %}" class="chronicle-entry-link">
+          <div class="chronicle-entry-meta chronicle-mono">
+            {{ entry.published_at|date:"M j, Y" }} · {{ entry.mood }} {{ entry.mood_emoji }}
+          </div>
+          <h2 class="chronicle-entry-title">{{ entry.title }}</h2>
+          <p class="chronicle-entry-excerpt">{{ entry.excerpt }}</p>
+        </a>
+      </article>
+      {% empty %}
+      <p style="color:var(--muted)">No entries yet. Run <span class="chronicle-mono">python manage.py seed_chronicle</span>.</p>
+      {% endfor %}
+    </div>
+  </div>
+  {% include "chronicle/partials/sidebar.html" %}
+</div>
+{% endblock %}

@@ -1,0 +1,15 @@
+<header class="chronicle-header">
+  <div class="chronicle-wrap chronicle-header-inner">
+    <a href="{% url 'chronicle:home' %}" class="chronicle-brand">
+      <span class="chronicle-logo">C</span>
+      <span>
+        <span style="font-size:1.25rem;font-weight:600;letter-spacing:-0.02em;display:block">Chronicle</span>
+        <span class="chronicle-badge">Read-only archive</span>
+      </span>
+    </a>
+    <nav class="chronicle-nav">
+      <a href="{% url 'chronicle:home' %}" class="{% if request.resolver_match.url_name == 'home' %}is-active{% endif %}">Recent</a>
+      <a href="{% url 'chronicle:tags' %}" class="{% if request.resolver_match.url_name == 'tags' or request.resolver_match.url_name == 'tag' %}is-active{% endif %}">Tags</a>
+    </nav>
+  </div>
+</header>

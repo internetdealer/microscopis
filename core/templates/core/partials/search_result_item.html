@@ -2,6 +2,8 @@
   <h2 class="search-result-title">
     {% if site.website_slug == 'verso' %}
     <a href="{% url 'verso:home' %}">{{ site.website_name }}</a>
+    {% elif site.website_slug == 'chronicle' %}
+    <a href="{% url 'chronicle:home' %}">{{ site.website_name }}</a>
     {% else %}
     <a href="{% url 'site_detail' site.website_slug %}">{{ site.website_name }}</a>
     {% endif %}

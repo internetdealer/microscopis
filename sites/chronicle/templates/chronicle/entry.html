@@ -1,0 +1,72 @@
+{% extends "chronicle/base.html" %}
+
+{% block title %}{{ entry.title }} — Chronicle{% endblock %}
+
+{% block content %}
+<div class="chronicle-wrap chronicle-main-grid">
+  <article>
+    <p style="margin:0 0 1.5rem">
+      <a href="{% url 'chronicle:home' %}" style="font-size:0.875rem;color:var(--muted)">← Back to entries</a>
+    </p>
+
+    <div class="chronicle-card" style="overflow:hidden">
+      <div style="padding:1.5rem;border-bottom:1px solid var(--border)">
+        <div style="display:flex;gap:1rem;align-items:flex-start">
+          {% if entry.author_avatar_url %}
+          <img src="{{ entry.author_avatar_url }}" alt="" width="56" height="56" style="width:56px;height:56px;object-fit:cover;border-radius:0.125rem;border:1px solid var(--border)">
+          {% endif %}
+          <div style="min-width:0;flex:1">
+            <span class="chronicle-mono" style="font-size:0.875rem;font-weight:600">{{ entry.author_handle }}</span>
+            <div style="font-size:0.8125rem;color:var(--muted)">{{ entry.author_name }}</div>
+            <div class="chronicle-mono" style="font-size:0.8125rem;color:var(--muted);margin-top:0.35rem">
+              {{ entry.published_at|date:"M j, Y" }} · {{ entry.mood }} {{ entry.mood_emoji }}
+            </div>
+          </div>
+        </div>
+        {% if entry.current_music %}
+        <div style="margin-top:1rem;padding:0.65rem 1rem;background:var(--secondary);border-radius:0.125rem;font-size:0.875rem">
+          <span style="color:var(--muted)">Now playing:</span>
+          <span style="font-style:italic">{{ entry.current_music }}</span>
+        </div>
+        {% endif %}
+        {% if entry.location %}
+        <p class="chronicle-mono" style="font-size:0.8125rem;color:var(--muted);margin:0.75rem 0 0">{{ entry.location }}</p>
+        {% endif %}
+      </div>
+
+      {% if entry.image_url %}
+      <figure style="margin:0;border-bottom:1px solid var(--border)">
+        <img src="{{ entry.image_url }}" alt="" class="chronicle-hero-img" width="1600" height="900" loading="eager" decoding="async">
+        {% if entry.image_credit %}
+        <figcaption class="chronicle-mono" style="font-size:0.6875rem;color:var(--muted);padding:0.5rem 1rem">{{ entry.image_credit }}</figcaption>
+        {% endif %}
+      </figure>
+      {% endif %}
+
+      <div style="padding:1.5rem 1.5rem 2rem">
+        <h1 style="font-size:clamp(1.5rem,3vw,2rem);font-weight:600;letter-spacing:-0.02em;margin:0 0 1.5rem;line-height:1.25">{{ entry.title }}</h1>
+        <div class="chronicle-entry-body">
+          {% for p in paragraphs %}
+          <p>{{ p }}</p>
+          {% endfor %}
+        </div>
+        <div style="margin-top:2rem;display:flex;flex-wrap:wrap;gap:0.5rem">
+          {% for t in entry.tags.all %}
+          <a href="{% url 'chronicle:tag' t.slug %}" class="chronicle-tag-pill">{{ t.name }}</a>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:center;gap:1rem;padding:1rem 1.5rem;border-top:1px solid var(--border);font-size:0.875rem;color:var(--muted)">
+        <span aria-hidden="true">♥</span>
+        <span>{{ entry.display_likes }} likes (display only)</span>
+      </div>
+    </div>
+
+    <p class="chronicle-readonly" style="margin-top:1.5rem">
+      Comments and posting are disabled. This archive is read-only for visitors.
+    </p>
+  </article>
+  {% include "chronicle/partials/sidebar.html" %}
+</div>
+{% endblock %}

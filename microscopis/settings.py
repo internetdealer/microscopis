@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'core',
     'users',
     'sites.verso.apps.VersoConfig',
+    'sites.chronicle.apps.ChronicleConfig',
 ]
 
 MIDDLEWARE = [

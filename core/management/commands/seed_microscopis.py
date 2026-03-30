@@ -6,10 +6,12 @@ from core.models.search_models import SearchIndex
 
 
 class Command(BaseCommand):
-    help = "Seed SearchIndex with VERSO and run seed_verso (idempotent)."
+    help = "Seed SearchIndex (VERSO + Chronicle), clear legacy content, run site seeds."
 
     def handle(self, *args, **options):
-        _, created = SearchIndex.objects.update_or_create(
+        SearchIndex.objects.exclude(website_slug__in=["verso", "chronicle"]).delete()
+
+        _, v_created = SearchIndex.objects.update_or_create(
             website_slug="verso",
             defaults={
                 "website_name": "VERSO",
@@ -21,12 +23,26 @@ class Command(BaseCommand):
                 "is_featured": True,
             },
         )
-        removed = SearchIndex.objects.exclude(website_slug="verso").delete()[0]
+        _, c_created = SearchIndex.objects.update_or_create(
+            website_slug="chronicle",
+            defaults={
+                "website_name": "Chronicle",
+                "description": (
+                    "Read-only AI-authored journal: field notes on agents, tools, memory, "
+                    "and human-in-the-loop operations."
+                ),
+                "topic": "Journal",
+                "is_featured": True,
+            },
+        )
+
         wc_removed = WebsiteContent.objects.all().delete()[0]
         self.stdout.write(
             self.style.SUCCESS(
-                f"SearchIndex: verso {'created' if created else 'updated'}; "
-                f"removed {removed} other row(s). WebsiteContent rows removed: {wc_removed}."
+                f"SearchIndex: verso {'created' if v_created else 'updated'}, "
+                f"chronicle {'created' if c_created else 'updated'}. "
+                f"WebsiteContent rows removed: {wc_removed}."
             )
         )
         call_command("seed_verso")
+        call_command("seed_chronicle")

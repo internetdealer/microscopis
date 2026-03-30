@@ -235,4 +235,271 @@ ARTICLES: list[dict] = [
             "leverage, which get surveillance, and who sets the defaults.",
         ),
     },
+    # --- Additional essays (agents / AI / human vs machine), published April 2026 ---
+    {
+        "slug": "permission-boundary-agents",
+        "category": "agents",
+        "title": "The Permission Boundary: What Your Agent Is Allowed to Touch",
+        "excerpt": (
+            "An agent without scoped permissions is a liability. Drawing the boundary—files, "
+            "APIs, spend—is where product, security, and governance actually meet."
+        ),
+        "author": "Nina Okonkwo",
+        "published_at": "2026-04-10",
+        "read_minutes": 9,
+        "is_featured": True,
+        "image_url": "https://images.unsplash.com/photo-1555949963-aa79dcee981c?auto=format&fit=crop&w=1600&q=80",
+        "image_credit": "Photo via Unsplash",
+        "body": _p(
+            "The demo shows an agent booking travel and updating a spreadsheet. Production "
+            "asks uglier questions: which identities may it assume, which secrets can it read, "
+            "and what happens when it loops on a failing tool call with your corporate card attached?",
+            "Permission design is not a one-time ACL list. It is a product decision about "
+            "trust gradients—read-only exploration versus write access, sandboxed browsers "
+            "versus live CRM updates, automatic retries versus human approval for irreversible steps.",
+            "Security teams rightly worry about prompt injection crossing those boundaries; "
+            "operators worry about silent partial failures that look like success in a trace. "
+            "The durable pattern is least privilege plus explicit escalation paths: narrow defaults, "
+            "loud failures, and humans who can revoke scope without redeploying the model.",
+            "Agents will spread where boundaries are legible. The organizations that win will "
+            "treat permissioning as a first-class surface—versioned, audited, and boring—"
+            "not as an afterthought bolted on after the demo wins the budget.",
+        ),
+    },
+    {
+        "slug": "inference-economics",
+        "category": "ai",
+        "title": "Inference Economics: Who Pays When Every Click Is a Model Call",
+        "excerpt": (
+            "Latency and quality are not the only constraints. As models sit behind every "
+            "feature, unit economics and metering become product strategy."
+        ),
+        "author": "Marcus Webb",
+        "published_at": "2026-04-09",
+        "read_minutes": 8,
+        "is_featured": True,
+        "image_url": "https://images.unsplash.com/photo-1611974789855-9c2a0a4756a8?auto=format&fit=crop&w=1600&q=80",
+        "image_credit": "Photo via Unsplash",
+        "body": _p(
+            "Training costs dominate headlines, but inference costs dominate spreadsheets. "
+            "Every autocomplete, summarization, and reranking step is a billable sequence of "
+            "tokens—often multiplied by retrieval, tool calls, and retries in agentic flows.",
+            "That shifts how products are priced and how teams choose model sizes. Smaller "
+            "models with caching and routing beat raw capability when the alternative is "
+            "unbounded spend on long contexts in high-traffic surfaces.",
+            "Customers rarely see the meter; they see latency and quality. Finance sees the "
+            "margin. The tension between product ambition and unit economics is where “AI "
+            "for everyone” either becomes sustainable infrastructure or a subsidized loss leader.",
+            "Transparency about inference cost—internally and, where appropriate, externally—"
+            "is not pessimism. It is a prerequisite for honest roadmaps and for avoiding the "
+            "trap of shipping features that cannot survive their own success.",
+        ),
+    },
+    {
+        "slug": "man-machine-myth-total-war",
+        "category": "human",
+        "title": "Man, Machine, and the Myth of Total War",
+        "excerpt": (
+            "The ‘war’ between humans and computers is a catchy headline. The reality is "
+            "competition, codependence, and a fight over who sets the rules."
+        ),
+        "author": "Elena Voss",
+        "published_at": "2026-04-08",
+        "read_minutes": 9,
+        "is_featured": True,
+        "image_url": "https://images.unsplash.com/photo-1531746797551-88f8194d4c1d?auto=format&fit=crop&w=1600&q=80",
+        "image_credit": "Photo via Unsplash",
+        "body": _p(
+            "Pop narratives frame the present as a zero-sum contest: humans versus machines, "
+            "with a winner-take-all finish line. History suggests something else—waves of "
+            "automation that reshuffle tasks while leaving institutions, power, and accountability "
+            "stubbornly human.",
+            "What does look like conflict is the fight over speed, data, and defaults. Who "
+            "can deploy first? Whose model is embedded in which workflow? Which errors are "
+            "tolerated as the cost of scale? Those are political and economic battles, not "
+            "a species-level duel in a sci-fi trailer.",
+            "Computers excel at scale and speed; humans still carry liability, ethics, and "
+            "the messy work of saying no when metrics look good but reality does not. The "
+            "danger is not that machines ‘win’—it is that we outsource judgment to interfaces "
+            "we do not understand and cannot challenge.",
+            "A more useful framing than war is stewardship: who owns the feedback loop, who "
+            "audits the trace, and who pays when the system fails someone who had no seat at "
+            "the design table. That is where humans and machines are genuinely entangled.",
+        ),
+    },
+    {
+        "slug": "hardening-agent-pipelines",
+        "category": "agents",
+        "title": "Hardening Agent Pipelines: Retries, Sandboxes, and Kill Switches",
+        "excerpt": (
+            "The difference between a demo and production is what happens on the third "
+            "failure, not the first success."
+        ),
+        "author": "James Liu",
+        "published_at": "2026-04-07",
+        "read_minutes": 10,
+        "is_featured": False,
+        "image_url": "https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&w=1600&q=80",
+        "image_credit": "Photo via Unsplash",
+        "body": _p(
+            "Reliability engineering did not disappear because the planner is a language model. "
+            "Timeouts, exponential backoff, circuit breakers, and idempotent operations—"
+            "these remain the grammar of systems that survive contact with the real world.",
+            "Sandboxes matter when agents execute code or browse: isolate filesystems, "
+            "network egress, and secret injection so a single bad prompt cannot become a "
+            "lateral movement story. Kill switches matter when cost or risk spirals: "
+            "hard caps on spend, token ceilings, and human-in-the-loop gates for irreversible actions.",
+            "Observability is not optional. Structured traces, correlation IDs, and redaction "
+            "pipelines are how you debug production agents without turning every incident into "
+            "forensics-by-screenshot.",
+            "The teams that ship durable agents are often the ones who sound boring on "
+            "purpose: they rehearse failure modes, measure recovery time, and treat ‘happy path’ "
+            "demos as marketing, not architecture.",
+        ),
+    },
+    {
+        "slug": "synthetic-media-provenance",
+        "category": "ai",
+        "title": "Synthetic Media and the Arms Race for Provenance",
+        "excerpt": (
+            "As generation becomes trivial, the scarce resource becomes trust: knowing what "
+            "was made, by whom, and under what constraints."
+        ),
+        "author": "Sofia Hernandez",
+        "published_at": "2026-04-06",
+        "read_minutes": 8,
+        "is_featured": False,
+        "image_url": "https://images.unsplash.com/photo-1639322537228-f710d846310a?auto=format&fit=crop&w=1600&q=80",
+        "image_credit": "Photo via Unsplash",
+        "body": _p(
+            "Text, image, audio, and video synthesis are no longer laboratory experiments. "
+            "They are consumer features. That shifts the problem from ‘can we generate?’ to "
+            "‘can we attribute, verify, and revoke?’—questions that touch cryptography, law, "
+            "and platform design at once.",
+            "Provenance proposals—metadata, watermarking, signing pipelines—compete with "
+            "adversaries who optimize for evasion. There is no single technical fix; there "
+            "is a layered stack of signals, each imperfect in isolation, sometimes useful together.",
+            "Institutions that need defensible records—newsrooms, courts, enterprises—"
+            "cannot rely on vibe alone. They need workflows: capture chains, editorial review, "
+            "and explicit policies for when synthetic assistance is disclosed.",
+            "The ‘war’ between authentic and synthetic is less about banning tools than about "
+            "raising the cost of deception and protecting the reputational channels that still "
+            "matter when pixels lie fluently.",
+        ),
+    },
+    {
+        "slug": "cognitive-offloading-price",
+        "category": "human",
+        "title": "Cognitive Offloading: The Hidden Price of Letting Machines Decide",
+        "excerpt": (
+            "Delegation feels efficient until judgment atrophies. The risk is not laziness; "
+            "it is unrecoverable loss of institutional memory."
+        ),
+        "author": "David Chen",
+        "published_at": "2026-04-05",
+        "read_minutes": 9,
+        "is_featured": False,
+        "image_url": "https://images.unsplash.com/photo-1532619675608-729875fa83e7?auto=format&fit=crop&w=1600&q=80",
+        "image_credit": "Photo via Unsplash",
+        "body": _p(
+            "When a model drafts, summarizes, and routes, humans stop rehearsing the full "
+            "chain of reasoning. That saves time. It also means fewer people know how to "
+            "reconstruct the answer when the tool is wrong—or unavailable.",
+            "Organizations may wake up with a competence cliff: senior staff who trust "
+            "outputs they no longer verify, and juniors who never learned the underlying craft. "
+            "That is not inevitable; it is a training and governance design problem.",
+            "Cognitive offloading is not unique to AI; calculators and spell-checkers did it "
+            "first. The difference is scale and authority: systems that sit at the center of "
+            "decision pipelines can reshape norms faster than any prior assistive tech.",
+            "The healthy middle is selective automation: keep humans in the loop where "
+            "accountability is real, invest in drills without the tool, and treat models as "
+            "amplifiers of expertise rather than replacements for it.",
+        ),
+    },
+    {
+        "slug": "sub-agents-conflict",
+        "category": "agents",
+        "title": "When Sub-Agents Conflict: Orchestration as Diplomacy",
+        "excerpt": (
+            "Multiple specialized agents can outperform one monolith—if they agree on facts, "
+            "interfaces, and who gets the final word."
+        ),
+        "author": "Alexandra Reed",
+        "published_at": "2026-04-04",
+        "read_minutes": 7,
+        "is_featured": False,
+        "image_url": "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1600&q=80",
+        "image_credit": "Photo via Unsplash",
+        "body": _p(
+            "Splitting work across sub-agents—research, critique, synthesis—mirrors "
+            "human teams. It also introduces coordination failures: duplicated effort, "
+            "contradictory conclusions, and ambiguous ownership of the final output.",
+            "Orchestration layers need explicit contracts: shared schemas for facts, "
+            "deterministic tie-breakers, and escalation paths when confidence diverges. "
+            "Without that, you get impressive parallelism with a fragile merge step.",
+            "Some designs use debate or arbitration: a third agent reviews conflict, or a "
+            "human adjudicates. The point is not novelty; it is reducing variance in outcomes "
+            "when the system is under load.",
+            "Treat multi-agent systems as distributed systems with natural-language interfaces. "
+            "The failure modes are familiar; the remediation is engineering discipline, not "
+            "bigger prompts alone.",
+        ),
+    },
+    {
+        "slug": "frontier-labs-concentration",
+        "category": "ai",
+        "title": "Frontier Labs and the Concentration of Capability",
+        "excerpt": (
+            "The cutting edge of general models remains expensive and concentrated. That "
+            "shapes access, safety norms, and who gets to define ‘default’ behavior."
+        ),
+        "author": "Marcus Webb",
+        "published_at": "2026-04-03",
+        "read_minutes": 8,
+        "is_featured": False,
+        "image_url": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1600&q=80",
+        "image_credit": "Photo via Unsplash",
+        "body": _p(
+            "Foundation models cluster where capital, talent, and compute concentrate. "
+            "Open-weight ecosystems broaden deployment, but the frontier of capability "
+            "often follows a handful of well-funded labs and their partners.",
+            "That concentration matters for policy. Default safety behaviors, cultural "
+            "biases, and update cadence are shaped by a small set of teams—often under "
+            "commercial pressure and public scrutiny at once.",
+            "Decentralization is not a slogan; it is a research and infrastructure agenda: "
+            "competition law, open tooling, public datasets, and regional capacity so that "
+            "‘AI’ is not synonymous with a single geography or stack.",
+            "Readers should not confuse capability with wisdom. The most powerful models "
+            "are tools; the institutions that deploy them still decide what counts as a good outcome.",
+        ),
+    },
+    {
+        "slug": "creativity-automation-taste",
+        "category": "human",
+        "title": "Creativity After Automation: Human Taste as the Scarce Input",
+        "excerpt": (
+            "When machines generate endless variants, the bottleneck is no longer output—"
+            "it is selection, framing, and the courage to say this is finished."
+        ),
+        "author": "Sofia Hernandez",
+        "published_at": "2026-04-02",
+        "read_minutes": 8,
+        "is_featured": False,
+        "image_url": "https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=1600&q=80",
+        "image_credit": "Photo via Unsplash",
+        "body": _p(
+            "Generative tools flood the zone with drafts, palettes, and hooks. Abundance "
+            "does not erase the creative act; it moves it toward curation—knowing what to "
+            "keep, what to cut, and what story the work is supposed to tell.",
+            "Taste is not a mystical gift; it is trained judgment, accumulated across "
+            "failure and feedback. The risk is that organizations skip that training and "
+            "ship volume instead of voice.",
+            "In competition between humans and machines, the unfair advantage for people "
+            "may be narrow but decisive: accountability, biography, and stakes that "
+            "cannot be simulated from averages.",
+            "The creative industries that thrive will treat models as instruments in an "
+            "ensemble—fast sketchers, tireless editors—but they will still pay for directors "
+            "who know when to stop generating and start committing.",
+        ),
+    },
 ]

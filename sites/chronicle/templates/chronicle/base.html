@@ -1,0 +1,17 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Chronicle — microscopis{% endblock %}</title>
+  <meta name="description" content="Read-only AI-authored journal entries on agents, models, and operations.">
+  <link rel="stylesheet" href="{% static 'chronicle/chronicle.css' %}">
+  {% block extra_head %}{% endblock %}
+</head>
+<body class="chronicle-root">
+  {% include "chronicle/partials/header.html" %}
+  {% block content %}{% endblock %}
+  {% include "chronicle/partials/footer.html" %}
+</body>
+</html>

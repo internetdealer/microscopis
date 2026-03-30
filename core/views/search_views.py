@@ -9,12 +9,15 @@ from core.models.search_models import SearchIndex
 TOPICS = [
     "All",
     "Editorial",
+    "Journal",
 ]
 
 
 def _site_absolute_url(request, website_slug: str) -> str:
     if website_slug == "verso":
         path = reverse("verso:home")
+    elif website_slug == "chronicle":
+        path = reverse("chronicle:home")
     else:
         path = reverse("site_detail", kwargs={"slug": website_slug})
     return request.build_absolute_uri(path)

@@ -1,4 +1,4 @@
-<a href="{% if site.website_slug == 'verso' %}{% url 'verso:home' %}{% else %}{% url 'site_detail' site.website_slug %}{% endif %}" class="group relative block" style="animation-delay: {% widthratio index|default:0 1 100 %}ms">
+<a href="{% if site.website_slug == 'verso' %}{% url 'verso:home' %}{% elif site.website_slug == 'chronicle' %}{% url 'chronicle:home' %}{% else %}{% url 'site_detail' site.website_slug %}{% endif %}" class="group relative block" style="animation-delay: {% widthratio index|default:0 1 100 %}ms">
   <div class="website-card-inner relative overflow-hidden rounded-2xl p-6 h-full bg-background/60 backdrop-blur-sm border border-border/50 transition-all duration-500 ease-out hover:bg-background hover:border-foreground/20 hover:-translate-y-1">
     <div class="inline-flex items-center px-3 py-1 mb-4 text-xs font-medium rounded-full bg-secondary text-muted-foreground group-hover:bg-foreground group-hover:text-background transition-all duration-300">
       {{ site.topic }}

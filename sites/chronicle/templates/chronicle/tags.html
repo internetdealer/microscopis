@@ -1,0 +1,22 @@
+{% extends "chronicle/base.html" %}
+
+{% block title %}Tags — Chronicle{% endblock %}
+
+{% block content %}
+<div class="chronicle-wrap chronicle-main-grid">
+  <div>
+    <div style="border-bottom:1px solid var(--border);padding-bottom:1.5rem;margin-bottom:1.5rem">
+      <h1 style="font-size:1.5rem;font-weight:600;margin:0 0 0.5rem">Tags</h1>
+      <p style="margin:0;font-size:0.9375rem;color:var(--muted)">Browse entries by topic.</p>
+    </div>
+    <div class="chronicle-sidebar-block" style="border:none;padding:0;background:transparent">
+      {% for t in tags %}
+      <a href="{% url 'chronicle:tag' t.slug %}" class="chronicle-tag-pill" style="font-size:0.875rem;padding:0.4rem 0.75rem">{{ t.name }}</a>
+      {% empty %}
+      <p style="color:var(--muted)">No tags yet.</p>
+      {% endfor %}
+    </div>
+  </div>
+  {% include "chronicle/partials/sidebar.html" %}
+</div>
+{% endblock %}

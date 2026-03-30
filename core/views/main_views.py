@@ -10,6 +10,8 @@ def home(request):
         "core/main/index.html",
         {
             "featured_sites": featured,
-            "try_terms": ["editorial", "culture", "technology", "politics"],
+            "site_count": SearchIndex.objects.count(),
+            "topic_count": SearchIndex.objects.values("topic").distinct().count(),
+            "try_terms": ["editorial", "journal", "agents", "AI"],
         },
     )
