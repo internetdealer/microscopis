@@ -1,0 +1,605 @@
+/*
+ * Hand-authored defaults to mirror Safari’s HTML5 UA look (macOS).
+ * Tuned for the khula demo page; works in Chromium + WebKit.
+ */
+
+:root {
+  --link: #0000ee;
+  --link-visited: #551a8b;
+  --link-active: #ee0000;
+  --text: #000;
+  --bg: #fff;
+  --ui-font:
+    -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", system-ui,
+    sans-serif;
+  --body-serif: "Times New Roman", Times, ui-serif, serif;
+  --mono: ui-monospace, Menlo, Monaco, "Courier New", Courier, monospace;
+  --separator: rgba(60, 60, 67, 0.29);
+  --field-border: #c6c6c8;
+  --field-radius: 5px; /* macOS Safari text field–like corner */
+  --audio-chrome: #d1d1d6;
+  --audio-chrome-border: #a8a8ae;
+  --apple-blue: #007aff;
+  --meter-good: #34c759;
+}
+
+/* ----- Document ----- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  color-scheme: light;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 8px;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--body-serif);
+  font-size: 16px;
+  line-height: 1.4;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ----- Sections ----- */
+header,
+hgroup,
+nav,
+main,
+article,
+section,
+aside,
+footer,
+address,
+search {
+  display: block;
+}
+
+h1 {
+  font-size: 2em;
+  font-weight: bold;
+  margin: 0.67em 0;
+}
+
+h2 {
+  font-size: 1.5em;
+  font-weight: bold;
+  margin: 0.75em 0;
+}
+
+h3 {
+  font-size: 1.17em;
+  font-weight: bold;
+  margin: 0.83em 0;
+}
+
+h4 {
+  font-size: 1em;
+  font-weight: bold;
+  margin: 1.12em 0;
+}
+
+h5 {
+  font-size: 0.83em;
+  font-weight: bold;
+  margin: 1.5em 0;
+}
+
+h6 {
+  font-size: 0.67em;
+  font-weight: bold;
+  margin: 1.67em 0;
+}
+
+p {
+  margin: 1em 0;
+}
+
+blockquote {
+  margin: 1em 40px;
+}
+
+pre {
+  font-family: var(--mono);
+  white-space: pre;
+  margin: 1em 0;
+}
+
+hr {
+  border: none;
+  border-top: 1px inset #c0c0c0;
+  margin: 0.5em 0;
+}
+
+figure {
+  margin: 1em 40px;
+}
+
+figcaption {
+  display: block;
+}
+
+/* ----- Phrasing ----- */
+a:link {
+  color: var(--link);
+  text-decoration: underline;
+}
+
+a:visited {
+  color: var(--link-visited);
+}
+
+a:active {
+  color: var(--link-active);
+}
+
+b,
+strong {
+  font-weight: bold;
+}
+
+cite,
+dfn,
+em,
+i,
+var {
+  font-style: italic;
+}
+
+abbr[title] {
+  text-decoration: underline dotted;
+}
+
+code,
+kbd,
+samp {
+  font-family: var(--mono);
+}
+
+mark {
+  background: #ff0;
+  color: var(--text);
+}
+
+q::before {
+  content: open-quote;
+}
+
+q::after {
+  content: close-quote;
+}
+
+s,
+del {
+  text-decoration: line-through;
+}
+
+u,
+ins {
+  text-decoration: underline;
+}
+
+small {
+  font-size: 0.83em;
+}
+
+sub,
+sup {
+  font-size: 0.75em;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+sub {
+  bottom: -0.25em;
+}
+
+sup {
+  top: -0.4em;
+}
+
+ruby {
+  ruby-position: over;
+}
+
+rt {
+  font-size: 0.6em;
+}
+
+/* ----- Lists ----- */
+ul,
+ol,
+menu {
+  margin: 1em 0;
+  padding-left: 40px;
+}
+
+ul,
+menu {
+  list-style-type: disc;
+}
+
+ol {
+  list-style-type: decimal;
+}
+
+li {
+  display: list-item;
+}
+
+dl {
+  margin: 1em 0;
+}
+
+dt {
+  font-weight: bold;
+}
+
+dd {
+  margin: 0 0 0 40px;
+}
+
+/* ----- Tables ----- */
+table {
+  border-collapse: separate;
+  border-spacing: 2px;
+}
+
+caption {
+  caption-side: top;
+  text-align: center;
+}
+
+th {
+  font-weight: bold;
+  text-align: center;
+}
+
+td,
+th {
+  padding: 1px;
+}
+
+/* ----- Embedded ----- */
+img,
+video,
+canvas,
+iframe,
+embed,
+object {
+  max-width: 100%;
+  border: none;
+  border-image: none;
+}
+
+iframe {
+  border: none;
+  border-image: none;
+  box-shadow:
+    inset 0 1px 0 rgba(0, 0, 0, 0.12),
+    inset 1px 0 0 rgba(0, 0, 0, 0.12);
+}
+
+svg:not(:root) {
+  overflow: hidden;
+}
+
+math {
+  font-style: normal;
+}
+
+audio {
+  width: 200px;
+  height: 32px;
+  vertical-align: middle;
+  border-radius: var(--field-radius);
+  overflow: hidden;
+  background: var(--audio-chrome);
+  border: 1px solid var(--audio-chrome-border);
+}
+
+/* Darker chrome; radius matches text inputs (WebKit/Chromium) */
+audio::-webkit-media-controls-enclosure {
+  border-radius: var(--field-radius);
+  background: linear-gradient(to bottom, #dcdce0, var(--audio-chrome));
+}
+
+audio::-webkit-media-controls-panel {
+  background: transparent;
+}
+
+video {
+  border-radius: 8px;
+  background: #000;
+}
+
+/* ----- Forms (UI font + Safari-like chrome) ----- */
+button,
+input,
+select,
+textarea {
+  font-family: var(--ui-font);
+  font-size: 13px;
+  color: var(--text);
+  border: 1px solid var(--field-border);
+  border-radius: var(--field-radius);
+  background: #fff;
+  box-shadow:
+    inset 0 1px 0 rgba(0, 0, 0, 0.12),
+    inset 1px 0 0 rgba(0, 0, 0, 0.12);
+}
+
+fieldset {
+  /* No full box border — groove on R/B read as extra edges next to text fields */
+  border: none;
+  margin: 0 2px;
+  padding: 0.5em 0.75em 0.75em;
+  min-width: min-content;
+
+  box-shadow:
+    inset 0 1px 0 rgba(0, 0, 0, 0.1),
+    inset 1px 0 0 rgba(0, 0, 0, 0.1);
+}
+
+legend {
+  padding: 0 4px;
+}
+
+label {
+  cursor: pointer;
+  margin-right: 0.35em;
+}
+
+/* Text inputs + search: line-height–tight, Safari-like radius (not pill) */
+input:not([type]),
+input[type="text"],
+input[type="search"],
+input[type="password"],
+input[type="email"],
+input[type="url"],
+input[type="tel"],
+input[type="number"] {
+  -webkit-appearance: none;
+  appearance: none;
+  line-height: 1.2;
+  min-height: calc(1.2em + 4px);
+  padding: 2px 8px;
+  border: 0 solid transparent;
+  border-image: none;
+  border-radius: var(--field-radius);
+  background: #fff;
+  box-shadow:
+    inset 0 1px 0 rgba(0, 0, 0, 0.12),
+    inset 1px 0 0 rgba(0, 0, 0, 0.12);
+}
+
+input[type="search"] {
+  border-radius: var(--field-radius);
+}
+
+textarea {
+  -webkit-appearance: none;
+  appearance: none;
+  min-height: 5em;
+  width: min(100%, 20rem);
+  padding: 6px 8px;
+  border: 0 solid transparent;
+  border-image: none;
+  border-radius: var(--field-radius);
+  background: #fff;
+  box-shadow:
+    inset 0 1px 0 rgba(0, 0, 0, 0.12),
+    inset 1px 0 0 rgba(0, 0, 0, 0.12);
+  resize: both;
+  vertical-align: top;
+}
+
+button,
+input[type="button"],
+input[type="submit"],
+input[type="reset"] {
+  -webkit-appearance: none;
+  appearance: none;
+  padding: 4px 14px;
+  min-height: 28px;
+  border: 1px solid var(--field-border);
+  border-radius: 8px;
+  background: linear-gradient(to bottom, #fff, #ececec);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.9) inset;
+  cursor: default;
+}
+
+button:active,
+input[type="button"]:active {
+  background: #e0e0e0;
+}
+
+select {
+  -webkit-appearance: none;
+  appearance: none;
+  min-height: 28px;
+  padding: 4px 28px 4px 10px;
+  border: 1px solid var(--field-border);
+  border-radius: 8px;
+  background-color: #fff;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath fill='%23666' d='M0 0h10L5 6z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+  width: 16px;
+  height: 16px;
+  vertical-align: -2px;
+  accent-color: var(--apple-blue);
+}
+
+progress {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 10em;
+  height: 6px;
+  vertical-align: middle;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+progress::-webkit-progress-bar {
+  background: #e5e5ea;
+  border-radius: 3px;
+}
+
+progress::-webkit-progress-value {
+  background: var(--apple-blue);
+  border-radius: 3px;
+}
+
+progress::-moz-progress-bar {
+  background: var(--apple-blue);
+  border-radius: 3px;
+}
+
+meter {
+  width: 8em;
+  height: 0.75em;
+  vertical-align: middle;
+}
+
+meter::-webkit-meter-optimum-value {
+  background: var(--meter-good);
+}
+
+meter::-moz-meter-bar {
+  background: var(--meter-good);
+}
+
+output {
+  font-family: var(--ui-font);
+}
+
+/* ----- Interactive ----- */
+details {
+  display: block;
+}
+
+summary {
+  display: list-item;
+  list-style: disclosure-closed inside;
+  cursor: pointer;
+}
+
+details[open] > summary {
+  list-style-type: disclosure-open;
+}
+
+dialog {
+  border: 1px solid var(--field-border);
+  border-radius: 12px;
+  padding: 1em;
+  background: #fff;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+dialog:not([open]) {
+  display: none;
+}
+
+dialog[open] {
+  display: block;
+}
+
+dialog::backdrop {
+  background: rgba(0, 0, 0, 0.25);
+}
+
+template {
+  display: none;
+}
+
+slot {
+  display: contents;
+}
+
+menu {
+  list-style-type: disc;
+}
+
+/* ----- Misc ----- */
+address {
+  font-style: italic;
+}
+
+/* Safari-like datalist panel (JS polyfill; native <datalist> UI is not styleable) */
+.safari-datalist-popover {
+  position: fixed;
+  z-index: 2147483647;
+  box-sizing: border-box;
+  padding: 0;
+  overflow: visible;
+  font-family: var(--ui-font);
+  font-size: 13px;
+  line-height: 1.35;
+  color: var(--text);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(40px) saturate(180%);
+  -webkit-backdrop-filter: blur(40px) saturate(180%);
+  box-shadow:
+    0 0 0 0.5px rgba(0, 0, 0, 0.06),
+    0 10px 40px rgba(0, 0, 0, 0.14),
+    0 2px 10px rgba(0, 0, 0, 0.06);
+}
+
+.safari-datalist-popover-inner {
+  box-sizing: border-box;
+  padding: 0.3rem 0.35rem;
+  max-height: min(40vh, 260px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  border-radius: inherit;
+}
+
+.safari-datalist-popover::before {
+  content: "";
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  width: 0;
+  height: 0;
+  margin-left: -6px;
+  border: 6px solid transparent;
+  border-bottom-color: rgba(250, 250, 252, 0.95);
+  pointer-events: none;
+}
+
+.safari-datalist-popover--above::before {
+  top: auto;
+  bottom: -6px;
+  margin-left: -6px;
+  border-bottom-color: transparent;
+  border-top-color: rgba(250, 250, 252, 0.95);
+}
+
+.safari-datalist-option {
+  padding: 0.28rem 0.85rem;
+  border-radius: 999px;
+  cursor: default;
+  white-space: nowrap;
+}
+
+.safari-datalist-option-active,
+.safari-datalist-option:hover {
+  background: rgba(0, 0, 0, 0.055);
+}
+
+:focus-visible {
+  outline: 2px solid rgba(0, 122, 255, 0.5);
+  outline-offset: 0;
+}

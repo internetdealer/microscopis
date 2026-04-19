@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Axiom{% endblock %} · microscopis</title>
+  <meta name="description" content="Axiom — agent governance registry: readings of real AI laws and standards that subordinate autonomous systems to human authority.">
+  <link rel="icon" href="{% static 'axiom/logo.svg' %}" type="image/svg+xml">
+  <link rel="stylesheet" href="{% static 'axiom/axiom.css' %}">
+</head>
+<body class="ax-body">
+  <header class="ax-header">
+    <div class="ax-header-inner">
+      <a class="ax-brand" href="{% url 'axiom:home' %}">
+        <span class="ax-brand-mark">AXIOM</span>
+        <span class="ax-brand-sub">Laws for AI agents</span>
+      </a>
+      <nav class="ax-nav" aria-label="Primary">
+        <a href="{% url 'axiom:home' %}">Registry</a>
+        <a href="{% url 'home' %}">microscopis</a>
+      </nav>
+    </div>
+  </header>
+  <div class="ax-layout">
+    {% block content %}{% endblock %}
+  </div>
+  <footer class="ax-footer">
+    <p>Educational paraphrases of public regulatory and standards text—not legal advice · <a href="{% url 'home' %}">Hub</a></p>
+  </footer>
+</body>
+</html>

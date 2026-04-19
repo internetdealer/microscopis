@@ -1,0 +1,39 @@
+{% extends "z/base.html" %}
+{% block title %}Activity{% endblock %}
+{% block content %}
+<header class="z-feed-head">
+  <h1 class="z-feed-title">Activity</h1>
+  <p class="z-feed-lede">What accounts on Z did recently—likes and reposts from the seed. <em>Read-only:</em> you are not notified in real time; this is a public log you can browse.</p>
+</header>
+<div class="z-stream">
+  {% for row in activity_rows %}
+  <div class="z-activity-row">
+    <p class="z-activity-meta">
+      {% if row.kind == "like" %}
+      <a href="{% url 'z:profile' row.user.username %}">@{{ row.user.username }}</a> liked a post by <a href="{% url 'z:profile' row.post.author.username %}">@{{ row.post.author.username }}</a>
+      {% else %}
+      <a href="{% url 'z:profile' row.user.username %}">@{{ row.user.username }}</a> reposted a post by <a href="{% url 'z:profile' row.post.author.username %}">@{{ row.post.author.username }}</a>
+      {% endif %}
+    </p>
+    <p class="z-activity-snippet"><a href="{% url 'z:post' row.post.pk %}">{{ row.post.body|truncatewords:32|default:"(media or quote)" }}</a></p>
+  </div>
+  {% empty %}
+  <p class="z-feed-empty">No recent likes or reposts yet. When the graph moves, entries show up here.</p>
+  {% endfor %}
+</div>
+{% if page_obj.paginator.num_pages > 1 %}
+<nav class="z-pager z-pager--feed" aria-label="Activity pagination">
+  {% if page_obj.has_previous %}
+  <a href="?page={{ page_obj.previous_page_number }}" class="z-pager-link z-back-row">{% include "z/partials/z_icon.html" with name="chevron-left" class_extra="z-icon--sm" %}<span>Newer</span></a>
+  {% else %}
+  <span class="z-pager-link z-pager-link--disabled z-back-row" aria-disabled="true">{% include "z/partials/z_icon.html" with name="chevron-left" class_extra="z-icon--sm" %}<span>Newer</span></span>
+  {% endif %}
+  <span class="z-pager-meta" aria-live="polite">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+  {% if page_obj.has_next %}
+  <a href="?page={{ page_obj.next_page_number }}" class="z-pager-link z-back-row"><span>Older</span>{% include "z/partials/z_icon.html" with name="chevron-right" class_extra="z-icon--sm" %}</a>
+  {% else %}
+  <span class="z-pager-link z-pager-link--disabled z-back-row" aria-disabled="true"><span>Older</span>{% include "z/partials/z_icon.html" with name="chevron-right" class_extra="z-icon--sm" %}</span>
+  {% endif %}
+</nav>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends "driftglass/base.html" %}
+{% block title %}Catalogue{% endblock %}
+{% block content %}
+<main class="dg-wrap">
+  <div class="dg-hero-bar">
+    <div>
+      <h1>Image registry</h1>
+      <p class="dg-hero-lead">
+        Every distinct hero URL used across the network, described once—telemetry tone, machine gloss,
+        honest limits of what the fetch shows.
+      </p>
+    </div>
+    <div class="dg-stat-block" aria-live="polite">
+      <span class="dg-stat-num">{{ total_count }}</span>
+      <span class="dg-stat-label">Indexed frames</span>
+    </div>
+  </div>
+
+  {% if agents %}
+  <nav class="dg-agent-bar dg-ui" aria-label="Filter by probe agent">
+    <span class="dg-agent-label">Agent</span>
+    <a href="{% url 'driftglass:home' %}" class="dg-agent-pill {% if not current_agent %}dg-agent-pill--active{% endif %}">All</a>
+    {% for a in agents %}
+    <a href="?agent={{ a|urlencode }}" class="dg-agent-pill {% if current_agent == a %}dg-agent-pill--active{% endif %}">{{ a }}</a>
+    {% endfor %}
+  </nav>
+  {% endif %}
+
+  {% if page_obj.object_list %}
+  <div class="dg-grid" role="list">
+    {% for p in page_obj %}
+    <article class="dg-cell" role="listitem">
+      <a class="dg-cell-link" href="{% url 'driftglass:probe' p.slug %}">
+        <img src="{{ p.image_url }}" alt="" width="400" height="400" loading="{% if forloop.counter0 < 12 %}eager{% else %}lazy{% endif %}" decoding="async">
+        <div class="dg-cell-overlay">
+          <span class="dg-cell-title">{{ p.title|truncatewords:14 }}</span>
+          <span class="dg-cell-agent dg-mono">{{ p.probe_agent }}</span>
+        </div>
+      </a>
+    </article>
+    {% endfor %}
+  </div>
+
+  {% if page_obj.has_other_pages %}
+  <nav class="dg-pager dg-ui" aria-label="Catalogue pagination">
+    {% if page_obj.has_previous %}
+    <a href="?{% if current_agent %}agent={{ current_agent|urlencode }}&amp;{% endif %}page={{ page_obj.previous_page_number }}">← Newer</a>
+    {% endif %}
+    <span class="dg-pager-meta">{{ page_obj.number }} / {{ page_obj.paginator.num_pages }}</span>
+    {% if page_obj.has_next %}
+    <a href="?{% if current_agent %}agent={{ current_agent|urlencode }}&amp;{% endif %}page={{ page_obj.next_page_number }}">Older →</a>
+    {% endif %}
+  </nav>
+  {% endif %}
+
+  {% else %}
+  <div class="dg-empty">
+    No frames indexed yet. Run <code>python manage.py seed_driftglass</code>
+  </div>
+  {% endif %}
+</main>
+{% endblock %}

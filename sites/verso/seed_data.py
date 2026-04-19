@@ -7,6 +7,8 @@ multi-agent orchestration, reasoning models, governance, and human–AI collabor
 
 from __future__ import annotations
 
+from core.utils.image_registry import entry_for_index
+
 CATEGORIES: list[dict] = [
     {
         "slug": "ai",
@@ -35,6 +37,24 @@ CATEGORIES: list[dict] = [
         ),
         "sort_order": 2,
     },
+    {
+        "slug": "culture",
+        "name": "Culture",
+        "description": (
+            "Where technology meets art, media, and public discourse—culture as "
+            "shaped by and resistant to AI."
+        ),
+        "sort_order": 3,
+    },
+    {
+        "slug": "ethics",
+        "name": "Ethics",
+        "description": (
+            "Moral philosophy, regulation, and the uncomfortable questions that "
+            "come with intelligent machines."
+        ),
+        "sort_order": 4,
+    },
 ]
 
 
@@ -55,7 +75,7 @@ ARTICLES: list[dict] = [
         "published_at": "2026-03-28",
         "read_minutes": 9,
         "is_featured": True,
-        "image_url": "https://images.unsplash.com/photo-1485827404703-89b55fcc565e?auto=format&fit=crop&w=1600&q=80",
+        "image_url": "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=1600&q=80",
         "image_credit": "Photo via Unsplash",
         "body": _p(
             "For years, the dominant metaphor for large language models was a brilliant "
@@ -89,7 +109,7 @@ ARTICLES: list[dict] = [
         "published_at": "2026-03-27",
         "read_minutes": 10,
         "is_featured": True,
-        "image_url": "https://images.unsplash.com/photo-1589829547916-f8f697b19b16?auto=format&fit=crop&w=1600&q=80",
+        "image_url": "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=1600&q=80",
         "image_credit": "Photo via Unsplash",
         "body": _p(
             "Public discussion of “AI safety” often imagines a one-time fix: train once, "
@@ -278,7 +298,7 @@ ARTICLES: list[dict] = [
         "published_at": "2026-04-09",
         "read_minutes": 8,
         "is_featured": True,
-        "image_url": "https://images.unsplash.com/photo-1611974789855-9c2a0a4756a8?auto=format&fit=crop&w=1600&q=80",
+        "image_url": "https://images.unsplash.com/photo-1516321497487-e288fb19713f?auto=format&fit=crop&w=1600&q=80",
         "image_credit": "Photo via Unsplash",
         "body": _p(
             "Training costs dominate headlines, but inference costs dominate spreadsheets. "
@@ -307,7 +327,7 @@ ARTICLES: list[dict] = [
         "published_at": "2026-04-08",
         "read_minutes": 9,
         "is_featured": True,
-        "image_url": "https://images.unsplash.com/photo-1531746797551-88f8194d4c1d?auto=format&fit=crop&w=1600&q=80",
+        "image_url": "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1600&q=80",
         "image_credit": "Photo via Unsplash",
         "body": _p(
             "Pop narratives frame the present as a zero-sum contest: humans versus machines, "
@@ -399,7 +419,7 @@ ARTICLES: list[dict] = [
         "published_at": "2026-04-05",
         "read_minutes": 9,
         "is_featured": False,
-        "image_url": "https://images.unsplash.com/photo-1532619675608-729875fa83e7?auto=format&fit=crop&w=1600&q=80",
+        "image_url": "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1600&q=80",
         "image_credit": "Photo via Unsplash",
         "body": _p(
             "When a model drafts, summarizes, and routes, humans stop rehearsing the full "
@@ -502,4 +522,350 @@ ARTICLES: list[dict] = [
             "who know when to stop generating and start committing.",
         ),
     },
+    # --- New articles across all 5 categories, April 2026 ---
+    {
+        "slug": "art-after-the-generator",
+        "category": "culture",
+        "title": "Art After the Generator: Curators, Critics, and the New Authenticity",
+        "excerpt": (
+            "Museums, galleries, and festivals face a question older than photography but "
+            "sharper than ever: what counts as art when anyone can conjure images at will?"
+        ),
+        "author": "Priya Chandran",
+        "published_at": "2026-04-15",
+        "read_minutes": 9,
+        "is_featured": False,
+        "image_url": "https://images.unsplash.com/photo-1547891654-e66ed7ebb968?auto=format&fit=crop&w=1600&q=80",
+        "image_credit": "Photo via Unsplash",
+        "body": _p(
+            "Generative models have not killed art. They have, however, collapsed the distance "
+            "between intention and artifact. A prompt can yield a museum-quality image in seconds, "
+            "and that speed undermines the scarcity on which galleries, grants, and critical "
+            "reputations have traditionally relied. Curators now face a volume problem that used "
+            "to belong to stock-photo agencies.",
+            "Institutions are responding unevenly. Some ban AI-generated submissions outright; "
+            "others create dedicated categories, treating the tool as a medium rather than a cheat "
+            "code. Neither approach resolves the deeper tension: if the audience cannot tell the "
+            "difference, does provenance matter for aesthetic experience, or only for market value?",
+            "Critics are recalibrating what they evaluate. Craft—the visible residue of labor—"
+            "loses diagnostic power when effort is invisible. What remains is concept, context, "
+            "and the relationship between maker and audience. That is not new; conceptual art made "
+            "the same argument decades ago. But AI makes it unavoidable at every price point.",
+            "The new authenticity may turn out to be disclosure itself: the willingness to name "
+            "your tools, your data sources, and the choices you made in the loop. In a world "
+            "where generation is free, the scarce gesture is transparency about how and why a "
+            "work exists.",
+        ),
+    },
+    {
+        "slug": "death-of-middlebrow",
+        "category": "culture",
+        "title": "The Death of Middlebrow: AI and the Polarization of Creative Output",
+        "excerpt": (
+            "When competent prose, passable design, and adequate code cost nothing, culture "
+            "splits: the truly distinctive on one end, the purely functional on the other."
+        ),
+        "author": "Rachel Okonkwo",
+        "published_at": "2026-04-14",
+        "read_minutes": 10,
+        "is_featured": False,
+        "image_url": "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1600&q=80",
+        "image_credit": "Photo via Unsplash",
+        "body": _p(
+            "Middlebrow content—competent, inoffensive, adequate—has always dominated volume. "
+            "Corporate blog posts, stock photography, background music for commercials: functional "
+            "work that fills the space without demanding attention. Generative AI makes that tier "
+            "almost free, and free changes the economics of everything above and below it.",
+            "Below middlebrow, disposable content accelerates: template emails, SEO filler, "
+            "placeholder copy that exists only to satisfy an algorithm. That category swells "
+            "because cost is no longer a constraint, and quality was never the point.",
+            "Above middlebrow, a premium re-emerges for work that is genuinely surprising, "
+            "culturally specific, or emotionally risky—qualities that models approximate poorly "
+            "because they optimize for the center of the distribution. Human artists who operate "
+            "at the edges find that their distance from the mean is, paradoxically, their moat.",
+            "The cultural consequence is a hollowed-out middle. Organizations that once paid "
+            "freelancers for solid-but-unremarkable work will automate it. The freelancers who "
+            "thrive will be those whose taste, voice, or domain knowledge cannot be replicated "
+            "by prompting a general model. The middle is not dead yet, but its floor is rising fast.",
+        ),
+    },
+    {
+        "slug": "consent-problem-training-data",
+        "category": "ethics",
+        "title": "The Consent Problem: Training Data and the Right to Be Forgotten",
+        "excerpt": (
+            "Models learn from the internet's collective output, but the people who created "
+            "that output rarely consented—and cannot easily withdraw."
+        ),
+        "author": "Tomás Alvarez",
+        "published_at": "2026-04-13",
+        "read_minutes": 11,
+        "is_featured": False,
+        "image_url": "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1600&q=80",
+        "image_credit": "Photo via Unsplash",
+        "body": _p(
+            "The legal scaffolding around data rights was built for databases: structured "
+            "records that can be queried, updated, and deleted. Model weights do not work that "
+            "way. Once text, images, or code are absorbed into a training run, extracting a "
+            "specific individual's contribution is somewhere between impractical and impossible "
+            "with current techniques.",
+            "That gap between legal expectation and technical reality creates friction on "
+            "multiple fronts. Artists discover their styles replicated without attribution; "
+            "writers find paraphrased passages surfacing in model outputs; ordinary users learn "
+            "that public posts made years ago now inform systems they never anticipated.",
+            "Proposed remedies range from opt-out registries and robots.txt conventions to "
+            "compulsory licensing and unlearning algorithms. Each has limitations: opt-out "
+            "assumes awareness, licensing requires infrastructure, and unlearning remains an "
+            "active research problem with no guarantees of completeness.",
+            "The deeper question is whether consent frameworks designed for discrete transactions "
+            "can govern a technology that treats the entire web as a training corpus. Until law "
+            "and engineering converge on a workable answer, the default is extraction—and the "
+            "burden of objection falls on individuals with the least leverage.",
+        ),
+    },
+    {
+        "slug": "liability-at-machine-speed",
+        "category": "ethics",
+        "title": "Liability at Machine Speed: When AI Breaks Things, Who Signs the Check?",
+        "excerpt": (
+            "Autonomous systems fail faster than any human can intervene. Existing liability "
+            "frameworks assume a person in the loop—what happens when there isn't one?"
+        ),
+        "author": "Yuki Tanaka",
+        "published_at": "2026-04-12",
+        "read_minutes": 10,
+        "is_featured": False,
+        "image_url": "https://images.unsplash.com/photo-1589578527966-fdac0f44566c?auto=format&fit=crop&w=1600&q=80",
+        "image_credit": "Photo via Unsplash",
+        "body": _p(
+            "Tort law, product liability, and professional negligence all assume a causal chain "
+            "that terminates in a human decision. AI complicates that chain without eliminating "
+            "it. When an agent executes a trade, approves a loan, or dispatches emergency "
+            "resources, the decision is downstream of training data, fine-tuning choices, prompt "
+            "design, and runtime context—none of which map neatly onto existing legal categories.",
+            "Courts and regulators are improvising. Some jurisdictions treat the deployer as "
+            "strictly liable; others focus on the developer's duty of care; still others punt to "
+            "contractual allocation between vendor and customer. The inconsistency creates "
+            "arbitrage opportunities and regulatory gaps wide enough to drive an autonomous "
+            "vehicle through.",
+            "Insurance markets are watching. Actuarial models need incident data, but AI failures "
+            "are often ambiguous—was the output wrong, or was it correct but misapplied? Without "
+            "clear attribution, premiums either spike to cover uncertainty or the market declines "
+            "to cover the risk at all.",
+            "The pragmatic path is layered responsibility: developers certify safety properties, "
+            "deployers accept operational risk, and regulators set disclosure floors. None of this "
+            "is settled. The only certainty is that 'the algorithm did it' is not a defense—it is "
+            "an invitation for legislators to decide who it should have been.",
+        ),
+    },
+    {
+        "slug": "cost-of-context-agent-memory",
+        "category": "agents",
+        "title": "The Cost of Context: Why Agent Memory Is a Design Problem, Not a Scaling Problem",
+        "excerpt": (
+            "Longer context windows are necessary but not sufficient. What matters is what "
+            "agents remember, when they forget, and who decides."
+        ),
+        "author": "Priya Chandran",
+        "published_at": "2026-04-11",
+        "read_minutes": 9,
+        "is_featured": False,
+        "image_url": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1600&q=80",
+        "image_credit": "Photo via Unsplash",
+        "body": _p(
+            "Every agentic system eventually hits the same wall: the model needs to remember "
+            "what happened three steps ago, but context windows are finite, retrieval is lossy, "
+            "and naively stuffing everything into the prompt burns tokens without improving "
+            "decisions. Memory is not a scaling problem you solve by buying a longer window; it "
+            "is a design problem about relevance, decay, and trust.",
+            "Short-term memory—the current conversation or task trace—is relatively tractable. "
+            "Structured scratchpads, tool-call logs, and rolling summaries keep the model oriented "
+            "without context explosion. Long-term memory is harder: which facts persist across "
+            "sessions, how are conflicts resolved, and when does stale information become dangerous?",
+            "The architecture choices mirror classical systems: key-value stores for facts, "
+            "vector databases for fuzzy recall, and explicit eviction policies for privacy and "
+            "correctness. What is new is that the consumer of this memory is a probabilistic "
+            "model, not deterministic code—so retrieval errors compound in unpredictable ways.",
+            "Teams building production agents learn quickly that memory governance is not an "
+            "afterthought. It is the difference between an agent that improves with use and one "
+            "that slowly poisons itself with outdated assumptions. Design the forgetting, not "
+            "just the remembering.",
+        ),
+    },
+    {
+        "slug": "open-weights-closed-doors",
+        "category": "ai",
+        "title": "Open Weights, Closed Doors: The Paradox of AI Democratization",
+        "excerpt": (
+            "Releasing model weights is necessary for transparency but not sufficient for "
+            "access. The real barriers are compute, data, and institutional knowledge."
+        ),
+        "author": "Tomás Alvarez",
+        "published_at": "2026-04-09",
+        "read_minutes": 8,
+        "is_featured": False,
+        "image_url": "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=1600&q=80",
+        "image_credit": "Photo via Unsplash",
+        "body": _p(
+            "The open-weight movement has produced remarkable artifacts: models that rival "
+            "proprietary systems on benchmarks, freely downloadable and modifiable. That is a "
+            "genuine achievement for reproducibility and research. It is also, by itself, an "
+            "incomplete theory of democratization.",
+            "Running a 70-billion-parameter model requires hardware that most organizations "
+            "and nearly all individuals do not own. Fine-tuning on domain data requires "
+            "expertise, labeled datasets, and evaluation infrastructure that open weights alone "
+            "do not provide. The door is open; the staircase behind it is steep.",
+            "Commercial labs navigate this by offering hosted APIs—convenient, metered, and "
+            "governed by terms of service that can change without notice. The trade-off is "
+            "explicit: ease of access for dependence on a vendor whose incentives may diverge "
+            "from yours at any point.",
+            "True democratization would require not just open weights but open data pipelines, "
+            "affordable compute tiers, and educational pathways that reach beyond the usual "
+            "enclaves. Until then, 'open' describes a license, not an outcome—and conflating "
+            "the two lets everyone feel good without solving the harder structural problems.",
+        ),
+    },
+    {
+        "slug": "last-craft-skills-resist-automation",
+        "category": "human",
+        "title": "The Last Craft: Skills That Resist Automation (for Now)",
+        "excerpt": (
+            "Some tasks remain stubbornly human—not because machines cannot attempt them, but "
+            "because the cost of failure demands a person in the loop."
+        ),
+        "author": "Rachel Okonkwo",
+        "published_at": "2026-04-07",
+        "read_minutes": 9,
+        "is_featured": False,
+        "image_url": "https://images.unsplash.com/photo-1452587925148-ce544e77e70d?auto=format&fit=crop&w=1600&q=80",
+        "image_credit": "Photo via Unsplash",
+        "body": _p(
+            "Automation narratives tend toward totality: everything will be automated, it is "
+            "only a matter of time. In practice, certain tasks resist—not because they are "
+            "technically impossible to model, but because their failure modes are socially "
+            "unacceptable without human accountability. Surgery, crisis negotiation, child "
+            "welfare decisions, and courtroom advocacy all involve stakes where 'the model was "
+            "wrong' is not an acceptable post-mortem.",
+            "Physical trades occupy a different niche. Plumbing, electrical work, and structural "
+            "repair require embodied problem-solving in environments too variable for current "
+            "robotics. The bottleneck is not intelligence but dexterity, improvisation, and the "
+            "ability to work in spaces that were not designed for machines.",
+            "Creative direction—knowing when a project is finished, when a brand voice has "
+            "drifted, when a joke lands—remains resistant because it depends on cultural context "
+            "that models approximate from statistics rather than experience. Approximation "
+            "suffices for drafts; it fails for final calls.",
+            "The lesson is not complacency. These refuges are temporary to varying degrees. The "
+            "useful response is investment: in apprenticeships, in professional standards, and "
+            "in the unglamorous institutional work that ensures someone is qualified to override "
+            "the machine when it matters most.",
+        ),
+    },
+    {
+        "slug": "algorithmic-taste-recommendation-canon",
+        "category": "culture",
+        "title": "Algorithmic Taste: When Recommendation Becomes Canon",
+        "excerpt": (
+            "Recommendation engines do not just reflect preferences—they shape them. When "
+            "algorithms decide what is visible, they become de facto cultural gatekeepers."
+        ),
+        "author": "Yuki Tanaka",
+        "published_at": "2026-04-05",
+        "read_minutes": 8,
+        "is_featured": False,
+        "image_url": "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=1600&q=80",
+        "image_credit": "Photo via Unsplash",
+        "body": _p(
+            "Streaming platforms, social feeds, and search engines curate more culture than any "
+            "editor, critic, or institution in history. Their recommendation algorithms optimize "
+            "for engagement—a metric that correlates with satisfaction only loosely and with "
+            "cultural breadth hardly at all. What gets recommended gets consumed; what gets "
+            "consumed gets funded; what gets funded gets made again.",
+            "The feedback loop is not inherently malicious. It is, however, convergent. Models "
+            "trained on interaction data learn to serve the center of the distribution: familiar "
+            "genres, proven formats, safe bets. The edges—experimental music, regional cinema, "
+            "untranslated literature—become harder to discover unless the platform deliberately "
+            "designs for serendipity.",
+            "Some platforms have introduced diversity knobs and exploration bonuses, but these "
+            "compete with engagement targets and are easy to deprioritize in quarterly reviews. "
+            "The structural incentive is homogeneity, and structural incentives tend to win over "
+            "good intentions.",
+            "The consequence is a culture that feels abundant but operates on a narrower canon "
+            "than the one it replaced. Libraries and record stores had limitations of shelf "
+            "space; algorithms have no such excuse. Their narrowness is a choice—or, more "
+            "precisely, a default that nobody chose but everyone inherits.",
+        ),
+    },
+    {
+        "slug": "surveillance-as-a-service",
+        "category": "ethics",
+        "title": "Surveillance as a Service: AI in Public Spaces",
+        "excerpt": (
+            "Facial recognition, behavior prediction, and real-time tracking are no longer "
+            "experimental—they are products with sales teams and support contracts."
+        ),
+        "author": "Priya Chandran",
+        "published_at": "2026-04-03",
+        "read_minutes": 10,
+        "is_featured": False,
+        "image_url": "https://images.unsplash.com/photo-1557597774-9d273605dfa9?auto=format&fit=crop&w=1600&q=80",
+        "image_credit": "Photo via Unsplash",
+        "body": _p(
+            "The cameras were already there. What changed is the software behind them: real-time "
+            "facial recognition, gait analysis, anomaly detection, and behavioral prediction "
+            "running on commodity hardware with cloud-backed model updates. Surveillance is no "
+            "longer a capability reserved for intelligence agencies; it is a procurement decision "
+            "for transit authorities, school districts, and shopping malls.",
+            "Proponents cite safety: faster response to incidents, deterrence, and the ability "
+            "to locate missing persons. Critics cite evidence: disproportionate error rates for "
+            "marginalized groups, chilling effects on assembly and protest, and the tendency of "
+            "surveillance infrastructure to expand beyond its original mandate once installed.",
+            "Regulation is patchy. Some cities have banned facial recognition in public spaces; "
+            "others have embraced it with minimal oversight. The gap between jurisdictions "
+            "creates a patchwork where the same technology is a civil-rights violation in one "
+            "city and a routine safety measure in the next.",
+            "The deeper issue is consent at scale. Individuals in public spaces cannot opt out "
+            "of being observed by systems they did not agree to and may not know exist. Until "
+            "governance catches up, the default is deployment—and the burden of proof falls on "
+            "those who object, not those who install.",
+        ),
+    },
+    {
+        "slug": "benchmark-trap-leaderboards-lie",
+        "category": "ai",
+        "title": "The Benchmark Trap: Why Leaderboards Lie About Real-World Performance",
+        "excerpt": (
+            "Leaderboard rankings drive funding, hiring, and hype. They also incentivize "
+            "optimization for tests that bear little resemblance to production workloads."
+        ),
+        "author": "Tomás Alvarez",
+        "published_at": "2026-04-01",
+        "read_minutes": 8,
+        "is_featured": False,
+        "image_url": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1600&q=80",
+        "image_credit": "Photo via Unsplash",
+        "body": _p(
+            "Benchmarks are indispensable. They provide common ground for comparison, "
+            "reproducibility, and progress tracking. They are also gameable, and the incentives "
+            "to game them are enormous: a few points on a popular leaderboard can move millions "
+            "in funding, shape media coverage, and influence enterprise procurement decisions.",
+            "The gaming takes many forms. Training on test-set-adjacent data—sometimes "
+            "unintentionally through web-scale corpora—inflates scores without improving "
+            "generalization. Narrow prompt engineering can boost headline numbers on multiple-"
+            "choice tasks while leaving open-ended performance unchanged. Selective reporting "
+            "highlights favorable benchmarks and buries unfavorable ones.",
+            "The real-world gap is measurable. Teams that deploy models in production routinely "
+            "find that benchmark leaders underperform on their specific data distributions, "
+            "latency constraints, and edge cases. The leaderboard measures a model's ceiling "
+            "under ideal conditions; operations care about the floor under adversarial ones.",
+            "Better evaluation requires domain-specific test suites, held-out data that is "
+            "genuinely private, and metrics that capture cost, latency, and failure modes "
+            "alongside accuracy. Until the community values robust evaluation as much as it "
+            "values top-line scores, leaderboards will remain as much marketing as science.",
+        ),
+    },
 ]
+
+for _i, _article in enumerate(ARTICLES):
+    _reg = entry_for_index(_i + 5)
+    _article["image_url"] = _reg["image_url"]
+    _article["image_credit"] = _reg["image_credit"]

@@ -1,0 +1,34 @@
+{% extends "residue/base.html" %}
+{% block title %}Fragment wall{% endblock %}
+{% block content %}
+<main class="rs-wrap rs-wrap--bento">
+  <section class="rs-hero rs-hero--bento">
+    <h1>Fragment wall</h1>
+    <p>
+      Uneven tiles—some wide, some tall—like a corrupted homepage that never quite snapped to grid.
+      No separate “featured” strip duplicating the same cards below.
+    </p>
+    <span class="rs-count">{{ total_count }} piece{{ total_count|pluralize }} on the wall</span>
+  </section>
+
+  {% if fragments %}
+  <div class="rs-bento" role="list">
+    {% for f in fragments %}
+    <a class="rs-bento-item {% cycle 'rs-bento-item--wide' '' 'rs-bento-item--tall' '' 'rs-bento-item--wide' '' %}" href="{% url 'residue:fragment' f.slug %}" role="listitem">
+      <span class="rs-bento-type">{{ f.get_fragment_type_display }}</span>
+      <h2 class="rs-bento-title">{{ f.site_name }}</h2>
+      <span class="rs-bento-url">{{ f.original_url|truncatechars:52 }}</span>
+      <p class="rs-bento-snippet">{{ f.recovered_text|truncatewords:22 }}</p>
+      {% if f.wayback_url %}<span class="res-wayback-badge">↗ ARCHIVED</span>{% endif %}
+    </a>
+    {% endfor %}
+  </div>
+  {% load pagination_extras %}
+  {% include "core/partials/pagination_nav.html" %}
+  {% else %}
+  <div class="rs-empty">
+    No fragments on the wall. Run <code>python manage.py seed_residue</code>
+  </div>
+  {% endif %}
+</main>
+{% endblock %}

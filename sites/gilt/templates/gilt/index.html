@@ -1,0 +1,57 @@
+{% extends "gilt/base.html" %}
+{% block title %}Ledger{% endblock %}
+{% block content %}
+<main class="gl-wrap">
+  <section class="gl-hero gl-hero--ledger" aria-labelledby="gl-hero-title">
+    <div class="gl-hero-ornament">—</div>
+    <h1 id="gl-hero-title">Leak register</h1>
+    <p class="gl-hero-lead">
+      One chronological ledger—no duplicate “featured” gallery. Each row is a recovered entry:
+      date, source, title. The archive reads like an estate inventory, not a blog.
+    </p>
+    <div class="gl-stat">
+      <span class="gl-stat-num">{{ total_count }}</span>
+      <span>entries on record</span>
+    </div>
+  </section>
+
+  {% if ledger_entries %}
+  <section class="gl-ledger-section" aria-labelledby="gl-ledger-title">
+    <h2 id="gl-ledger-title" class="gl-ledger-heading">Master ledger</h2>
+    <p class="gl-ledger-note">Newest intercepts first. Select a row to open the full folio.</p>
+    <div class="gl-ledger-scroll">
+      <table class="gl-ledger">
+        <thead>
+          <tr>
+            <th scope="col">Date</th>
+            <th scope="col">Source</th>
+            <th scope="col">Title</th>
+            <th scope="col">Mood</th>
+            <th scope="col" class="gl-ledger-col-go"></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for e in ledger_entries %}
+          <tr class="{% if e.is_featured %}gl-ledger-row--marked{% endif %}">
+            <td class="gl-ledger-date">{{ e.entry_date|date:"Y-m-d" }}</td>
+            <td class="gl-ledger-source">{{ e.billionaire_name }}</td>
+            <td class="gl-ledger-title">
+              <a href="{% url 'gilt:entry' e.slug %}">{{ e.title }}</a>
+            </td>
+            <td class="gl-ledger-mood">{% if e.mood_tag %}<span class="gl-mood">{{ e.mood_tag }}</span>{% else %}—{% endif %}</td>
+            <td class="gl-ledger-go"><a href="{% url 'gilt:entry' e.slug %}" aria-label="Open entry">→</a></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% load pagination_extras %}
+    {% include "core/partials/pagination_nav.html" %}
+  </section>
+  {% else %}
+  <div class="gl-empty">
+    No entries in the ledger. Run <code>python manage.py seed_gilt</code>
+  </div>
+  {% endif %}
+</main>
+{% endblock %}

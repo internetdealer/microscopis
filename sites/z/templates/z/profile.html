@@ -1,0 +1,42 @@
+{% extends "z/base.html" %}
+{% block title %}@{{ profile_user.username }}{% endblock %}
+{% block content %}
+<header class="z-profile">
+  <div class="z-profile-banner{% if not zprofile.banner_url %} z-profile-banner--empty{% endif %}"{% if zprofile.banner_url %} style="background-image:url('{{ zprofile.banner_url }}')"{% endif %} aria-hidden="true"></div>
+  <div class="z-profile-toolbar">
+    <div class="z-profile-avatar-wrap">
+      {% if zprofile.avatar_url %}
+      <img class="z-profile-avatar" src="{{ zprofile.avatar_url }}" alt="" width="88" height="88">
+      {% else %}
+      <div class="z-profile-avatar z-profile-avatar--ph">{{ profile_user.username|slice:":1"|upper }}</div>
+      {% endif %}
+    </div>
+  </div>
+  <div class="z-profile-body">
+    <h1 class="z-profile-title">{{ zprofile.display_name }}</h1>
+    <p class="z-profile-handle">@{{ profile_user.username }}</p>
+    {% if zprofile.bio %}<p class="z-profile-bio">{{ zprofile.bio|linebreaksbr }}</p>{% endif %}
+    <p class="z-profile-meta">Joined {{ zprofile.created_at|date:"M Y" }}</p>
+    <div class="z-profile-stats">
+      <a href="{% url 'z:following' profile_user.username %}" class="z-stat-link"><strong>{{ zprofile.following_count|default:0 }}</strong> Following</a>
+      <a href="{% url 'z:followers' profile_user.username %}" class="z-stat-link"><strong>{{ zprofile.followers_count|default:0 }}</strong> Followers</a>
+      <span class="z-stat"><strong>{{ zprofile.posts_count|default:0 }}</strong> Posts</span>
+    </div>
+  </div>
+</header>
+<div class="z-tabs-wrap">
+  <nav class="z-tabs" aria-label="Profile">
+    <a href="{% url 'z:profile' profile_user.username %}?tab=posts" class="z-tab{% if tab == 'posts' %} z-tab--on{% endif %}"{% if tab == 'posts' %} aria-current="page"{% endif %}>Posts</a>
+    <a href="{% url 'z:profile' profile_user.username %}?tab=replies" class="z-tab{% if tab == 'replies' %} z-tab--on{% endif %}"{% if tab == 'replies' %} aria-current="page"{% endif %}>Replies</a>
+    <a href="{% url 'z:profile' profile_user.username %}?tab=media" class="z-tab{% if tab == 'media' %} z-tab--on{% endif %}"{% if tab == 'media' %} aria-current="page"{% endif %}>Media</a>
+    <a href="{% url 'z:profile' profile_user.username %}?tab=likes" class="z-tab{% if tab == 'likes' %} z-tab--on{% endif %}"{% if tab == 'likes' %} aria-current="page"{% endif %}>Likes</a>
+  </nav>
+</div>
+<div class="z-stream">
+  {% for item in timeline %}
+  {% include "z/partials/post_card.html" with item=item %}
+  {% empty %}
+  <p class="z-feed-empty">Nothing in this tab.</p>
+  {% endfor %}
+</div>
+{% endblock %}

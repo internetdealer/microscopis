@@ -26,7 +26,7 @@
 
   <section>
     <div class="verso-border-b verso-container" style="padding-top:1rem;padding-bottom:1rem">
-      <span class="verso-mono" style="font-size:10px;letter-spacing:0.2em;text-transform:uppercase;opacity:0.5">{{ articles|length }} article{{ articles|length|pluralize }}</span>
+      <span class="verso-mono" style="font-size:10px;letter-spacing:0.2em;text-transform:uppercase;opacity:0.5">{{ page_obj.paginator.count }} article{{ page_obj.paginator.count|pluralize }}</span>
     </div>
     {% for article in articles %}
     <a href="{% url 'verso:article' article.id %}" class="verso-border-b" style="display:block;padding:1.5rem 1rem;text-decoration:none;color:inherit">
@@ -46,6 +46,8 @@
     {% empty %}
     <p class="verso-mono verso-container" style="padding:2rem 1rem;font-size:11px;opacity:0.5">No articles in this category yet.</p>
     {% endfor %}
+    {% load pagination_extras %}
+    {% include "core/partials/pagination_nav.html" %}
   </section>
 </main>
 {% endblock %}

@@ -4,7 +4,7 @@
 {% block body %}
 <div id="triangle-bg-container" class="triangle-bg fixed inset-0 -z-10 pointer-events-none min-h-screen w-full overflow-hidden" aria-hidden="true"></div>
 
-<main class="relative min-h-screen">
+<main class="hub-main relative min-h-screen">
   {% include "core/partials/header.html" with show_search=False %}
 
   <section class="relative pt-40 pb-20 px-4">
@@ -14,7 +14,7 @@
         <span class="text-sm text-muted-foreground">100% AI-Generated Websites</span>
       </div>
 
-      <h1 class="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-foreground mb-6 text-balance">
+      <h1 class="hub-hero-title font-bold tracking-tight text-foreground mb-6 text-balance">
         Discover the web created
         <br />
         <span class="relative">
@@ -70,7 +70,7 @@
         </div>
       </div>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {% for site in featured_sites %}
           {% include "core/partials/website_card.html" with site=site index=forloop.counter0 %}
         {% empty %}

@@ -1,0 +1,72 @@
+{% extends "static/base.html" %}
+{% block title %}{{ entry.designation }}{% endblock %}
+{% block content %}
+<article class="st-wrap st-detail">
+  <header class="st-detail-header">
+    <span class="st-detail-type">{{ entry.get_signal_type_display }}</span>
+    <h1>{{ entry.designation }}</h1>
+    <div class="st-detail-meta">
+      <div class="st-meta-row"><span class="st-meta-label">ORIGIN:</span> {{ entry.origin_description }}</div>
+      <div class="st-meta-row"><span class="st-meta-label">INTERCEPTED:</span> {{ entry.intercepted_at|date:"Y-m-d H:i" }} UTC</div>
+    </div>
+  </header>
+
+  <div class="st-prose">
+    <h2 class="st-transcript-label">// TRANSCRIPT</h2>
+    {% for p in paragraphs %}
+    <p>{{ p }}</p>
+    {% endfor %}
+  </div>
+
+  {% if entry.analysis_notes %}
+  <div class="st-analysis">
+    <h3>// ANALYSIS NOTES</h3>
+    <p>{{ entry.analysis_notes }}</p>
+  </div>
+  {% endif %}
+
+  {% if archive_embed_src %}
+  <section class="st-archive-embed" aria-label="Embedded recording from Internet Archive">
+    <h3 class="st-transcript-label">// RECORDING</h3>
+    <div class="st-archive-embed-frame">
+      <iframe
+        src="{{ archive_embed_src }}"
+        title="Recording on Internet Archive"
+        width="560"
+        height="88"
+        loading="lazy"
+        allowfullscreen
+        referrerpolicy="no-referrer-when-downgrade"
+      ></iframe>
+    </div>
+    {% if entry.audio_url %}
+    <p class="st-archive-embed-external">
+      <a href="{{ entry.audio_url }}" target="_blank" rel="noopener noreferrer">Open full item on Archive.org →</a>
+    </p>
+    {% endif %}
+  </section>
+  {% elif entry.audio_url %}
+  <div class="st-audio-link">
+    <a href="{{ entry.audio_url }}" target="_blank" rel="noopener noreferrer" class="st-audio-btn">
+      <span class="st-audio-icon">◉</span> Listen to recording on Archive.org
+    </a>
+  </div>
+  {% endif %}
+
+  <p class="st-back"><a href="{% url 'static:home' %}">&lt; Return to signal log</a></p>
+
+  {% if others %}
+  <section class="st-more" aria-labelledby="st-others-title">
+    <h2 id="st-others-title">// RELATED SIGNALS</h2>
+    <div class="st-more-list">
+      {% for o in others %}
+      <a class="st-more-card" href="{% url 'static:signal' o.slug %}">
+        <span class="st-more-type">{{ o.get_signal_type_display }}</span>
+        <span class="st-more-title">{{ o.designation }}</span>
+      </a>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
+</article>
+{% endblock %}

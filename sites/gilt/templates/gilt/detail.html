@@ -1,0 +1,41 @@
+{% extends "gilt/base.html" %}
+{% block title %}{{ entry.title }}{% endblock %}
+{% block content %}
+<article class="gl-wrap gl-detail">
+  <header class="gl-detail-header">
+    <div class="gl-detail-ornament">&loz;</div>
+    <div class="gl-detail-meta">{{ entry.billionaire_name }} · {{ entry.entry_date|date:"F j, Y" }}</div>
+    <h1>{{ entry.title }}</h1>
+    {% if entry.mood_tag %}<span class="gl-mood">{{ entry.mood_tag }}</span>{% endif %}
+  </header>
+
+  <div class="gl-prose">
+    {% for p in paragraphs %}
+    <p>{{ p }}</p>
+    {% endfor %}
+  </div>
+
+  <div class="gl-detail-end">
+    <div class="gl-divider"></div>
+    <span>Entry ends</span>
+  </div>
+
+  <p class="gl-back"><a href="{% url 'gilt:home' %}">&larr; Return to archive</a></p>
+
+  {% if others %}
+  <section class="gl-more" aria-labelledby="gl-more-title">
+    <h2 id="gl-more-title" class="gl-section-title">More Leaked Entries</h2>
+    <div class="gl-divider"></div>
+    <div class="gl-more-list">
+      {% for o in others %}
+      <a class="gl-more-item" href="{% url 'gilt:entry' o.slug %}">
+        <span class="gl-more-name">{{ o.billionaire_name }}</span>
+        <span class="gl-more-title">{{ o.title }}</span>
+        {% if o.mood_tag %}<span class="gl-mood">{{ o.mood_tag }}</span>{% endif %}
+      </a>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
+</article>
+{% endblock %}

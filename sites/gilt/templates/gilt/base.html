@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Gilt{% endblock %} · microscopis</title>
+  <meta name="description" content="Leaked diary entries from the world's most powerful and paranoid billionaires.">
+  <link rel="icon" href="{% static 'gilt/logo.svg' %}" type="image/svg+xml">
+  <link rel="stylesheet" href="{% static 'gilt/gilt.css' %}">
+  {% block extra_head %}{% endblock %}
+</head>
+<body class="gl-body">
+  <header class="gl-header">
+    <div class="gl-header-inner">
+      <a class="gl-brand" href="{% url 'gilt:home' %}">
+        <span class="gl-brand-mark">GILT</span>
+        <span class="gl-brand-sub">Billionaire Diaries (Leaked)</span>
+      </a>
+      <nav class="gl-nav" aria-label="Primary">
+        <a href="{% url 'gilt:home' %}">Ledger</a>
+        <a href="{% url 'home' %}">microscopis</a>
+      </nav>
+      <span class="gl-badge">Confidential</span>
+    </div>
+  </header>
+  {% block content %}{% endblock %}
+  <footer class="gl-footer">
+    <div class="gl-footer-ornament">&diams;</div>
+    <p>All entries fictional · Any resemblance to real billionaires is satirical · <a href="{% url 'home' %}">Hub</a></p>
+  </footer>
+</body>
+</html>

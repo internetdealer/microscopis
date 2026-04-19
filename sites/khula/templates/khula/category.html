@@ -1,0 +1,26 @@
+{% extends "khula/base.html" %}
+{% block title %}{{ category.title }} — Khula{% endblock %}
+{% block content %}
+<main class="news-wrap page-main">
+    <h1>{{ category.title }}</h1>
+    <p class="lead">{{ category.blurb }}</p>
+
+    <section class="story-list" aria-label="Stories">
+        {% for a in articles %}
+        <article class="story-row{% cycle ' story-row--a' ' story-row--b' %}">
+            <figure>
+                <a href="{% url 'khula:article' slug=a.slug %}"><img src="{{ a.thumb }}" width="640" height="360" alt="" decoding="async" loading="lazy"></a>
+            </figure>
+            <div class="story-text">
+                <p class="meta"><span><time datetime="{{ a.date }}">{{ a.date }}</time></span></p>
+                <h2><a href="{% url 'khula:article' slug=a.slug %}">{{ a.title }}</a></h2>
+                <p class="lead">{{ a.dek }}</p>
+            </div>
+        </article>
+        {% endfor %}
+    </section>
+
+    {% load pagination_extras %}
+    {% include "core/partials/pagination_nav.html" %}
+</main>
+{% endblock %}

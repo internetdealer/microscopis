@@ -1,0 +1,53 @@
+{% extends "sable/base.html" %}
+{% block title %}{{ theory.title }}{% endblock %}
+{% block content %}
+<article class="sa-wrap sa-detail">
+  <header class="sa-detail-header">
+    <span class="sa-detail-plausibility sa-plaus--{{ theory.plausibility }}">Plausibility: {{ theory.get_plausibility_display }}</span>
+    <h1>{{ theory.title }}</h1>
+  </header>
+
+  <div class="sa-prose">
+    {% for p in paragraphs %}
+    <p>{{ p }}</p>
+    {% endfor %}
+  </div>
+
+  {% if theory.evidence_cited %}
+  <aside class="sa-evidence">
+    <h3>// EVIDENCE CITED</h3>
+    <p>{{ theory.evidence_cited }}</p>
+  </aside>
+  {% endif %}
+
+  {% if theory.real_events %}
+  <div class="sb-real-events">
+    <h3>// REAL EVENTS REFERENCED</h3>
+    <p class="sb-events-list">{{ theory.real_events }}</p>
+    {% if theory.wikipedia_urls %}
+    <div class="sb-wiki-links">
+      {% for url in wiki_urls %}
+      <a href="{{ url }}" target="_blank" rel="noopener noreferrer">{{ url|cut:"https://en.wikipedia.org/wiki/" }} →</a>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+  {% endif %}
+
+  <p class="sa-back"><a href="{% url 'sable:home' %}">← Back to theories</a></p>
+
+  {% if others %}
+  <section class="sa-more" aria-labelledby="sa-others-title">
+    <h2 id="sa-others-title">Other theories</h2>
+    <div class="sa-more-list">
+      {% for o in others %}
+      <a class="sa-more-card" href="{% url 'sable:theory' o.slug %}">
+        <span class="sa-more-plausibility sa-plaus--{{ o.plausibility }}">{{ o.get_plausibility_display }}</span>
+        <span class="sa-more-title">{{ o.title }}</span>
+      </a>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
+</article>
+{% endblock %}

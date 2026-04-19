@@ -1,0 +1,42 @@
+{% extends "parlor/base.html" %}
+{% block title %}{{ dialogue.title }}{% endblock %}
+{% block content %}
+<article class="pa-wrap pa-detail">
+  <header class="pa-detail-header">
+    <h1>{{ dialogue.title }}</h1>
+    <div class="pa-detail-speakers">
+      <span class="pa-speaker pa-speaker--a">{{ dialogue.person_a }}</span>
+      <span class="pa-vs">vs</span>
+      <span class="pa-speaker pa-speaker--b">{{ dialogue.person_b }}</span>
+    </div>
+    <p class="pa-meta">{{ dialogue.created_at|date:"F j, Y" }}</p>
+  </header>
+
+  <div class="pa-conversation">
+    {% for turn in turns %}
+    <div class="pa-bubble {% if forloop.counter|divisibleby:2 %}pa-bubble--b{% else %}pa-bubble--a{% endif %}">
+      <span class="pa-bubble-name">{% if forloop.counter|divisibleby:2 %}{{ dialogue.person_b }}{% else %}{{ dialogue.person_a }}{% endif %}</span>
+      <p>{{ turn }}</p>
+    </div>
+    {% endfor %}
+  </div>
+
+  <p class="pa-back"><a href="{% url 'parlor:home' %}">← Back to Dialogues</a></p>
+
+  {% if others %}
+  <aside class="pa-more" aria-labelledby="pa-more-title">
+    <h2 id="pa-more-title" class="pa-section-label">Other Conversations</h2>
+    <ul class="pa-other-list">
+      {% for o in others %}
+      <li>
+        <a href="{% url 'parlor:dialogue' o.slug %}">
+          <strong>{{ o.person_a }} vs {{ o.person_b }}</strong>
+          <span>{{ o.title }}</span>
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+  </aside>
+  {% endif %}
+</article>
+{% endblock %}

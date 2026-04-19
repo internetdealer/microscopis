@@ -1,0 +1,285 @@
+/*
+ * Safari HTML5 control chrome (aligned to sites/khula/static/khula/css/safari-html5-defaults.css
+ * form rules). Scoped to .hub-main (home) and .safari-ui (e.g. search). Loaded before app.css.
+ */
+
+:is(.hub-main, .safari-ui) {
+  --hub-safari-text: #000;
+  --hub-safari-field-border: #c6c6c8;
+  --hub-safari-field-radius: 5px;
+  --hub-safari-ui-font:
+    -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", system-ui,
+    sans-serif;
+}
+
+.hub-main .hub-search-field.search-field {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 0.5rem;
+  font-family: var(--hub-safari-ui-font);
+  border: 1px solid var(--hub-safari-field-border);
+  border-radius: var(--hub-safari-field-radius);
+  background: #fff;
+  box-shadow:
+    inset 0 1px 0 rgba(0, 0, 0, 0.12),
+    inset 1px 0 0 rgba(0, 0, 0, 0.12);
+}
+
+.hub-main .hub-search-field.search-field:focus-within {
+  outline: 2px solid rgba(0, 122, 255, 0.5);
+  outline-offset: 1px;
+}
+
+.hub-main .hub-search-icon {
+  flex-shrink: 0;
+  color: #666;
+}
+
+.hub-main input.hub-search-input.input-search {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  -webkit-appearance: none;
+  appearance: none;
+  line-height: 1.2;
+  min-height: calc(1.2em + 4px);
+  padding: 2px 8px;
+  border: 0 solid transparent;
+  border-radius: 0;
+  background: transparent !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+  outline: none;
+  font-family: var(--hub-safari-ui-font);
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--hub-safari-text);
+  caret-color: var(--hub-safari-text);
+}
+
+.hub-main input.hub-search-input.input-search:focus,
+.hub-main input.hub-search-input.input-search:focus-visible {
+  outline: none;
+  box-shadow: none !important;
+  border: none;
+}
+
+.hub-main input.hub-search-input.input-search::placeholder {
+  color: #666;
+  opacity: 1;
+}
+
+.hub-main .hub-search-submit {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--hub-safari-ui-font);
+  font-size: 13px;
+  line-height: 1;
+  color: var(--hub-safari-text);
+  cursor: default;
+  -webkit-appearance: none;
+  appearance: none;
+  padding: 4px 14px;
+  min-height: 28px;
+  min-width: 28px;
+  border: 1px solid var(--hub-safari-field-border);
+  border-radius: 8px;
+  background: linear-gradient(to bottom, #fff, #ececec);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.9) inset;
+}
+
+.hub-main .hub-search-submit:hover {
+  filter: brightness(0.98);
+}
+
+.hub-main .hub-search-submit:active {
+  background: #e0e0e0;
+}
+
+.hub-main .hub-try-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--hub-safari-ui-font);
+  font-size: 13px;
+  color: var(--hub-safari-text);
+  cursor: default;
+  text-decoration: none;
+  -webkit-appearance: none;
+  appearance: none;
+  padding: 4px 14px;
+  min-height: 28px;
+  border: 1px solid var(--hub-safari-field-border);
+  border-radius: 8px;
+  background: linear-gradient(to bottom, #fff, #ececec);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.9) inset;
+}
+
+.hub-main .hub-try-chip:hover {
+  filter: brightness(0.98);
+}
+
+.hub-main .hub-try-chip:active {
+  background: #e0e0e0;
+}
+
+.hub-main .hub-nav-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--hub-safari-ui-font);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--hub-safari-text);
+  text-decoration: none;
+  cursor: default;
+  -webkit-appearance: none;
+  appearance: none;
+  padding: 4px 14px;
+  min-height: 28px;
+  border: 1px solid var(--hub-safari-field-border);
+  border-radius: 8px;
+  background: linear-gradient(to bottom, #fff, #ececec);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.9) inset;
+}
+
+.hub-main .hub-nav-cta:hover {
+  filter: brightness(0.98);
+}
+
+.hub-main .hub-nav-cta:active {
+  background: #e0e0e0;
+}
+
+.hub-main .hub-search-submit:focus-visible,
+.hub-main .hub-try-chip:focus-visible,
+.hub-main .hub-nav-cta:focus-visible {
+  outline: 2px solid rgba(0, 122, 255, 0.5);
+  outline-offset: 2px;
+}
+
+/* ----- Search page (results) — same Safari field + button language ----- */
+.safari-ui .search-input-wrap {
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--hub-safari-ui-font);
+  border: 1px solid var(--hub-safari-field-border);
+  border-radius: var(--hub-safari-field-radius);
+  background: #fff;
+  box-shadow:
+    inset 0 1px 0 rgba(0, 0, 0, 0.12),
+    inset 1px 0 0 rgba(0, 0, 0, 0.12);
+}
+
+.safari-ui .search-input-wrap:focus-within {
+  outline: 2px solid rgba(0, 122, 255, 0.5);
+  outline-offset: 1px;
+}
+
+.safari-ui .search-field-input {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  -webkit-appearance: none;
+  appearance: none;
+  line-height: 1.2;
+  min-height: calc(1.2em + 4px);
+  padding: 2px 8px;
+  border: none;
+  outline: none;
+  background: transparent !important;
+  box-shadow: none !important;
+  font-family: var(--hub-safari-ui-font);
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: normal;
+  color: var(--hub-safari-text);
+  caret-color: var(--hub-safari-text);
+}
+
+.safari-ui .search-field-input::placeholder {
+  color: #666;
+  opacity: 1;
+}
+
+.safari-ui .search-icon {
+  flex-shrink: 0;
+  color: #666;
+}
+
+.safari-ui .search-clear {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.75rem;
+  min-height: 1.5rem;
+  padding: 0 0.35rem;
+  border-radius: 8px;
+  border: 1px solid var(--hub-safari-field-border);
+  background: linear-gradient(to bottom, #fff, #ececec);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.9) inset;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--hub-safari-text);
+  text-decoration: none;
+  cursor: default;
+}
+
+.safari-ui .search-clear:hover {
+  filter: brightness(0.98);
+}
+
+.safari-ui .search-clear:active {
+  background: #e0e0e0;
+}
+
+.safari-ui .search-filter-pill {
+  flex-shrink: 0;
+  font-family: var(--hub-safari-ui-font);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: normal;
+  color: var(--hub-safari-text);
+  text-decoration: none;
+  cursor: default;
+  padding: 4px 14px;
+  min-height: 28px;
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--hub-safari-field-border);
+  border-radius: 8px;
+  background: linear-gradient(to bottom, #fff, #ececec);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.9) inset;
+}
+
+.safari-ui .search-filter-pill:hover {
+  filter: brightness(0.98);
+}
+
+.safari-ui .search-filter-pill:active {
+  background: #e0e0e0;
+}
+
+.safari-ui .search-filter-pill.is-active {
+  background: #e0e0e0;
+  border-color: #a8a8ae;
+  color: var(--hub-safari-text);
+  font-weight: 600;
+}
+
+.safari-ui .search-field-input:focus-visible,
+.safari-ui .search-clear:focus-visible,
+.safari-ui .search-filter-pill:focus-visible {
+  outline: 2px solid rgba(0, 122, 255, 0.5);
+  outline-offset: 2px;
+}

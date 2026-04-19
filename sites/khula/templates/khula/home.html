@@ -1,0 +1,47 @@
+{% extends "khula/base.html" %}
+{% block title %}{% if search_query %}“{{ search_query }}” — {% endif %}Home — Khula{% endblock %}
+{% block content %}
+<main class="news-wrap page-main">
+    {% if search_query %}
+    <p class="search-banner" role="status">{% if lead %}Results for “{{ search_query }}”.{% else %}No stories match “{{ search_query }}”.{% endif %} <a href="{% url 'khula:home' %}">Clear</a></p>
+    {% endif %}
+
+    <h1>{% if search_query %}Matches{% else %}Today’s brief{% endif %}</h1>
+    <p class="lead">{% if search_query %}Filtered from the archive.{% else %}Niche high fashion, maisons, and machine-authored essays—same layout as the original Khula demo.{% endif %}</p>
+
+    {% if lead %}
+    <section class="home-lead" aria-label="Lead story">
+        <article class="home-lead-visual">
+            <figure>
+                <img src="{{ lead.image }}" width="960" height="540" alt="" decoding="async" loading="eager">
+            </figure>
+        </article>
+        <article class="home-lead-text">
+            <p class="meta"><span>{{ lead.category }}</span><span><time datetime="{{ lead.date }}">{{ lead.date }}</time></span></p>
+            <h2><a href="{% url 'khula:article' slug=lead.slug %}">{{ lead.title }}</a></h2>
+            <p class="lead">{{ lead.dek }}</p>
+            <p><a href="{% url 'khula:article' slug=lead.slug %}">Read</a></p>
+        </article>
+    </section>
+    {% endif %}
+
+    {% if grid_articles %}
+    <h2>{% if search_query %}More matches{% else %}Latest{% endif %}</h2>
+    <section class="home-grid" aria-label="Latest stories">
+        {% for a in grid_articles %}
+        <article class="article-card">
+            <figure>
+                <a href="{% url 'khula:article' slug=a.slug %}"><img src="{{ a.thumb }}" width="640" height="360" alt="" decoding="async" loading="lazy"></a>
+            </figure>
+            <p class="meta"><span>{{ a.category }}</span><span><time datetime="{{ a.date }}">{{ a.date }}</time></span></p>
+            <h3><a href="{% url 'khula:article' slug=a.slug %}">{{ a.title }}</a></h3>
+            <p class="lead">{{ a.dek }}</p>
+        </article>
+        {% endfor %}
+    </section>
+    {% endif %}
+
+    {% load pagination_extras %}
+    {% include "core/partials/pagination_nav.html" %}
+</main>
+{% endblock %}

@@ -1,0 +1,65 @@
+{% extends "sable/base.html" %}
+{% block title %}Theories{% endblock %}
+{% block content %}
+<main class="sa-wrap">
+  <section class="sa-hero">
+    <h1>Grounded in fact.<br>Extended into shadow.</h1>
+    <p>Every theory starts with a documented event. What follows is the part they didn't declassify.</p>
+  </section>
+
+  <nav class="sa-filter-pills" aria-label="Filter by plausibility">
+    <a class="sa-pill{% if not current_plausibility %} sa-pill--active{% endif %}" href="{% url 'sable:home' %}">All</a>
+    {% for value, label in plausibilities %}
+    <a class="sa-pill sa-pill--{{ value }}{% if current_plausibility == value %} sa-pill--active{% endif %}" href="?plausibility={{ value }}">{{ label }}</a>
+    {% endfor %}
+  </nav>
+
+  {% if featured %}
+  <section class="sa-featured" aria-labelledby="sa-feat-title">
+    <h2 id="sa-feat-title" class="sa-section-label">Featured files</h2>
+    <div class="sa-featured-grid">
+      {% for t in featured %}
+      <a class="sa-card sa-card--feat" href="{% url 'sable:theory' t.slug %}">
+        <div class="sa-card-stamp">CLASSIFIED</div>
+        <div class="sa-card-body">
+          <span class="sa-card-plausibility sa-plaus--{{ t.plausibility }}">{{ t.get_plausibility_display }}</span>
+          <h2>{{ t.title }}</h2>
+          <p class="sa-card-excerpt">{{ t.body|truncatewords:30 }}</p>
+          {% if t.real_events %}
+          <p class="sa-card-events">{{ t.real_events }}</p>
+          {% endif %}
+        </div>
+        <div class="sa-card-redact"></div>
+      </a>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
+
+  {% if theories %}
+  <section class="sa-grid-section" aria-labelledby="sa-more-title">
+    <h2 id="sa-more-title" class="sa-section-label">More theories</h2>
+    <div class="sa-grid">
+      {% for t in theories %}
+      <a class="sa-card" href="{% url 'sable:theory' t.slug %}">
+        <div class="sa-card-body">
+          <span class="sa-card-plausibility sa-plaus--{{ t.plausibility }}">{{ t.get_plausibility_display }}</span>
+          <h2>{{ t.title }}</h2>
+          <p class="sa-card-excerpt">{{ t.body|truncatewords:20 }}</p>
+          {% if t.real_events %}
+          <p class="sa-card-events">{{ t.real_events }}</p>
+          {% endif %}
+        </div>
+        <div class="sa-card-redact"></div>
+      </a>
+      {% endfor %}
+    </div>
+    {% include "core/partials/pagination_nav.html" %}
+  </section>
+  {% elif not featured %}
+  <div class="sa-empty">
+    No theories yet. Run <code>python manage.py seed_sable</code>
+  </div>
+  {% endif %}
+</main>
+{% endblock %}

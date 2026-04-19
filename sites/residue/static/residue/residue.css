@@ -1,0 +1,887 @@
+/*
+ * Residue — broken/corrupted webpage aesthetic.
+ * Dead websites, 404 archaeology, ghost content.
+ * IBM Plex Mono for metadata, Lora for body text.
+ */
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap");
+
+:root {
+  --rs-bg: #0c0c0c;
+  --rs-surface: #111111;
+  --rs-card: #0e0e0e;
+  --rs-ink: #e8e0d4;
+  --rs-ink2: #b8b0a4;
+  --rs-muted: #686058;
+  --rs-dim: #3a3632;
+  --rs-link-blue: #0000EE;
+  --rs-link-visited: #551A8B;
+  --rs-red: #cc3333;
+  --rs-amber: #d4a24e;
+  --rs-green-dim: #3a5a3a;
+  --rs-line: #1e1c1a;
+  --rs-line-heavy: #2a2724;
+  --rs-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+  --rs-shadow-lift: 0 6px 24px rgba(0, 0, 0, 0.4);
+  --rs-mono: "IBM Plex Mono", ui-monospace, "Cascadia Code", Menlo, monospace;
+  --rs-serif: "Lora", Georgia, "Times New Roman", Times, serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  overflow-x: clip;
+}
+
+/* ─── Base body ─── */
+
+body.rs-body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--rs-bg);
+  color: var(--rs-ink);
+  font-family: var(--rs-serif);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  position: relative;
+}
+
+/* Noise / static texture overlay */
+body.rs-body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='5' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 100;
+  mix-blend-mode: overlay;
+}
+
+/* 404 watermark */
+body.rs-body::before {
+  content: "404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404 404";
+  position: fixed;
+  inset: 0;
+  font-family: var(--rs-mono);
+  font-size: 5vw;
+  font-weight: 600;
+  color: rgba(232, 224, 212, 0.015);
+  line-height: 1.4;
+  word-break: break-all;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+  letter-spacing: 0.3em;
+}
+
+/* ─── Header ─── */
+
+.rs-header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: rgba(12, 12, 12, 0.92);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid var(--rs-line);
+}
+
+.rs-header-inner {
+  max-width: 64rem;
+  margin: 0 auto;
+  padding: 0.75rem clamp(1rem, 3vw, 1.5rem);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.rs-brand {
+  text-decoration: none;
+  color: inherit;
+}
+
+.rs-brand-mark {
+  font-family: var(--rs-mono);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--rs-ink);
+  letter-spacing: 0.08em;
+  animation: rs-glitch 4s ease-in-out infinite;
+}
+
+.rs-brand-sub {
+  display: block;
+  font-family: var(--rs-mono);
+  font-size: 0.6rem;
+  font-weight: 400;
+  color: var(--rs-muted);
+  margin-top: 0.1rem;
+  letter-spacing: 0.05em;
+}
+
+.rs-nav {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.rs-nav a {
+  font-family: var(--rs-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--rs-ink2);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.rs-nav a:hover {
+  color: var(--rs-ink);
+  text-decoration: underline;
+}
+
+/* ─── Layout ─── */
+
+.rs-wrap {
+  max-width: 64rem;
+  margin: 0 auto;
+  padding: 2rem clamp(1rem, 3vw, 1.5rem) 4rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* ─── Hero ─── */
+
+.rs-hero {
+  text-align: center;
+  padding: 3rem 0 3.5rem;
+  border-bottom: 1px solid var(--rs-line);
+  margin-bottom: 2.5rem;
+  position: relative;
+}
+
+.rs-hero h1 {
+  font-family: var(--rs-mono);
+  font-size: clamp(1.5rem, 4vw, 2.4rem);
+  font-weight: 600;
+  line-height: 1.2;
+  margin: 0 0 0.75rem;
+  color: var(--rs-ink);
+  letter-spacing: 0.04em;
+  position: relative;
+}
+
+.rs-hero h1::after {
+  content: "Digital Remains";
+  position: absolute;
+  top: 2px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--rs-red);
+  opacity: 0.06;
+  z-index: -1;
+  white-space: nowrap;
+}
+
+.rs-hero p {
+  font-family: var(--rs-serif);
+  font-size: 0.92rem;
+  font-style: italic;
+  color: var(--rs-ink2);
+  margin: 0 0 0.75rem;
+  max-width: 32rem;
+  margin-inline: auto;
+}
+
+.rs-count {
+  font-family: var(--rs-mono);
+  font-size: 0.68rem;
+  color: var(--rs-muted);
+  letter-spacing: 0.06em;
+}
+
+/* ─── Section labels ─── */
+
+.rs-section-label {
+  font-family: var(--rs-mono);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--rs-muted);
+  margin: 0 0 1.25rem;
+  position: relative;
+  padding-left: 1rem;
+}
+
+.rs-section-label::before {
+  content: ">";
+  position: absolute;
+  left: 0;
+  color: var(--rs-dim);
+}
+
+/* ─── Featured grid ─── */
+
+.rs-featured {
+  margin-bottom: 3rem;
+}
+
+.rs-featured-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+@media (min-width: 700px) {
+  .rs-featured-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* ─── Cards — corrupted fragment style ─── */
+
+.rs-card {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  background: var(--rs-card);
+  border: 1px solid var(--rs-line);
+  border-left: 3px solid var(--rs-line-heavy);
+  border-radius: 0;
+  overflow: hidden;
+  box-shadow: var(--rs-shadow);
+  transition: transform 0.15s, border-color 0.2s, box-shadow 0.2s;
+  position: relative;
+}
+
+.rs-card:hover {
+  border-color: var(--rs-dim);
+  border-left-color: var(--rs-ink2);
+  box-shadow: var(--rs-shadow-lift);
+  transform: translate(2px, -1px);
+}
+
+/* Featured cards get a heavier, "torn" feel */
+.rs-card--feat {
+  border-left-width: 4px;
+  border-left-color: var(--rs-amber);
+  border-top: 2px solid var(--rs-line-heavy);
+  box-shadow:
+    var(--rs-shadow),
+    inset 0 -1px 0 var(--rs-line);
+}
+
+.rs-card--feat:hover {
+  border-left-color: var(--rs-ink);
+  transform: translate(3px, -2px);
+}
+
+.rs-card-glitch {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--rs-dim) 0px,
+    var(--rs-dim) 4px,
+    transparent 4px,
+    transparent 8px
+  );
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.rs-card:hover .rs-card-glitch {
+  opacity: 0.6;
+}
+
+.rs-card-body {
+  padding: 1.1rem 1.2rem 1.25rem;
+  position: relative;
+  z-index: 1;
+}
+
+.rs-card-type {
+  display: inline-block;
+  font-family: var(--rs-mono);
+  font-size: 0.58rem;
+  font-weight: 600;
+  color: var(--rs-muted);
+  background: rgba(104, 96, 88, 0.1);
+  padding: 0.2rem 0.45rem;
+  border: 1px solid var(--rs-line);
+  margin-bottom: 0.6rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.rs-card-body h2 {
+  font-family: var(--rs-serif);
+  font-size: 0.92rem;
+  font-weight: 600;
+  margin: 0 0 0.3rem;
+  line-height: 1.3;
+  color: var(--rs-ink);
+}
+
+.rs-card-url {
+  display: block;
+  font-family: var(--rs-mono);
+  font-size: 0.6rem;
+  color: var(--rs-muted);
+  margin-bottom: 0.5rem;
+  word-break: break-all;
+  text-decoration: line-through;
+  text-decoration-color: var(--rs-dim);
+}
+
+.rs-card-excerpt {
+  font-family: var(--rs-serif);
+  font-size: 0.82rem;
+  color: var(--rs-ink2);
+  margin: 0;
+  line-height: 1.55;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ─── Wayback badge on cards ─── */
+
+.res-wayback-badge {
+  display: inline-block;
+  font-family: var(--rs-mono);
+  font-size: 0.55rem;
+  font-weight: 600;
+  color: var(--rs-link-blue);
+  border: 1px solid rgba(0, 0, 238, 0.3);
+  padding: 0.15rem 0.5rem;
+  border-radius: 9999px;
+  margin-top: 0.6rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* ─── Grid ─── */
+
+.rs-grid-section {
+  margin-bottom: 2rem;
+}
+
+.rs-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr));
+}
+
+/* ─── Detail page ─── */
+
+.rs-detail {
+  max-width: 44rem;
+  margin: 0 auto;
+}
+
+.rs-detail-header {
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--rs-line);
+  position: relative;
+}
+
+.rs-detail-header::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 4rem;
+  height: 1px;
+  background: var(--rs-amber);
+}
+
+.rs-detail-type {
+  display: inline-block;
+  font-family: var(--rs-mono);
+  font-size: 0.62rem;
+  font-weight: 600;
+  color: var(--rs-muted);
+  background: rgba(104, 96, 88, 0.1);
+  padding: 0.25rem 0.6rem;
+  border: 1px solid var(--rs-line);
+  margin-bottom: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.rs-detail-header h1 {
+  font-family: var(--rs-serif);
+  font-size: clamp(1.3rem, 3.5vw, 2rem);
+  font-weight: 700;
+  margin: 0 0 1rem;
+  line-height: 1.25;
+  color: var(--rs-ink);
+}
+
+.rs-detail-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-family: var(--rs-mono);
+  font-size: 0.7rem;
+  color: var(--rs-ink2);
+}
+
+.rs-meta-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+}
+
+.rs-meta-label {
+  color: var(--rs-muted);
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.rs-meta-url {
+  font-family: var(--rs-mono);
+  font-size: 0.66rem;
+  word-break: break-all;
+  color: var(--rs-ink2);
+  text-decoration: line-through;
+  text-decoration-color: var(--rs-dim);
+}
+
+/* ─── Prose — recovered text ─── */
+
+.rs-prose {
+  margin-bottom: 2rem;
+}
+
+.rs-prose p {
+  font-family: var(--rs-serif);
+  margin: 0 0 1.25rem;
+  color: var(--rs-ink2);
+  line-height: 1.8;
+  font-size: 0.95rem;
+}
+
+.rs-prose p:first-child::first-letter {
+  font-size: 2em;
+  float: left;
+  line-height: 1;
+  margin-right: 0.12em;
+  margin-top: 0.05em;
+  color: var(--rs-ink);
+  font-weight: 700;
+}
+
+/* ─── Context / recovery notes ─── */
+
+.rs-context {
+  background: rgba(212, 162, 78, 0.04);
+  border-left: 3px solid var(--rs-amber);
+  padding: 1rem 1.25rem;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.rs-context::before {
+  content: "[RECOVERED]";
+  position: absolute;
+  top: -0.55rem;
+  left: 1.25rem;
+  font-family: var(--rs-mono);
+  font-size: 0.55rem;
+  font-weight: 600;
+  color: var(--rs-amber);
+  background: var(--rs-bg);
+  padding: 0 0.4rem;
+  letter-spacing: 0.1em;
+}
+
+.rs-context h3 {
+  font-family: var(--rs-mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--rs-amber);
+  margin: 0 0 0.4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.rs-context p {
+  font-family: var(--rs-serif);
+  font-size: 0.82rem;
+  color: var(--rs-ink2);
+  margin: 0;
+  line-height: 1.6;
+  font-style: italic;
+}
+
+/* ─── Wayback Machine button ─── */
+
+.res-wayback-link {
+  margin-bottom: 2rem;
+  padding: 1rem 0;
+}
+
+.res-wayback-btn {
+  display: inline-block;
+  font-family: var(--rs-mono);
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--rs-link-blue);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  padding: 0.6rem 1.2rem;
+  border: 1px solid rgba(0, 0, 238, 0.25);
+  background: rgba(0, 0, 238, 0.04);
+  transition: background 0.15s, color 0.15s;
+  cursor: pointer;
+}
+
+.res-wayback-btn:visited {
+  color: var(--rs-link-visited);
+  border-color: rgba(85, 26, 139, 0.25);
+}
+
+.res-wayback-btn:hover {
+  background: rgba(0, 0, 238, 0.08);
+  color: #0000FF;
+}
+
+/* ─── Back link ─── */
+
+.rs-back {
+  margin-top: 2rem;
+}
+
+.rs-back a {
+  font-family: var(--rs-mono);
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--rs-ink2);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.rs-back a::before {
+  content: "← ";
+}
+
+.rs-back a:hover {
+  color: var(--rs-ink);
+  text-decoration: underline;
+}
+
+/* ─── Related / other fragments ─── */
+
+.rs-more {
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--rs-line);
+}
+
+.rs-more h2 {
+  font-family: var(--rs-mono);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--rs-muted);
+  margin: 0 0 1rem;
+}
+
+.rs-more-list {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 14rem), 1fr));
+}
+
+.rs-more-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 0.85rem 1rem;
+  background: var(--rs-card);
+  border: 1px solid var(--rs-line);
+  border-left: 2px solid var(--rs-line-heavy);
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.15s, transform 0.15s;
+}
+
+.rs-more-card:hover {
+  border-left-color: var(--rs-ink2);
+  transform: translateX(2px);
+}
+
+.rs-more-type {
+  font-family: var(--rs-mono);
+  font-size: 0.58rem;
+  font-weight: 600;
+  color: var(--rs-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.rs-more-title {
+  font-family: var(--rs-serif);
+  font-size: 0.82rem;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--rs-ink);
+}
+
+/* ─── Bento fragment wall (irregular grid) ─── */
+
+.rs-hero--bento {
+  max-width: 48rem;
+}
+.rs-wrap--bento .rs-hero p {
+  max-width: 40rem;
+}
+.rs-bento {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem 1rem;
+  margin-top: 2rem;
+  align-items: stretch;
+}
+.rs-bento-item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  padding: 1rem 1.1rem 1.15rem;
+  background: var(--rs-card);
+  border: 1px solid var(--rs-line);
+  text-decoration: none;
+  color: inherit;
+  box-shadow: var(--rs-shadow);
+  transition: border-color 0.15s, transform 0.15s;
+  min-height: 6rem;
+  overflow: hidden;
+}
+.rs-bento-item:hover {
+  border-color: var(--rs-ink2);
+  transform: translate(-2px, -2px);
+}
+.rs-bento-item--wide {
+  grid-column: span 2;
+}
+.rs-bento-item--tall {
+  grid-row: span 2;
+  min-height: 12rem;
+}
+.rs-bento-type {
+  font-family: var(--rs-mono);
+  font-size: 0.55rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--rs-muted);
+}
+.rs-bento-title {
+  font-family: var(--rs-serif);
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.2;
+  color: var(--rs-ink);
+}
+.rs-bento-url {
+  font-family: var(--rs-mono);
+  font-size: 0.62rem;
+  color: var(--rs-link-blue);
+  word-break: break-all;
+}
+.rs-bento-snippet {
+  font-family: var(--rs-serif);
+  font-size: 0.82rem;
+  line-height: 1.45;
+  color: var(--rs-ink2);
+  margin: 0;
+  flex: 1;
+}
+@media (max-width: 900px) {
+  .rs-bento {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .rs-bento-item--wide {
+    grid-column: span 2;
+  }
+}
+@media (max-width: 520px) {
+  .rs-bento {
+    grid-template-columns: 1fr;
+  }
+  .rs-bento-item--wide,
+  .rs-bento-item--tall {
+    grid-column: span 1;
+    grid-row: span 1;
+    min-height: 6rem;
+  }
+}
+
+/* ─── Empty state ─── */
+
+.rs-empty {
+  padding: 3rem 1.25rem;
+  text-align: center;
+  color: var(--rs-ink2);
+  border: 1px dashed var(--rs-line);
+  background: var(--rs-card);
+  font-family: var(--rs-mono);
+  font-size: 0.85rem;
+}
+
+.rs-empty code {
+  font-family: var(--rs-mono);
+  font-size: 0.85em;
+  color: var(--rs-amber);
+}
+
+/* ─── Footer ─── */
+
+.rs-footer {
+  margin-top: 4rem;
+  padding: 1.5rem clamp(1rem, 3vw, 1.5rem) 2rem;
+  border-top: 1px solid var(--rs-line);
+  text-align: center;
+  font-family: var(--rs-mono);
+  font-size: 0.68rem;
+  color: var(--rs-dim);
+  letter-spacing: 0.02em;
+  position: relative;
+  z-index: 1;
+}
+
+.rs-footer a {
+  color: var(--rs-muted);
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.rs-footer a:hover {
+  color: var(--rs-ink2);
+  text-decoration: underline;
+}
+
+/* ─── Glitch animation on brand ─── */
+
+@keyframes rs-glitch {
+  0%, 90%, 100% {
+    text-shadow: none;
+    transform: none;
+  }
+  91% {
+    text-shadow: -2px 0 var(--rs-red), 2px 0 rgba(0, 100, 200, 0.4);
+    transform: translateX(-1px);
+  }
+  92% {
+    text-shadow: 2px 0 var(--rs-red), -1px 0 rgba(0, 100, 200, 0.4);
+    transform: translateX(1px);
+  }
+  93% {
+    text-shadow: none;
+    transform: none;
+  }
+  95% {
+    text-shadow: -1px 0 var(--rs-red);
+    transform: translateX(-1px) skewX(-0.5deg);
+  }
+  96% {
+    text-shadow: none;
+    transform: none;
+  }
+}
+
+/* ─── Scanline hover effect on cards ─── */
+
+@keyframes rs-scanline {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+.rs-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(232, 224, 212, 0.01) 2px,
+    rgba(232, 224, 212, 0.01) 4px
+  );
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.rs-card:hover::before {
+  opacity: 1;
+}
+
+/* ─── Mobile responsive ─── */
+
+@media (max-width: 600px) {
+  .rs-hero {
+    padding: 2rem 0 2.5rem;
+  }
+
+  .rs-hero h1 {
+    font-size: 1.4rem;
+  }
+
+  .rs-card-body {
+    padding: 0.9rem 1rem 1.1rem;
+  }
+
+  .rs-detail-header h1 {
+    font-size: 1.25rem;
+  }
+
+  .rs-prose p {
+    font-size: 0.9rem;
+  }
+
+  .rs-nav {
+    gap: 1rem;
+  }
+
+  .rs-nav a {
+    font-size: 0.7rem;
+  }
+
+  .rs-more-list {
+    grid-template-columns: 1fr;
+  }
+
+  .res-wayback-btn {
+    font-size: 0.75rem;
+    padding: 0.5rem 1rem;
+    display: block;
+    text-align: center;
+  }
+}
+
+@media (max-width: 400px) {
+  .rs-header-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .rs-brand-mark {
+    font-size: 1rem;
+  }
+}

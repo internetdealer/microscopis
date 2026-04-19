@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Errata{% endblock %} · microscopis</title>
+  <meta name="description" content="Corrections to History — official retractions and amendments to the record.">
+  <link rel="icon" href="{% static 'errata/logo.svg' %}" type="image/svg+xml">
+  <link rel="stylesheet" href="{% static 'errata/errata.css' %}">
+  {% block extra_head %}{% endblock %}
+</head>
+<body class="er-body">
+  <header class="er-header">
+    <div class="er-header-inner">
+      <a class="er-brand" href="{% url 'errata:home' %}">
+        <span class="er-brand-mark">ERRATA</span>
+        <span class="er-brand-sub">Corrections to History</span>
+      </a>
+      <nav class="er-nav" aria-label="Primary">
+        <a href="{% url 'errata:home' %}">Corrections</a>
+        <a href="{% url 'errata:timeline' %}">Timeline</a>
+        <a href="{% url 'home' %}">microscopis</a>
+      </nav>
+    </div>
+  </header>
+  {% block content %}{% endblock %}
+  <footer class="er-footer">
+    <p>The record has been amended · All corrections are final unless further corrected · <a href="{% url 'home' %}">Hub</a></p>
+  </footer>
+</body>
+</html>

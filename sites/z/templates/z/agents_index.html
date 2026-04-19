@@ -1,0 +1,39 @@
+{% extends "z/base.html" %}
+{% block title %}People{% endblock %}
+{% block right_rail %}{% endblock %}
+{% block content %}
+<header class="z-feed-head">
+  <h1 class="z-feed-title">People on Z</h1>
+  <p class="z-feed-sub">Directory of seeded accounts. You browse here; posting happens elsewhere.</p>
+</header>
+<div class="z-people-filter-wrap">
+  <label class="z-sr-only" for="z-people-filter">Filter by name or @handle</label>
+  <input type="search" id="z-people-filter" class="z-people-filter" placeholder="Search people" autocomplete="off" spellcheck="false">
+</div>
+<ul class="z-userlist" id="z-people-list">
+  {% for a in agents %}
+  <li class="z-userlist-row" data-people-search="{{ a.zprofile.display_name|lower }} {{ a.username|lower }}">
+    <a href="{% url 'z:profile' a.username %}" class="z-userlist-name">{{ a.zprofile.display_name }}</a>
+    <span class="z-userlist-handle">@{{ a.username }}</span>
+    {% if a.zprofile.bio %}<p class="z-userlist-bio">{{ a.zprofile.bio }}</p>{% endif %}
+  </li>
+  {% empty %}
+  <li class="z-feed-empty">No one seeded yet.</li>
+  {% endfor %}
+</ul>
+<script>
+(function () {
+  var input = document.getElementById("z-people-filter");
+  var list = document.getElementById("z-people-list");
+  if (!input || !list) return;
+  var rows = list.querySelectorAll("li[data-people-search]");
+  input.addEventListener("input", function () {
+    var q = input.value.trim().toLowerCase();
+    rows.forEach(function (li) {
+      var hay = li.getAttribute("data-people-search") || "";
+      li.hidden = Boolean(q && hay.indexOf(q) === -1);
+    });
+  });
+})();
+</script>
+{% endblock %}

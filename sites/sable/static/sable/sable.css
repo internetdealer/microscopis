@@ -1,0 +1,799 @@
+/*
+ * Sable — Investigative journalism / redacted documents aesthetic.
+ * "Special Elite" for headings (typewriter), "Source Serif 4" for body.
+ */
+@import url("https://fonts.googleapis.com/css2?family=Special+Elite&family=Source+Serif+4:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap");
+
+:root {
+  --sa-bg: #f0e8d5;
+  --sa-surface: #e8dfc9;
+  --sa-card: #f5edd9;
+  --sa-card-border: #c9b99a;
+  --sa-ink: #1a1a1a;
+  --sa-ink2: #3d3527;
+  --sa-muted: #7a6e5d;
+  --sa-accent: #8b1a1a;
+  --sa-accent-soft: rgba(139, 26, 26, 0.1);
+  --sa-accent-hot: #a52222;
+  --sa-stamp: rgba(139, 26, 26, 0.12);
+  --sa-line: #c9b99a;
+  --sa-line-light: #d5cbb4;
+  --sa-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --sa-shadow-lift: 0 8px 24px rgba(0, 0, 0, 0.12);
+  --sa-radius: 2px;
+  --sa-tab-height: 1.6rem;
+  --sa-plaus-low: #4a7c4a;
+  --sa-plaus-medium: #a08520;
+  --sa-plaus-high: #c44a00;
+  --sa-plaus-unsettling: #8b1a1a;
+  --sa-margin-red: rgba(180, 50, 50, 0.25);
+  --sa-margin-red-line: rgba(180, 50, 50, 0.4);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  overflow-x: clip;
+}
+
+body.sa-body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--sa-bg);
+  color: var(--sa-ink);
+  font-family: "Source Serif 4", Georgia, serif;
+  font-size: 1rem;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Header ── */
+.sa-header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: rgba(240, 232, 213, 0.96);
+  backdrop-filter: blur(8px);
+  border-bottom: 2px solid var(--sa-line);
+}
+
+.sa-header-inner {
+  max-width: 53rem;
+  margin: 0 auto;
+  padding: 0.75rem clamp(1rem, 3vw, 1.5rem);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.sa-brand {
+  text-decoration: none;
+  color: inherit;
+}
+
+.sa-brand-mark {
+  font-family: "Special Elite", "Courier New", monospace;
+  font-size: 1.5rem;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--sa-accent);
+}
+
+.sa-brand-sub {
+  display: block;
+  font-size: 0.65rem;
+  font-weight: 400;
+  color: var(--sa-muted);
+  margin-top: 0;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-family: "Source Serif 4", serif;
+}
+
+.sa-nav {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.sa-nav a {
+  font-family: "Special Elite", monospace;
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--sa-ink2);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.sa-nav a:hover {
+  color: var(--sa-accent);
+}
+
+/* ── Layout ── */
+.sa-wrap {
+  max-width: 53rem;
+  margin: 0 auto;
+  padding: 2rem clamp(1rem, 3vw, 1.5rem) 4rem;
+}
+
+/* ── Hero ── */
+.sa-hero {
+  text-align: center;
+  padding: 3rem 0 2.5rem;
+  border-bottom: 2px solid var(--sa-line);
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.sa-hero h1 {
+  font-family: "Special Elite", "Courier New", monospace;
+  font-size: clamp(1.6rem, 4.5vw, 2.8rem);
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  margin: 0 0 0.8rem;
+  color: var(--sa-ink);
+}
+
+.sa-hero p {
+  font-size: 1rem;
+  color: var(--sa-ink2);
+  margin: 0;
+  max-width: 34rem;
+  margin-inline: auto;
+  font-style: italic;
+}
+
+/* ── Filter pills ── */
+.sa-filter-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 2.5rem;
+  padding: 1rem 0;
+  border-bottom: 1px dashed var(--sa-line);
+}
+
+.sa-pill {
+  display: inline-block;
+  font-family: "Special Elite", monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 0.35rem 0.85rem;
+  border: 1px solid var(--sa-line);
+  border-radius: var(--sa-radius);
+  background: var(--sa-card);
+  color: var(--sa-muted);
+  text-decoration: none;
+  transition: all 0.15s;
+}
+
+.sa-pill:hover {
+  border-color: var(--sa-ink2);
+  color: var(--sa-ink2);
+}
+
+.sa-pill--active {
+  background: var(--sa-ink);
+  color: var(--sa-bg);
+  border-color: var(--sa-ink);
+}
+
+.sa-pill--active:hover {
+  background: var(--sa-ink2);
+  border-color: var(--sa-ink2);
+  color: var(--sa-bg);
+}
+
+/* ── Section labels ── */
+.sa-section-label {
+  font-family: "Special Elite", monospace;
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--sa-muted);
+  margin: 0 0 1.25rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--sa-line-light);
+}
+
+/* ── Featured ── */
+.sa-featured {
+  margin-bottom: 3rem;
+}
+
+.sa-featured-grid {
+  display: grid;
+  gap: 1.5rem;
+}
+
+@media (min-width: 700px) {
+  .sa-featured-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* ── Cards — manila folder style ── */
+.sa-card {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  background: var(--sa-card);
+  border: 1px solid var(--sa-card-border);
+  border-radius: 0 var(--sa-radius) var(--sa-radius) var(--sa-radius);
+  overflow: visible;
+  box-shadow: var(--sa-shadow);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+  margin-top: var(--sa-tab-height);
+}
+
+.sa-card::before {
+  content: "";
+  position: absolute;
+  top: calc(-1 * var(--sa-tab-height));
+  left: -1px;
+  width: 5.5rem;
+  height: var(--sa-tab-height);
+  background: var(--sa-card);
+  border: 1px solid var(--sa-card-border);
+  border-bottom: none;
+  border-radius: var(--sa-radius) var(--sa-radius) 0 0;
+}
+
+.sa-card:hover {
+  transform: translateY(-3px) rotate(-0.3deg);
+  box-shadow: var(--sa-shadow-lift);
+}
+
+.sa-card--feat {
+  overflow: hidden;
+}
+
+/* CLASSIFIED stamp on featured cards */
+.sa-card-stamp {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-18deg);
+  font-family: "Special Elite", monospace;
+  font-size: 2.8rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--sa-stamp);
+  pointer-events: none;
+  white-space: nowrap;
+  z-index: 1;
+  user-select: none;
+}
+
+.sa-card-redact {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--sa-accent);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.sa-card:hover .sa-card-redact {
+  opacity: 1;
+}
+
+.sa-card-body {
+  padding: 1.25rem 1.35rem 1.5rem;
+  position: relative;
+  z-index: 2;
+}
+
+.sa-card-plausibility {
+  display: inline-block;
+  font-family: "Special Elite", monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.55rem;
+  border-radius: var(--sa-radius);
+  margin-bottom: 0.6rem;
+  border: 1px solid currentColor;
+}
+
+/* Plausibility color system */
+.sa-plaus--low {
+  color: var(--sa-plaus-low);
+  background: rgba(74, 124, 74, 0.08);
+}
+
+.sa-plaus--medium {
+  color: var(--sa-plaus-medium);
+  background: rgba(160, 133, 32, 0.08);
+}
+
+.sa-plaus--high {
+  color: var(--sa-plaus-high);
+  background: rgba(196, 74, 0, 0.08);
+}
+
+.sa-plaus--unsettling {
+  color: #fff;
+  background: var(--sa-plaus-unsettling);
+  border-color: var(--sa-plaus-unsettling);
+}
+
+/* Plausibility meter bar */
+.sa-plaus--low::after,
+.sa-plaus--medium::after,
+.sa-plaus--high::after,
+.sa-plaus--unsettling::after {
+  content: "";
+  display: inline-block;
+  width: 2.5rem;
+  height: 4px;
+  margin-left: 0.5rem;
+  vertical-align: middle;
+  border-radius: 2px;
+}
+
+.sa-plaus--low::after {
+  background: linear-gradient(90deg, var(--sa-plaus-low) 25%, transparent 25%);
+}
+
+.sa-plaus--medium::after {
+  background: linear-gradient(90deg, var(--sa-plaus-medium) 50%, transparent 50%);
+}
+
+.sa-plaus--high::after {
+  background: linear-gradient(90deg, var(--sa-plaus-high) 75%, transparent 75%);
+}
+
+.sa-plaus--unsettling::after {
+  background: linear-gradient(90deg, #fff 100%, transparent 100%);
+}
+
+.sa-card-body h2 {
+  font-family: "Special Elite", monospace;
+  font-size: 1.05rem;
+  font-weight: 400;
+  margin: 0 0 0.5rem;
+  line-height: 1.3;
+  letter-spacing: 0.01em;
+  color: var(--sa-ink);
+}
+
+.sa-card-excerpt {
+  font-size: 0.88rem;
+  color: var(--sa-ink2);
+  margin: 0;
+  line-height: 1.55;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.sa-card-events {
+  margin: 0.6rem 0 0;
+  font-family: "Special Elite", monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--sa-muted);
+  padding-top: 0.5rem;
+  border-top: 1px dashed var(--sa-line-light);
+}
+
+/* ── Grid ── */
+.sa-grid-section {
+  margin-bottom: 2rem;
+}
+
+.sa-grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr));
+}
+
+/* ── Detail page — typed document ── */
+.sa-detail {
+  max-width: 42rem;
+  margin: 0 auto;
+  position: relative;
+  padding-left: 3.5rem;
+}
+
+.sa-detail::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 2.8rem;
+  bottom: 0;
+  width: 1px;
+  background: var(--sa-margin-red-line);
+}
+
+.sa-detail::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 3rem;
+  bottom: 0;
+  width: 1px;
+  background: var(--sa-margin-red-line);
+}
+
+@media (max-width: 600px) {
+  .sa-detail {
+    padding-left: 1rem;
+  }
+  .sa-detail::before,
+  .sa-detail::after {
+    display: none;
+  }
+}
+
+.sa-detail-header {
+  margin-bottom: 2.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 2px solid var(--sa-line);
+}
+
+.sa-detail-plausibility {
+  display: inline-block;
+  font-family: "Special Elite", monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.75rem;
+  border-radius: var(--sa-radius);
+  margin-bottom: 1rem;
+  border: 1px solid currentColor;
+}
+
+.sa-detail-header h1 {
+  font-family: "Special Elite", "Courier New", monospace;
+  font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+  font-weight: 400;
+  margin: 0;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+  color: var(--sa-ink);
+}
+
+/* ── Prose ── */
+.sa-prose {
+  margin-bottom: 2rem;
+}
+
+.sa-prose p {
+  margin: 0 0 1.3rem;
+  color: var(--sa-ink2);
+  line-height: 1.8;
+  text-indent: 1.5rem;
+}
+
+.sa-prose p:first-child {
+  text-indent: 0;
+}
+
+.sa-prose p:first-child::first-letter {
+  font-family: "Special Elite", monospace;
+  font-size: 2.8em;
+  float: left;
+  line-height: 0.85;
+  margin-right: 0.1em;
+  margin-top: 0.05em;
+  color: var(--sa-accent);
+}
+
+/* ── Evidence ── */
+.sa-evidence {
+  margin: 2rem 0;
+  padding: 1.25rem 1.5rem;
+  background: var(--sa-surface);
+  border-left: 3px solid var(--sa-accent);
+  border-radius: 0 var(--sa-radius) var(--sa-radius) 0;
+}
+
+.sa-evidence h3 {
+  font-family: "Special Elite", monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--sa-accent);
+  margin: 0 0 0.5rem;
+}
+
+.sa-evidence p {
+  font-size: 0.88rem;
+  color: var(--sa-muted);
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* ── Real events referenced ── */
+.sb-real-events {
+  margin: 2rem 0;
+  padding: 1.25rem 1.5rem;
+  background: var(--sa-surface);
+  border: 1px dashed var(--sa-line);
+  border-left: 3px solid var(--sa-ink);
+  position: relative;
+}
+
+.sb-real-events::before {
+  content: "DECLASSIFIED";
+  position: absolute;
+  top: -0.6rem;
+  right: 1rem;
+  font-family: "Special Elite", monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--sa-accent);
+  background: var(--sa-bg);
+  padding: 0 0.4rem;
+}
+
+.sb-real-events h3 {
+  font-family: "Special Elite", monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--sa-ink);
+  margin: 0 0 0.5rem;
+}
+
+.sb-events-list {
+  font-size: 0.9rem;
+  color: var(--sa-ink2);
+  margin: 0 0 0.75rem;
+  font-weight: 500;
+}
+
+.sb-wiki-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--sa-line-light);
+}
+
+.sb-wiki-links a {
+  font-family: "Source Serif 4", serif;
+  font-size: 0.82rem;
+  color: var(--sa-accent);
+  text-decoration: none;
+  transition: color 0.15s;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.sb-wiki-links a::before {
+  content: "[";
+  color: var(--sa-muted);
+}
+
+.sb-wiki-links a::after {
+  content: "]";
+  color: var(--sa-muted);
+  margin-right: 0.3rem;
+}
+
+.sb-wiki-links a:hover {
+  color: var(--sa-accent-hot);
+  text-decoration: underline;
+}
+
+/* ── Back link ── */
+.sa-back {
+  margin-top: 2.5rem;
+}
+
+.sa-back a {
+  font-family: "Special Elite", monospace;
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--sa-accent);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.15s;
+}
+
+.sa-back a:hover {
+  border-bottom-color: var(--sa-accent);
+}
+
+/* ── More theories ── */
+.sa-more {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 2px solid var(--sa-line);
+}
+
+.sa-more h2 {
+  font-family: "Special Elite", monospace;
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--sa-muted);
+  margin: 0 0 1rem;
+}
+
+.sa-more-list {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 14rem), 1fr));
+}
+
+.sa-more-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 1rem 1.1rem;
+  background: var(--sa-card);
+  border: 1px solid var(--sa-card-border);
+  border-radius: var(--sa-radius);
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.15s, transform 0.15s;
+}
+
+.sa-more-card:hover {
+  border-color: var(--sa-accent);
+  transform: rotate(-0.5deg);
+}
+
+.sa-more-plausibility {
+  font-family: "Special Elite", monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.sa-more-title {
+  font-family: "Special Elite", monospace;
+  font-size: 0.88rem;
+  line-height: 1.3;
+  color: var(--sa-ink);
+}
+
+/* ── Redacted text utility ── */
+.sa-redacted {
+  position: relative;
+  display: inline;
+}
+
+.sa-redacted::after {
+  content: "";
+  position: absolute;
+  left: -2px;
+  right: -2px;
+  top: 0.1em;
+  bottom: 0.1em;
+  background: var(--sa-ink);
+  border-radius: 1px;
+  pointer-events: none;
+}
+
+/* ── Empty state ── */
+.sa-empty {
+  padding: 3rem 1.25rem;
+  text-align: center;
+  color: var(--sa-ink2);
+  border: 2px dashed var(--sa-line);
+  border-radius: var(--sa-radius);
+  background: var(--sa-card);
+}
+
+.sa-empty code {
+  font-family: "Special Elite", monospace;
+  font-size: 0.88em;
+  color: var(--sa-accent);
+}
+
+/* ── Footer ── */
+.sa-footer {
+  margin-top: 4rem;
+  padding: 1.5rem clamp(1rem, 3vw, 1.5rem) 2rem;
+  border-top: 2px solid var(--sa-line);
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--sa-muted);
+}
+
+.sa-footer a {
+  color: var(--sa-ink2);
+  font-weight: 500;
+  text-decoration: none;
+  border-bottom: 1px solid var(--sa-line);
+}
+
+.sa-footer a:hover {
+  color: var(--sa-accent);
+  border-bottom-color: var(--sa-accent);
+}
+
+/* ── Pin-board index aesthetic ── */
+@media (min-width: 700px) {
+  .sa-grid {
+    position: relative;
+  }
+
+  .sa-grid .sa-card:nth-child(odd) {
+    transform: rotate(-0.7deg);
+  }
+
+  .sa-grid .sa-card:nth-child(even) {
+    transform: rotate(0.5deg);
+  }
+
+  .sa-grid .sa-card:nth-child(3n) {
+    transform: rotate(0.9deg);
+  }
+
+  .sa-grid .sa-card:hover {
+    transform: translateY(-4px) rotate(0deg) !important;
+    z-index: 2;
+  }
+}
+
+/* Push-pin dot on each card */
+.sa-card::after {
+  content: "";
+  position: absolute;
+  top: calc(-1 * var(--sa-tab-height) + 0.35rem);
+  left: 2rem;
+  width: 8px;
+  height: 8px;
+  background: var(--sa-accent);
+  border-radius: 50%;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  z-index: 3;
+}
+
+/* ── Responsive ── */
+@media (max-width: 700px) {
+  .sa-featured-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .sa-card-stamp {
+    font-size: 1.8rem;
+  }
+
+  .sa-filter-pills {
+    gap: 0.35rem;
+  }
+
+  .sa-pill {
+    font-size: 0.68rem;
+    padding: 0.25rem 0.6rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .sa-hero h1 {
+    font-size: 1.4rem;
+  }
+
+  .sa-hero p {
+    font-size: 0.9rem;
+  }
+
+  .sa-card-body h2 {
+    font-size: 0.95rem;
+  }
+}

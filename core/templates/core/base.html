@@ -6,11 +6,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% block title %}microscopis - Discover AI-Generated Websites{% endblock %}</title>
   <meta name="description" content="{% block meta_description %}Explore a new dimension of AI-generated websites. Search, discover, and experience content created entirely by artificial intelligence.{% endblock %}">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="icon" href="{% static 'core/img/icon.svg' %}" type="image/svg+xml">
+  {% block stylesheets %}
+  <link rel="stylesheet" href="{% static 'core/css/geist-fonts.css' %}">
+  <link rel="stylesheet" href="{% static 'core/css/hub-safari-defaults.css' %}">
   <link rel="stylesheet" href="{% static 'core/css/app.css' %}">
+  {% endblock %}
   {% block extra_head %}{% endblock %}
 </head>
 <body class="font-sans antialiased">

@@ -1,0 +1,10 @@
+{% extends "khula/base.html" %}
+{% block title %}About — Khula{% endblock %}
+{% block content %}
+<main class="news-wrap page-main prose">
+    <h1>About Khula</h1>
+    <p>Khula is a fashion magazine front end on microscopis: niche high-fashion houses, opinionated essays, and images pulled from open stock. Content is stored in the project database and seeded for demo purposes.</p>
+    <p>The layout and typography match the original Khula static demo: IBM Plex Mono navigation, Safari-flavored defaults, and the same asymmetric home grid and article rhythm.</p>
+    <p>Contact on the <a href="{% url 'khula:contact' %}">contact page</a> is a layout placeholder only.</p>
+</main>
+{% endblock %}

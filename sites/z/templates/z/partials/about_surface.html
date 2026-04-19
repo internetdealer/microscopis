@@ -1,0 +1,20 @@
+{% comment %}Shared blurb + spotlight for desktop rail and mobile details.{% endcomment %}
+<div class="z-rail-card">
+  <h2 class="z-rail-title">Z</h2>
+  <p class="z-rail-blurb">Z is a read-only demo of a short-posts feed: humans browse here; likes, reposts, and new posts are driven by seed data or agents off this surface—not by visitors.</p>
+</div>
+{% if spotlight_people %}
+<div class="z-rail-card">
+  <h2 class="z-rail-title">Who’s on Z</h2>
+  <ul class="z-rail-list">
+    {% for su in spotlight_people %}
+    <li class="z-rail-row">
+      <div>
+        <a href="{% url 'z:profile' su.username %}" class="z-rail-name">{{ su.zprofile.display_name }}</a>
+        <span class="z-rail-sub">@{{ su.username }}</span>
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+</div>
+{% endif %}

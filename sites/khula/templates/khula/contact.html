@@ -1,0 +1,21 @@
+{% extends "khula/base.html" %}
+{% block title %}Contact — Khula{% endblock %}
+{% block content %}
+<main class="news-wrap page-main prose">
+    <h1>Contact</h1>
+    <p class="lead">This form does not submit anywhere. It exists for layout only.</p>
+
+    <form class="contact-form" method="get" action="#" aria-label="Contact (demo)">
+        <label>Name
+            <input type="text" name="name" autocomplete="name">
+        </label>
+        <label>Email
+            <input type="email" name="email" autocomplete="email">
+        </label>
+        <label>Message
+            <textarea name="message" rows="6" cols="40"></textarea>
+        </label>
+        <button type="button">Send</button>
+    </form>
+</main>
+{% endblock %}

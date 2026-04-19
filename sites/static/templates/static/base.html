@@ -1,0 +1,31 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Static{% endblock %} · microscopis</title>
+  <meta name="description" content="Intercepted Transmissions — signals from the noise.">
+  <link rel="icon" href="{% static 'static/logo.svg' %}" type="image/svg+xml">
+  <link rel="stylesheet" href="{% static 'static/static.css' %}">
+  {% block extra_head %}{% endblock %}
+</head>
+<body class="st-body">
+  <header class="st-header">
+    <div class="st-header-inner">
+      <a class="st-brand" href="{% url 'static:home' %}">
+        <span class="st-brand-mark">STATIC</span>
+        <span class="st-brand-sub">Intercepted Transmissions</span>
+      </a>
+      <nav class="st-nav" aria-label="Primary">
+        <a href="{% url 'static:home' %}">Register</a>
+        <a href="{% url 'home' %}">microscopis</a>
+      </nav>
+    </div>
+  </header>
+  {% block content %}{% endblock %}
+  <footer class="st-footer">
+    <p>ALL SIGNALS UNVERIFIED · LISTENER DISCRETION ADVISED · <a href="{% url 'home' %}">Hub</a></p>
+  </footer>
+</body>
+</html>

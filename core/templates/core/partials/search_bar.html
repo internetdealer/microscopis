@@ -6,19 +6,77 @@
   </div>
 </form>
 {% else %}
-<form action="{% url 'search' %}" method="get" class="w-full max-w-2xl mx-auto">
-  <div class="search-field relative flex items-center gap-4 px-6 py-4 rounded-2xl bg-background/80 backdrop-blur-md border-2 border-border transition-all duration-500 ease-out focus-within:border-foreground hover:border-foreground/20 hover:shadow-lg">
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 text-muted-foreground focus-within:text-foreground transition-colors duration-300 shrink-0"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-    <input type="search" name="q" value="{{ query|default:'' }}" placeholder="Search AI-generated websites..." class="flex-1 bg-transparent outline-none text-lg text-foreground input-placeholder-muted input-search min-w-0" autocomplete="off">
-    <button type="submit" class="flex items-center justify-center w-12 h-12 rounded-xl bg-foreground text-background transition-all duration-300 ease-out hover:scale-105 active:scale-95" aria-label="Search">
+<form action="{% url 'search' %}" method="get" class="w-full mx-auto" autocomplete="off" style="position:relative">
+  <div class="search-field hub-search-field relative w-full max-w-2xl mx-auto">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hub-search-icon shrink-0"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+    <input id="home-search-q" type="search" name="q" value="{{ query|default:'' }}" placeholder="Search AI-generated websites..." class="hub-search-input input-search input-placeholder-muted min-w-0" autocomplete="off">
+    <button type="submit" class="hub-search-submit" aria-label="Search">
       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
     </button>
   </div>
+  <div id="home-suggestions" class="suggestions-dropdown" hidden></div>
   <div class="flex flex-wrap items-center justify-center gap-2 mt-6">
     <span class="text-sm text-muted-foreground">Try:</span>
     {% for term in try_terms %}
-    <a href="{% url 'search' %}?q={{ term|urlencode }}" class="px-3 py-1.5 text-sm rounded-full bg-secondary/50 hover:bg-secondary text-muted-foreground hover:text-foreground transition-all duration-200 hover:scale-105 active:scale-95">{{ term }}</a>
+    <a href="{% url 'search' %}?q={{ term|urlencode }}" class="hub-try-chip">{{ term }}</a>
     {% endfor %}
   </div>
 </form>
+
+<script>
+(function () {
+  var input = document.getElementById("home-search-q");
+  var box = document.getElementById("home-suggestions");
+  if (!input || !box) return;
+  var timer = null;
+
+  function escapeAttr(v) {
+    return String(v).replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "\u003c");
+  }
+
+  function hide() { box.hidden = true; box.innerHTML = ""; }
+
+  function render(results) {
+    return results.map(function (s) {
+      var logo = s.logo_url
+        ? '<img class="sug-icon-img" src="' + escapeAttr(s.logo_url) + '" alt="" width="24" height="24" loading="lazy" decoding="async">'
+        : '<span class="sug-icon-fallback">' + escapeAttr(s.name.charAt(0)) + '</span>';
+      return '<a class="sug-item" href="' + escapeAttr(s.url) + '">'
+        + '<div class="sug-icon sug-icon--logo">' + logo + '</div>'
+        + '<div class="sug-body">'
+        +   '<div class="sug-row">'
+        +     '<span class="sug-name">' + escapeAttr(s.name) + '</span>'
+        +     '<span class="sug-topic">' + escapeAttr(s.topic) + '</span>'
+        +   '</div>'
+        +   '<span class="sug-desc">' + escapeAttr(s.description) + '</span>'
+        + '</div>'
+        + '<svg class="sug-arrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>'
+        + '</a>';
+    }).join("");
+  }
+
+  input.addEventListener("input", function () {
+    clearTimeout(timer);
+    var q = input.value.trim();
+    if (q.length < 1) { hide(); return; }
+    timer = setTimeout(function () {
+      fetch("{% url 'search_suggest' %}?q=" + encodeURIComponent(q))
+        .then(function (r) { return r.json(); })
+        .then(function (data) {
+          if (!data.results.length) { hide(); return; }
+          box.innerHTML = render(data.results);
+          box.hidden = false;
+        });
+    }, 120);
+  });
+
+  input.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") hide();
+  });
+
+  document.addEventListener("click", function (e) {
+    if (!box.contains(e.target) && e.target !== input) hide();
+  });
+})();
+</script>
 {% endif %}

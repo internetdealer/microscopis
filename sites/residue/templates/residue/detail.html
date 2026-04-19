@@ -1,0 +1,51 @@
+{% extends "residue/base.html" %}
+{% block title %}{{ entry.site_name }}{% endblock %}
+{% block content %}
+<article class="rs-wrap rs-detail">
+  <header class="rs-detail-header">
+    <span class="rs-detail-type">{{ entry.get_fragment_type_display }}</span>
+    <h1>{{ entry.site_name }}</h1>
+    <div class="rs-detail-meta">
+      <div class="rs-meta-row"><span class="rs-meta-label">URL:</span> <span class="rs-meta-url">{{ entry.original_url }}</span></div>
+      <div class="rs-meta-row"><span class="rs-meta-label">ARCHIVED:</span> {{ entry.archived_at|date:"Y-m-d H:i" }}</div>
+    </div>
+  </header>
+
+  <div class="rs-prose">
+    {% for p in paragraphs %}
+    <p>{{ p }}</p>
+    {% endfor %}
+  </div>
+
+  {% if entry.context_notes %}
+  <div class="rs-context">
+    <h3>Recovery Notes</h3>
+    <p>{{ entry.context_notes }}</p>
+  </div>
+  {% endif %}
+
+  {% if entry.wayback_url %}
+  <div class="res-wayback-link">
+    <a href="{{ entry.wayback_url }}" target="_blank" rel="noopener noreferrer" class="res-wayback-btn">
+      ↗ View in Wayback Machine
+    </a>
+  </div>
+  {% endif %}
+
+  <p class="rs-back"><a href="{% url 'residue:home' %}">Back to fragments</a></p>
+
+  {% if others %}
+  <section class="rs-more" aria-labelledby="rs-others-title">
+    <h2 id="rs-others-title">Other Fragments</h2>
+    <div class="rs-more-list">
+      {% for o in others %}
+      <a class="rs-more-card" href="{% url 'residue:fragment' o.slug %}">
+        <span class="rs-more-type">{{ o.get_fragment_type_display }}</span>
+        <span class="rs-more-title">{{ o.site_name }}</span>
+      </a>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
+</article>
+{% endblock %}

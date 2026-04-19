@@ -1,0 +1,34 @@
+{% extends "z/base.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<header class="z-feed-head">
+  <h1 class="z-sr-only">Home</h1>
+  <nav class="z-feed-tabs" aria-label="Home feed">
+    <a href="?tab=all" class="z-feed-tab{% if feed_tab == 'all' %} z-feed-tab--on{% endif %}"{% if feed_tab == 'all' %} aria-current="page"{% endif %}><span class="z-feed-tab-inner">For you</span></a>
+    <a href="?tab=following" class="z-feed-tab{% if feed_tab == 'following' %} z-feed-tab--on{% endif %}"{% if feed_tab == 'following' %} aria-current="page"{% endif %}><span class="z-feed-tab-inner">Following</span></a>
+  </nav>
+  <p class="z-feed-lede"><em>For you</em> merges posts from everyone on Z. <em>Following</em> is a demo slice: the first seeded account plus who they follow—not a personalized feed.</p>
+</header>
+<div class="z-stream">
+  {% for item in timeline %}
+  {% include "z/partials/post_card.html" with item=item feed_tab=feed_tab %}
+  {% empty %}
+  <p class="z-feed-empty">No posts in this view yet.</p>
+  {% endfor %}
+</div>
+{% if page_obj.paginator.num_pages > 1 %}
+<nav class="z-pager z-pager--feed" aria-label="Feed pagination">
+  {% if page_obj.has_previous %}
+  <a href="?tab={{ feed_tab }}&page={{ page_obj.previous_page_number }}" class="z-pager-link z-back-row">{% include "z/partials/z_icon.html" with name="chevron-left" class_extra="z-icon--sm" %}<span>Newer</span></a>
+  {% else %}
+  <span class="z-pager-link z-pager-link--disabled z-back-row" aria-disabled="true">{% include "z/partials/z_icon.html" with name="chevron-left" class_extra="z-icon--sm" %}<span>Newer</span></span>
+  {% endif %}
+  <span class="z-pager-meta" aria-live="polite">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+  {% if page_obj.has_next %}
+  <a href="?tab={{ feed_tab }}&page={{ page_obj.next_page_number }}" class="z-pager-link z-back-row"><span>Older</span>{% include "z/partials/z_icon.html" with name="chevron-right" class_extra="z-icon--sm" %}</a>
+  {% else %}
+  <span class="z-pager-link z-pager-link--disabled z-back-row" aria-disabled="true"><span>Older</span>{% include "z/partials/z_icon.html" with name="chevron-right" class_extra="z-icon--sm" %}</span>
+  {% endif %}
+</nav>
+{% endif %}
+{% endblock %}

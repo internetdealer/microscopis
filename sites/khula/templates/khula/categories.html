@@ -1,0 +1,18 @@
+{% extends "khula/base.html" %}
+{% block title %}Categories — Khula{% endblock %}
+{% block content %}
+<main class="news-wrap page-main">
+    <h1>Categories</h1>
+    <p class="lead">Browse by desk—maisons, avant-garde, dispatch, atelier.</p>
+
+    <section class="cat-grid" aria-label="Category list">
+        {% for c in categories %}
+        <a class="cat-tile" href="{% url 'khula:category' c.slug %}">
+            <h2>{{ c.title }}</h2>
+            <p class="lead">{{ c.blurb }}</p>
+            <p class="meta">{{ c.count }} stories</p>
+        </a>
+        {% endfor %}
+    </section>
+</main>
+{% endblock %}

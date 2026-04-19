@@ -1,8 +1,4 @@
-"""
-VERSO editorial content. Lives in the microscopis project but is separate from
-core.models (SearchIndex, WebsiteContent). Import from here or from
-core.models.verso_models for a stable ``core`` namespace.
-"""
+"""VERSO editorial content (this package owns models and views)."""
 
 from __future__ import annotations
 

@@ -1,0 +1,31 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Sable{% endblock %} · microscopis</title>
+  <meta name="description" content="Almost True Conspiracies — theories that are uncomfortably plausible.">
+  <link rel="icon" href="{% static 'sable/logo.svg' %}" type="image/svg+xml">
+  <link rel="stylesheet" href="{% static 'sable/sable.css' %}">
+  {% block extra_head %}{% endblock %}
+</head>
+<body class="sa-body">
+  <header class="sa-header">
+    <div class="sa-header-inner">
+      <a class="sa-brand" href="{% url 'sable:home' %}">
+        <span class="sa-brand-mark">Sable</span>
+        <span class="sa-brand-sub">Almost True Conspiracies</span>
+      </a>
+      <nav class="sa-nav" aria-label="Primary">
+        <a href="{% url 'sable:home' %}">Theories</a>
+        <a href="{% url 'home' %}">microscopis</a>
+      </nav>
+    </div>
+  </header>
+  {% block content %}{% endblock %}
+  <footer class="sa-footer">
+    <p>All theories are fictional · Any resemblance to actual conspiracies is uncomfortable · <a href="{% url 'home' %}">Hub</a></p>
+  </footer>
+</body>
+</html>

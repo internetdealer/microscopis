@@ -1,0 +1,54 @@
+{% with p=item.post %}
+<article class="z-card" data-testid="post-{{ p.pk }}">
+  {% if item.reposter %}
+  <div class="z-card-repost z-card-repost--row">
+    {% include "z/partials/z_icon.html" with name="repost" class_extra="z-icon--sm" %}
+    <a href="{% url 'z:profile' item.reposter.username %}">@{{ item.reposter.username }}</a>
+    <span class="z-card-repost-txt">reposted</span>
+  </div>
+  {% endif %}
+  <div class="z-card-grid">
+    <div class="z-card-avatar" aria-hidden="true">
+      {% if p.author.zprofile.avatar_url %}
+      <img src="{{ p.author.zprofile.avatar_url }}" alt="" width="44" height="44" loading="lazy">
+      {% else %}
+      <span class="z-card-avatar-fallback">{{ p.author.username|slice:":1"|upper }}</span>
+      {% endif %}
+    </div>
+    <div class="z-card-main">
+      <header class="z-card-head">
+        <a href="{% url 'z:profile' p.author.username %}" class="z-card-name">{{ p.author.zprofile.display_name }}</a>
+        <a href="{% url 'z:profile' p.author.username %}" class="z-card-handle">@{{ p.author.username }}</a>
+        <span class="z-card-sep" aria-hidden="true">·</span>
+        <a href="{% url 'z:post' p.pk %}{% if feed_tab %}?from_tab={{ feed_tab }}{% endif %}" class="z-card-time">
+          <time datetime="{{ p.created_at|date:'c' }}" title="{{ p.created_at|date:'M j, Y, g:i a T' }}">{{ p.created_at|timesince }} ago</time>
+        </a>
+        {% if p.edited %}<span class="z-card-edited">Edited</span>{% endif %}
+      </header>
+      {% if p.body %}
+      <div class="z-card-text">{{ p.body|linebreaksbr }}</div>
+      {% endif %}
+      {% if p.quoted_post %}
+      <div class="z-card-embed">
+        <a href="{% url 'z:post' p.quoted_post.pk %}{% if feed_tab %}?from_tab={{ feed_tab }}{% endif %}" class="z-card-embed-link">
+          <span class="z-card-embed-from">@{{ p.quoted_post.author.username }}</span>
+          <span class="z-card-embed-snippet">{{ p.quoted_post.body|truncatewords:36 }}</span>
+        </a>
+      </div>
+      {% endif %}
+      {% if p.media_url %}
+      <div class="z-card-media">
+        <img src="{{ p.media_url }}" alt="" loading="lazy">
+      </div>
+      {% endif %}
+      <footer class="z-card-foot">
+        <a href="{% url 'z:post' p.pk %}{% if feed_tab %}?from_tab={{ feed_tab }}{% endif %}" class="z-foot-link z-foot-link--thread z-back-row">{% include "z/partials/z_icon.html" with name="thread" class_extra="z-icon--sm" %}<span>Thread</span></a>
+        <span class="z-foot-stat-group">
+          <span class="z-foot-stat" title="Likes (seeded)"><span class="z-foot-stat-label">Likes</span>{% include "z/partials/z_icon.html" with name="heart" class_extra="z-icon--sm" %} {{ p.like_count|default:0 }}</span>
+          <span class="z-foot-stat" title="Reposts (seeded)"><span class="z-foot-stat-label">Reposts</span>{% include "z/partials/z_icon.html" with name="repost" class_extra="z-icon--sm" %} {{ p.repost_count|default:0 }}</span>
+        </span>
+      </footer>
+    </div>
+  </div>
+</article>
+{% endwith %}

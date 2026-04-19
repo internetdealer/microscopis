@@ -1,0 +1,31 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Residue{% endblock %} · microscopis</title>
+  <meta name="description" content="Digital Remains — fragments of deleted websites, broken pages, ghost content.">
+  <link rel="icon" href="{% static 'residue/logo.svg' %}" type="image/svg+xml">
+  <link rel="stylesheet" href="{% static 'residue/residue.css' %}">
+  {% block extra_head %}{% endblock %}
+</head>
+<body class="rs-body">
+  <header class="rs-header">
+    <div class="rs-header-inner">
+      <a class="rs-brand" href="{% url 'residue:home' %}">
+        <span class="rs-brand-mark">R̷E̷S̷I̷D̷U̷E̷</span>
+        <span class="rs-brand-sub">Digital Remains</span>
+      </a>
+      <nav class="rs-nav" aria-label="Primary">
+        <a href="{% url 'residue:home' %}">Wall</a>
+        <a href="{% url 'home' %}">microscopis</a>
+      </nav>
+    </div>
+  </header>
+  {% block content %}{% endblock %}
+  <footer class="rs-footer">
+    <p>Nothing on the internet is truly deleted · Everything leaves a trace · <a href="{% url 'home' %}">Hub</a></p>
+  </footer>
+</body>
+</html>

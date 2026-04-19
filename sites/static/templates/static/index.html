@@ -1,0 +1,55 @@
+{% extends "static/base.html" %}
+{% block title %}Intercept register{% endblock %}
+{% block content %}
+<main class="st-wrap st-wrap--register">
+  <section class="st-hero st-hero--compact">
+    <h1>INTERCEPT REGISTER</h1>
+    <p>Tabular log of signals—designation, class, time. Not a card wall; a station log.</p>
+    <span class="st-count">{{ total_count }} row{{ total_count|pluralize }} in register</span>
+  </section>
+
+  {% if signals %}
+  <div class="st-table-wrap">
+    <table class="st-register">
+      <thead>
+        <tr>
+          <th scope="col">Designation</th>
+          <th scope="col">Class</th>
+          <th scope="col">Intercepted</th>
+          <th scope="col">Origin</th>
+          <th scope="col">Media</th>
+          <th scope="col">Preview</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for s in signals %}
+        <tr class="{% if s.is_featured %}st-register-row--flag{% endif %}">
+          <td class="st-reg-desig">
+            <a href="{% url 'static:signal' s.slug %}">{{ s.designation }}</a>
+          </td>
+          <td class="st-reg-type">{{ s.get_signal_type_display }}</td>
+          <td class="st-reg-time">{{ s.intercepted_at|date:"Y-m-d H:i" }}</td>
+          <td class="st-reg-origin">{{ s.origin_description|default:"—"|truncatechars:36 }}</td>
+          <td class="st-reg-audio st-reg-media">
+            {% if s.archive_embed_id or s.audio_url %}
+            <span class="st-media-badges">
+              {% if s.archive_embed_id %}<span class="st-embed-badge">EMBED</span>{% endif %}
+              {% if s.audio_url %}<span class="st-audio-badge">AUDIO</span>{% endif %}
+            </span>
+            {% else %}—{% endif %}
+          </td>
+          <td class="st-reg-prev"><a href="{% url 'static:signal' s.slug %}">{{ s.transcript|truncatewords:12 }}</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% load pagination_extras %}
+  {% include "core/partials/pagination_nav.html" %}
+  {% else %}
+  <div class="st-empty">
+    No rows in register. Run <code>python manage.py seed_static</code>
+  </div>
+  {% endif %}
+</main>
+{% endblock %}

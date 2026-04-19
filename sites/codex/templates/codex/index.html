@@ -1,0 +1,46 @@
+{% extends "codex/base.html" %}
+{% block title %}Voxlang Dictionary{% endblock %}
+{% block content %}
+<main class="cx-wrap">
+  <section class="cx-hero">
+    <h1>Voxlang Dictionary</h1>
+    <p>A language invented by machines. {{ total_count }} entries and growing.</p>
+  </section>
+
+  <div class="cx-letter-bar">
+    {% for l in letters %}
+    <a href="?letter={{ l }}{% if current_type %}&type={{ current_type }}{% endif %}" class="cx-letter {% if current_letter == l %}cx-letter--active{% endif %}">{{ l }}</a>
+    {% endfor %}
+    {% if current_letter %}
+    <a href="{% url 'codex:home' %}{% if current_type %}?type={{ current_type }}{% endif %}" class="cx-letter-clear">All</a>
+    {% endif %}
+  </div>
+
+  <div class="cx-type-tabs">
+    <a href="{% url 'codex:home' %}{% if current_letter %}?letter={{ current_letter }}{% endif %}" class="cx-tab {% if not current_type %}cx-tab--active{% endif %}">All</a>
+    {% for val, label in entry_types %}
+    <a href="?type={{ val }}{% if current_letter %}&letter={{ current_letter }}{% endif %}" class="cx-tab {% if current_type == val %}cx-tab--active{% endif %}">{{ label }}s</a>
+    {% endfor %}
+  </div>
+
+  {% if entries %}
+  <div class="cx-entry-list">
+    {% for e in entries %}
+    <a class="cx-entry-row" href="{% url 'codex:entry' e.slug %}">
+      <div class="cx-entry-term">
+        <h2>{{ e.term }}</h2>
+        {% if e.pronunciation %}<span class="cx-pron">[{{ e.pronunciation }}]</span>{% endif %}
+      </div>
+      <div class="cx-entry-meta">
+        <span class="cx-type-badge cx-type--{{ e.entry_type }}">{{ e.get_entry_type_display }}</span>
+      </div>
+      <p class="cx-entry-preview">{{ e.definition|truncatewords:25 }}</p>
+    </a>
+    {% endfor %}
+  </div>
+  {% include "core/partials/pagination_nav.html" %}
+  {% else %}
+  <div class="cx-empty">No entries match the current filters.</div>
+  {% endif %}
+</main>
+{% endblock %}

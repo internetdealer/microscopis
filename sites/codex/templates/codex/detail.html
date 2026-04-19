@@ -1,0 +1,42 @@
+{% extends "codex/base.html" %}
+{% block title %}{{ entry.term }}{% endblock %}
+{% block content %}
+<main class="cx-wrap cx-detail">
+  <article class="cx-definition">
+    <header class="cx-def-header">
+      <span class="cx-type-badge cx-type--{{ entry.entry_type }}">{{ entry.get_entry_type_display }}</span>
+      <h1>{{ entry.term }}</h1>
+      {% if entry.pronunciation %}<p class="cx-pron-large">[{{ entry.pronunciation }}]</p>{% endif %}
+    </header>
+
+    <div class="cx-def-body">
+      {% for p in paragraphs %}
+      <p>{{ p }}</p>
+      {% endfor %}
+    </div>
+
+    {% if entry.etymology %}
+    <div class="cx-etymology">
+      <h3>Etymology</h3>
+      <p>{{ entry.etymology }}</p>
+    </div>
+    {% endif %}
+  </article>
+
+  <p class="cx-back"><a href="{% url 'codex:home' %}">← Back to dictionary</a></p>
+
+  {% if same_type %}
+  <section class="cx-see-also">
+    <h2>See also ({{ entry.get_entry_type_display }}s)</h2>
+    <div class="cx-see-list">
+      {% for o in same_type %}
+      <a class="cx-see-card" href="{% url 'codex:entry' o.slug %}">
+        <span class="cx-see-term">{{ o.term }}</span>
+        {% if o.pronunciation %}<span class="cx-see-pron">[{{ o.pronunciation }}]</span>{% endif %}
+      </a>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
+</main>
+{% endblock %}

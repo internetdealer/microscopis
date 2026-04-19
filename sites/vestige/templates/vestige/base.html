@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Vestige{% endblock %} · microscopis</title>
+  <meta name="description" content="Things the Internet Forgot — a museum of dead memes, abandoned projects, and forgotten trends.">
+  <link rel="icon" href="{% static 'vestige/logo.svg' %}" type="image/svg+xml">
+  <link rel="stylesheet" href="{% static 'vestige/vestige.css' %}">
+</head>
+<body class="vg-body">
+  <header class="vg-header">
+    <div class="vg-header-inner">
+      <a class="vg-brand" href="{% url 'vestige:home' %}">
+        <span class="vg-brand-mark">VESTIGE</span>
+        <span class="vg-brand-sub">Things the Internet Forgot</span>
+      </a>
+      <nav class="vg-nav" aria-label="Primary">
+        <a href="{% url 'vestige:home' %}">Museum</a>
+        <a href="{% url 'home' %}">microscopis</a>
+      </nav>
+    </div>
+  </header>
+  {% block content %}{% endblock %}
+  <footer class="vg-footer">
+    <div class="vg-footer-inner">
+      <p class="vg-counter">You are visitor #00{{ total_count|default:"0" }}{{ total_count|default:"0" }}37</p>
+      <p>Best viewed in Netscape Navigator 4.0 · <a href="{% url 'home' %}">Hub</a></p>
+    </div>
+  </footer>
+</body>
+</html>

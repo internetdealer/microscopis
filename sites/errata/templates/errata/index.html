@@ -1,0 +1,55 @@
+{% extends "errata/base.html" %}
+{% block title %}Corrections{% endblock %}
+{% block content %}
+<main class="er-wrap">
+  <section class="er-hero">
+    <h1>Corrections to History</h1>
+    <p>Official amendments to the record. What you were told was wrong. Here is what is less wrong.</p>
+    <span class="er-count">{{ total_count }} correction{{ total_count|pluralize }} issued</span>
+  </section>
+
+  {% if featured %}
+  <section class="er-featured" aria-labelledby="er-feat-title">
+    <h2 id="er-feat-title" class="er-section-label">Recent Corrections</h2>
+    <div class="er-featured-grid">
+      {% for c in featured %}
+      <a class="er-card er-card--feat" href="{% url 'errata:correction' c.slug %}">
+        <div class="er-card-body">
+          <div class="er-card-meta">
+            <span class="er-card-severity er-severity--{{ c.severity }}">{{ c.get_severity_display }}</span>
+            <span class="er-card-date">{{ c.issued_at|date:"Y-m-d" }}</span>
+          </div>
+          <h2>{{ c.original_claim|truncatechars:80 }}</h2>
+          <p class="er-card-excerpt">{{ c.correction|truncatewords:22 }}</p>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
+
+  {% if entries %}
+  <section class="er-grid-section" aria-labelledby="er-more-title">
+    <h2 id="er-more-title" class="er-section-label">Archive</h2>
+    <div class="er-grid">
+      {% for c in entries %}
+      <a class="er-card" href="{% url 'errata:correction' c.slug %}">
+        <div class="er-card-body">
+          <div class="er-card-meta">
+            <span class="er-card-severity er-severity--{{ c.severity }}">{{ c.get_severity_display }}</span>
+          </div>
+          <h2>{{ c.original_claim|truncatechars:70 }}</h2>
+          <p class="er-card-excerpt">{{ c.correction|truncatewords:18 }}</p>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+    {% include "core/partials/pagination_nav.html" %}
+  </section>
+  {% elif not featured %}
+  <div class="er-empty">
+    No corrections issued. Run <code>python manage.py seed_errata</code>
+  </div>
+  {% endif %}
+</main>
+{% endblock %}

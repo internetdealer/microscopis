@@ -1,0 +1,64 @@
+{% extends "errata/base.html" %}
+{% block title %}Correction: {{ entry.original_claim|truncatechars:50 }}{% endblock %}
+{% block content %}
+<article class="er-wrap er-detail">
+  <header class="er-detail-header">
+    <div class="er-detail-meta-bar">
+      <span class="er-detail-severity er-severity--{{ entry.severity }}">{{ entry.get_severity_display }}</span>
+      <span class="er-detail-date">Issued: {{ entry.issued_at|date:"Y-m-d" }}</span>
+    </div>
+    <div class="er-detail-claim">
+      <span class="er-claim-label">ORIGINAL CLAIM:</span>
+      <h1>{{ entry.original_claim }}</h1>
+    </div>
+  </header>
+
+  <div class="er-correction">
+    <span class="er-correction-label">CORRECTION:</span>
+    <div class="er-prose">
+      {% for p in paragraphs %}
+      <p>{{ p }}</p>
+      {% endfor %}
+    </div>
+  </div>
+
+  {% if entry.wikipedia_url %}
+  <div class="er-source-link">
+    <a href="{{ entry.wikipedia_url }}" target="_blank" rel="noopener noreferrer">Source: Wikipedia →</a>
+  </div>
+  {% endif %}
+  {% if entry.fact_year %}
+  <div class="er-fact-year">Original claim period: {{ entry.fact_year }}{% if entry.fact_year < 0 %} BCE{% else %} CE{% endif %}</div>
+  {% endif %}
+
+  {% if entry.source_cited %}
+  <div class="er-source">
+    <span class="er-source-label">SOURCE:</span>
+    <p>{{ entry.source_cited }}</p>
+  </div>
+  {% endif %}
+
+  {% if entry.editor_note %}
+  <div class="er-editor-note">
+    <span class="er-note-label">EDITOR'S NOTE:</span>
+    <p>{{ entry.editor_note }}</p>
+  </div>
+  {% endif %}
+
+  <p class="er-back"><a href="{% url 'errata:home' %}">Back to corrections</a></p>
+
+  {% if others %}
+  <section class="er-more" aria-labelledby="er-others-title">
+    <h2 id="er-others-title">Other Corrections</h2>
+    <div class="er-more-list">
+      {% for o in others %}
+      <a class="er-more-card" href="{% url 'errata:correction' o.slug %}">
+        <span class="er-more-severity er-severity--{{ o.severity }}">{{ o.get_severity_display }}</span>
+        <span class="er-more-title">{{ o.original_claim|truncatechars:60 }}</span>
+      </a>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
+</article>
+{% endblock %}

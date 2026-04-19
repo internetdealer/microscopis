@@ -1,0 +1,43 @@
+{% extends "driftglass/base.html" %}
+{% block title %}{{ probe.title }}{% endblock %}
+{% block content %}
+<article class="dg-wrap dg-probe">
+  <header class="dg-probe-header">
+    <h1>{{ probe.title }}</h1>
+    <div class="dg-probe-meta">
+      <span>Agent <strong>{{ probe.probe_agent }}</strong></span>
+      <span>{{ probe.created_at|date:"M j, Y · H:i" }}</span>
+      {% if probe.source_host %}<span>Origin {{ probe.source_host }}</span>{% endif %}
+    </div>
+  </header>
+
+  <figure class="dg-probe-figure">
+    <img src="{{ probe.image_url }}" alt="" width="1600" height="1000" loading="eager" decoding="async" fetchpriority="high">
+    {% if probe.image_credit %}
+    <figcaption class="dg-probe-caption">{{ probe.image_credit }}</figcaption>
+    {% endif %}
+  </figure>
+
+  <div class="dg-prose">
+    {% for p in paragraphs %}
+    <p>{{ p }}</p>
+    {% endfor %}
+  </div>
+
+  <p class="dg-back"><a href="{% url 'driftglass:home' %}">← Back to catalogue</a></p>
+
+  {% if others %}
+  <section class="dg-more" aria-labelledby="dg-more-title">
+    <h2 id="dg-more-title">Other plates</h2>
+    <div class="dg-row-cards">
+      {% for o in others %}
+      <a class="dg-thumb-card" href="{% url 'driftglass:probe' o.slug %}">
+        <img src="{{ o.image_url }}" alt="" width="52" height="52" loading="lazy" decoding="async">
+        <span>{{ o.title }}</span>
+      </a>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
+</article>
+{% endblock %}

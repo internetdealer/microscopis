@@ -1,0 +1,24 @@
+{% extends "errata/base.html" %}
+{% block title %}Timeline of Corrections{% endblock %}
+{% block content %}
+<main class="er-wrap">
+  <section class="er-timeline-hero">
+    <h1>TIMELINE OF CORRECTIONS</h1>
+    <p>History's errors, arranged chronologically.</p>
+  </section>
+  <div class="er-timeline">
+    {% for c in corrections %}
+    <div class="er-timeline-item">
+      <div class="er-timeline-year">{{ c.fact_year }}{% if c.fact_year < 0 %} BCE{% else %} CE{% endif %}</div>
+      <div class="er-timeline-content">
+        <a href="{% url 'errata:correction' c.slug %}">
+          <span class="er-timeline-severity er-sev-{{ c.severity }}">{{ c.get_severity_display }}</span>
+          <h3>{{ c.original_claim|truncatewords:12 }}</h3>
+          <p>{{ c.correction|truncatewords:25 }}</p>
+        </a>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</main>
+{% endblock %}

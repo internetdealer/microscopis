@@ -1,7 +1,10 @@
+from django.core.paginator import Paginator
 from django.http import Http404
 from django.shortcuts import get_object_or_404, render
 
 from sites.chronicle.models import ChronicleEntry, ChronicleTag
+
+ENTRIES_PER_PAGE = 10
 
 
 def _sidebar_context():
@@ -13,7 +16,9 @@ def _sidebar_context():
 
 def index(request):
     entries = ChronicleEntry.objects.prefetch_related("tags").order_by("-published_at")
-    ctx = {"entries": entries}
+    paginator = Paginator(entries, ENTRIES_PER_PAGE)
+    page_obj = paginator.get_page(request.GET.get("page"))
+    ctx = {"entries": page_obj, "page_obj": page_obj}
     ctx.update(_sidebar_context())
     return render(request, "chronicle/index.html", ctx)
 
@@ -42,6 +47,8 @@ def tag_detail(request, tag_slug: str):
         .filter(tags=tag)
         .order_by("-published_at")
     )
-    ctx = {"tag": tag, "entries": entries}
+    paginator = Paginator(entries, ENTRIES_PER_PAGE)
+    page_obj = paginator.get_page(request.GET.get("page"))
+    ctx = {"tag": tag, "entries": page_obj, "page_obj": page_obj}
     ctx.update(_sidebar_context())
     return render(request, "chronicle/tag.html", ctx)

@@ -1,0 +1,14 @@
+{% load pagination_extras %}
+{% if page_obj.has_other_pages %}
+<nav class="micro-pagination" aria-label="Page navigation">
+  <ul class="micro-pagination__list">
+    {% if page_obj.has_previous %}
+    <li><a href="{% pagination_href request page_obj.previous_page_number %}" class="micro-pagination__link">Previous</a></li>
+    {% endif %}
+    <li class="micro-pagination__meta"><span>{{ page_obj.number }} / {{ page_obj.paginator.num_pages }}</span></li>
+    {% if page_obj.has_next %}
+    <li><a href="{% pagination_href request page_obj.next_page_number %}" class="micro-pagination__link">Next</a></li>
+    {% endif %}
+  </ul>
+</nav>
+{% endif %}

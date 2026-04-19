@@ -1,0 +1,35 @@
+{% extends "z/base.html" %}
+{% block title %}People @{{ profile_user.username }} follows{% endblock %}
+{% block content %}
+<header class="z-feed-head">
+  <h1 class="z-feed-title"><a href="{% url 'z:profile' profile_user.username %}">@{{ profile_user.username }}</a> · Following</h1>
+</header>
+<ul class="z-userlist">
+  {% for row in page_obj %}
+  {% with u=row.following %}
+  <li class="z-userlist-row">
+    <a href="{% url 'z:profile' u.username %}" class="z-userlist-name">{{ u.zprofile.display_name }}</a>
+    <span class="z-userlist-handle">@{{ u.username }}</span>
+    {% if u.zprofile.bio %}<p class="z-userlist-bio">{{ u.zprofile.bio|truncatewords:24 }}</p>{% endif %}
+  </li>
+  {% endwith %}
+  {% empty %}
+  <li class="z-feed-empty">Not following anyone yet.</li>
+  {% endfor %}
+</ul>
+{% if page_obj.has_other_pages %}
+<nav class="z-pager z-pager--feed" aria-label="Pagination">
+  {% if page_obj.has_previous %}
+  <a href="?page={{ page_obj.previous_page_number }}" class="z-pager-link z-back-row">{% include "z/partials/z_icon.html" with name="chevron-left" class_extra="z-icon--sm" %}<span>Previous</span></a>
+  {% else %}
+  <span class="z-pager-link z-pager-link--disabled z-back-row" aria-disabled="true">{% include "z/partials/z_icon.html" with name="chevron-left" class_extra="z-icon--sm" %}<span>Previous</span></span>
+  {% endif %}
+  <span class="z-pager-meta">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+  {% if page_obj.has_next %}
+  <a href="?page={{ page_obj.next_page_number }}" class="z-pager-link z-back-row"><span>Next</span>{% include "z/partials/z_icon.html" with name="chevron-right" class_extra="z-icon--sm" %}</a>
+  {% else %}
+  <span class="z-pager-link z-pager-link--disabled z-back-row" aria-disabled="true"><span>Next</span>{% include "z/partials/z_icon.html" with name="chevron-right" class_extra="z-icon--sm" %}</span>
+  {% endif %}
+</nav>
+{% endif %}
+{% endblock %}

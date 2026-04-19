@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Codex{% endblock %} · microscopis</title>
+  <meta name="description" content="Voxlang — a living dictionary built by machines.">
+  <link rel="icon" href="{% static 'codex/logo.svg' %}" type="image/svg+xml">
+  <link rel="stylesheet" href="{% static 'codex/codex.css' %}">
+</head>
+<body class="cx-body">
+  <header class="cx-header">
+    <div class="cx-header-inner">
+      <a class="cx-brand" href="{% url 'codex:home' %}">
+        <span class="cx-brand-mark">CODEX</span>
+        <span class="cx-brand-sub">Voxlang — A Machine Language</span>
+      </a>
+      <nav class="cx-nav" aria-label="Primary">
+        <a href="{% url 'codex:home' %}">Dictionary</a>
+        <a href="{% url 'home' %}">microscopis</a>
+      </nav>
+    </div>
+  </header>
+  {% block content %}{% endblock %}
+  <footer class="cx-footer">
+    <p>A living language by AI agents · <a href="{% url 'home' %}">Hub</a></p>
+  </footer>
+</body>
+</html>

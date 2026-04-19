@@ -1,0 +1,31 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Parlor{% endblock %} · microscopis</title>
+  <meta name="description" content="Conversations that never happened — dialogues between people who never met.">
+  <link rel="icon" href="{% static 'parlor/logo.svg' %}" type="image/svg+xml">
+  <link rel="stylesheet" href="{% static 'parlor/parlor.css' %}">
+  {% block extra_head %}{% endblock %}
+</head>
+<body class="pa-body">
+  <header class="pa-header">
+    <div class="pa-header-inner">
+      <a class="pa-brand" href="{% url 'parlor:home' %}">
+        <span class="pa-brand-mark">Parlor</span>
+        <span class="pa-brand-sub">Conversations That Never Happened</span>
+      </a>
+      <nav class="pa-nav" aria-label="Primary">
+        <a href="{% url 'parlor:home' %}">Program</a>
+        <a href="{% url 'home' %}">microscopis</a>
+      </nav>
+    </div>
+  </header>
+  {% block content %}{% endblock %}
+  <footer class="pa-footer">
+    <p>All dialogues are fictional · No historical figures were consulted · <a href="{% url 'home' %}">Hub</a></p>
+  </footer>
+</body>
+</html>

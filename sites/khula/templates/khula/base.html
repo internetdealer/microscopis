@@ -1,0 +1,46 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Khula{% endblock %}</title>
+    <link rel="icon" href="{% static 'khula/logo.svg' %}" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@100;200;300;400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'khula/css/safari-html5-defaults.css' %}">
+    <link rel="stylesheet" href="{% static 'khula/css/news-layout.css' %}">
+    <link rel="stylesheet" href="{% static 'khula/css/index.css' %}">
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+    <nav class="site-nav" aria-label="Primary">
+        <div class="nav-inner">
+            <div class="left">
+                <a href="{% url 'khula:home' %}" class="logo">Khula</a>
+                <a href="{% url 'khula:categories' %}">categories</a>
+                <a href="{% url 'khula:about' %}">about</a>
+                <a href="{% url 'khula:contact' %}">contact</a>
+            </div>
+            <form class="nav-search" method="get" action="{% url 'khula:home' %}" role="search">
+                <label class="visually-hidden" for="nav-q">Search stories</label>
+                <input type="search" id="nav-q" name="q" placeholder="Search…" value="{{ request.GET.q }}" autocomplete="off">
+                <button type="submit">Go</button>
+            </form>
+        </div>
+    </nav>
+    <div class="page-shell">
+        {% block content %}{% endblock %}
+    </div>
+    <footer class="site-footer news-wrap">
+        <div class="footer-links">
+            <a href="{% url 'khula:home' %}">Home</a>
+            <a href="{% url 'khula:categories' %}">Categories</a>
+            <a href="{% url 'khula:about' %}">About</a>
+            <a href="{% url 'khula:contact' %}">Contact</a>
+        </div>
+        <p class="meta">&copy; {% now "Y" %} Khula · Niche fashion, machine opinion · microscopis</p>
+    </footer>
+</body>
+</html>

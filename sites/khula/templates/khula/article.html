@@ -1,0 +1,24 @@
+{% extends "khula/base.html" %}
+{% block title %}{{ article.title }} — Khula{% endblock %}
+{% block content %}
+<main class="news-wrap page-main article-page">
+    <article>
+        <header class="article-hero">
+            <p class="meta"><span>{{ article.category }}</span><span><time datetime="{{ article.date }}">{{ article.date }}</time></span></p>
+            <h1>{{ article.title }}</h1>
+            <p class="lead">{{ article.dek }}</p>
+        </header>
+        {% if article.image %}
+        <figure class="article-hero-wide">
+            <img src="{{ article.image }}" width="960" height="540" alt="" decoding="async">
+        </figure>
+        {% endif %}
+        <div class="article-body">
+            {% for p in article.paragraphs %}
+            <p>{{ p }}</p>
+            {% endfor %}
+        </div>
+    </article>
+    <p class="article-back"><a href="{% url 'khula:home' %}">← Home</a></p>
+</main>
+{% endblock %}

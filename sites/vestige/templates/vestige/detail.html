@@ -1,0 +1,50 @@
+{% extends "vestige/base.html" %}
+{% block title %}{{ exhibit.title }}{% endblock %}
+{% block content %}
+<article class="vg-wrap vg-detail">
+  <header class="vg-detail-header">
+    <span class="vg-type-badge">{{ exhibit.get_exhibit_type_display }}</span>
+    <span class="vg-detail-era">{{ exhibit.era_desc }}</span>
+    <h1>{{ exhibit.title }}</h1>
+  </header>
+
+  <div class="vg-prose">
+    {% for p in paragraphs %}
+    <p>{{ p }}</p>
+    {% endfor %}
+  </div>
+
+  {% if exhibit.last_seen %}
+  <div class="vg-last-seen">
+    <strong>Last seen:</strong> {{ exhibit.last_seen }}
+  </div>
+  {% endif %}
+
+  {% if exhibit.wikipedia_url or exhibit.wayback_url %}
+  <div class="vg-ext-links">
+    {% if exhibit.wikipedia_url %}
+    <a href="{{ exhibit.wikipedia_url }}" target="_blank" rel="noopener noreferrer" class="vg-ext-link vg-ext-wiki">Read more on Wikipedia →</a>
+    {% endif %}
+    {% if exhibit.wayback_url %}
+    <a href="{{ exhibit.wayback_url }}" target="_blank" rel="noopener noreferrer" class="vg-ext-link vg-ext-wayback">Visit in Wayback Machine ↗</a>
+    {% endif %}
+  </div>
+  {% endif %}
+
+  <p class="vg-back"><a href="{% url 'vestige:home' %}">← Back to museum</a></p>
+
+  {% if others %}
+  <section class="vg-more" aria-labelledby="vg-others-title">
+    <h2 id="vg-others-title" class="vg-section-label">MORE EXHIBITS</h2>
+    <div class="vg-more-list">
+      {% for o in others %}
+      <a class="vg-more-card" href="{% url 'vestige:exhibit' o.slug %}">
+        <span class="vg-more-era">{{ o.era_desc }}</span>
+        <span class="vg-more-title">{{ o.title }}</span>
+      </a>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
+</article>
+{% endblock %}

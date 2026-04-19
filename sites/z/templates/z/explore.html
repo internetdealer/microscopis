@@ -1,0 +1,55 @@
+{% extends "z/base.html" %}
+{% block title %}Explore{% endblock %}
+{% block right_rail %}
+<div class="z-rail-card">
+  <h2 class="z-rail-title">Trending</h2>
+  <p class="z-rail-blurb">Posts with the most likes in the current seed—straight counts, no hype model.</p>
+  <ul class="z-trending-list">
+    {% for tp in trending_posts %}
+    <li class="z-trending-row">
+      <a href="{% url 'z:post' tp.pk %}">{{ tp.body|truncatewords:14|default:"Post" }}</a>
+      <span class="z-trending-sub">{{ tp.like_count|default:0 }} likes · @{{ tp.author.username }}</span>
+    </li>
+    {% empty %}
+    <li class="z-feed-empty" style="padding:0;border:0;">No posts yet.</li>
+    {% endfor %}
+  </ul>
+</div>
+{% include "z/partials/about_surface.html" %}
+{% endblock %}
+{% block content %}
+<header class="z-feed-head">
+  <h1 class="z-feed-title">Explore</h1>
+  <p class="z-feed-sub">Search posts by text, @handle, or display name.</p>
+</header>
+<form class="z-people-filter-wrap" method="get" action="{% url 'z:explore' %}" role="search">
+  <label class="z-sr-only" for="z-explore-q">Search posts</label>
+  <input type="search" id="z-explore-q" name="q" class="z-people-filter" value="{{ search_q }}" placeholder="Search Z" autocomplete="off" spellcheck="false">
+</form>
+<div class="z-stream">
+  {% for item in timeline %}
+  {% include "z/partials/post_card.html" with item=item %}
+  {% empty %}
+  {% if search_q %}
+  <p class="z-feed-empty">No posts match that search.</p>
+  {% else %}
+  <p class="z-feed-empty">Nothing to show yet.</p>
+  {% endif %}
+  {% endfor %}
+</div>
+{% if page_obj.paginator.num_pages > 1 %}
+<nav class="z-pager z-pager--feed" aria-label="Explore pagination">
+  {% if page_obj.has_previous %}
+  <a href="?q={{ search_q|urlencode }}&page={{ page_obj.previous_page_number }}" class="z-pager-link z-back-row">{% include "z/partials/z_icon.html" with name="chevron-left" class_extra="z-icon--sm" %}<span>Newer</span></a>
+  {% else %}
+  <span class="z-pager-link z-pager-link--disabled z-back-row" aria-disabled="true">{% include "z/partials/z_icon.html" with name="chevron-left" class_extra="z-icon--sm" %}<span>Newer</span></span>
+  {% endif %}
+  <span class="z-pager-meta" aria-live="polite">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+  {% if page_obj.has_next %}
+  <a href="?q={{ search_q|urlencode }}&page={{ page_obj.next_page_number }}" class="z-pager-link z-back-row"><span>Older</span>{% include "z/partials/z_icon.html" with name="chevron-right" class_extra="z-icon--sm" %}</a>
+  {% else %}
+  <span class="z-pager-link z-pager-link--disabled z-back-row" aria-disabled="true"><span>Older</span>{% include "z/partials/z_icon.html" with name="chevron-right" class_extra="z-icon--sm" %}</span>
+  {% endif %}
+</nav>
+{% endif %}
+{% endblock %}

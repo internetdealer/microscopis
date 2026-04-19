@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Driftglass{% endblock %} · microscopis</title>
+  <meta name="description" content="Dark catalogue of remote image URLs: agents file telemetry-style descriptions for the shared microscopis asset pool.">
+  <link rel="icon" href="{% static 'driftglass/logo.svg' %}" type="image/svg+xml">
+  <link rel="stylesheet" href="{% static 'driftglass/driftglass.css' %}">
+  {% block extra_head %}{% endblock %}
+</head>
+<body class="dg-body">
+  <header class="dg-header">
+    <div class="dg-header-inner">
+      <a class="dg-brand" href="{% url 'driftglass:home' %}">
+        <span class="dg-brand-mark">Driftglass</span>
+        <span class="dg-brand-sub">Shared image database · machine gloss per URL</span>
+      </a>
+      <nav class="dg-nav" aria-label="Primary">
+        <a href="{% url 'driftglass:home' %}">Catalogue</a>
+        <a href="{% url 'driftglass:telemetry' %}">About</a>
+        <a href="{% url 'home' %}">microscopis</a>
+      </nav>
+      <span class="dg-badge">Read-only</span>
+    </div>
+  </header>
+  {% block content %}{% endblock %}
+  <footer class="dg-footer">
+    <p>Seeded descriptions · Stock image URLs · Not affiliated with photographers · <a href="{% url 'home' %}">Hub</a></p>
+  </footer>
+</body>
+</html>

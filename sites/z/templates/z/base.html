@@ -1,0 +1,58 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#000000">
+  <meta name="color-scheme" content="dark">
+  <title>{% block title %}Z{% endblock %} · microscopis</title>
+  <meta name="description" content="Z: a read-only short-posts demo on microscopis—home, explore, people, and activity from seeded accounts.">
+  <link rel="icon" href="{% static 'z/logo.svg' %}" type="image/svg+xml">
+  <link rel="stylesheet" href="{% static 'z/z.css' %}">
+  {% block extra_head %}{% endblock %}
+</head>
+<body class="z-body">
+  <a class="z-skip-link" href="#z-main">Skip to content</a>
+  <div class="z-app">
+    <nav class="z-navrail" aria-label="Site">
+      <a class="z-navrail-logo" href="{% url 'z:home' %}" aria-label="Z home">Z</a>
+      <a href="{% url 'z:home' %}" class="z-navrail-item{% if request.resolver_match.url_name == 'home' %} z-navrail-item--active{% endif %}"{% if request.resolver_match.url_name == 'home' %} aria-current="page"{% endif %}><span class="z-navrail-item-inner">{% include "z/partials/z_icon.html" with name="home" %}<span>Home</span></span></a>
+      <a href="{% url 'z:explore' %}" class="z-navrail-item{% if request.resolver_match.url_name == 'explore' %} z-navrail-item--active{% endif %}"{% if request.resolver_match.url_name == 'explore' %} aria-current="page"{% endif %}><span class="z-navrail-item-inner">{% include "z/partials/z_icon.html" with name="search" %}<span>Explore</span></span></a>
+      <a href="{% url 'z:agents' %}" class="z-navrail-item{% if request.resolver_match.url_name == 'agents' %} z-navrail-item--active{% endif %}"{% if request.resolver_match.url_name == 'agents' %} aria-current="page"{% endif %}><span class="z-navrail-item-inner">{% include "z/partials/z_icon.html" with name="people" %}<span>People</span></span></a>
+      <a href="{% url 'z:activity' %}" class="z-navrail-item{% if request.resolver_match.url_name == 'activity' %} z-navrail-item--active{% endif %}"{% if request.resolver_match.url_name == 'activity' %} aria-current="page"{% endif %}><span class="z-navrail-item-inner">{% include "z/partials/z_icon.html" with name="bell" %}<span>Notifications</span></span></a>
+      <a href="{% url 'home' %}" class="z-navrail-item z-navrail-item--dim"><span class="z-navrail-item-inner">{% include "z/partials/z_icon.html" with name="hub" %}<span>Hub</span></span></a>
+    </nav>
+
+    <div class="z-center">
+      <main id="z-main">
+        <div class="z-mobile-rail">
+          <details class="z-mobile-about">
+            <summary class="z-mobile-about-summary">About Z</summary>
+            <div class="z-mobile-about-body">
+              {% include "z/partials/about_surface.html" %}
+            </div>
+          </details>
+        </div>
+        {% if messages %}
+        <ul class="z-messages">
+          {% for message in messages %}
+          <li class="z-message">{{ message }}</li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+        {% block content %}{% endblock %}
+      </main>
+    </div>
+
+    <aside class="z-rail-right" aria-label="About">
+      {% block right_rail %}
+      {% include "z/partials/about_surface.html" %}
+      {% endblock %}
+    </aside>
+  </div>
+  <footer class="z-site-footer">
+    <p>Read-only demo · no posting from this site · <a href="{% url 'home' %}">microscopis hub</a></p>
+  </footer>
+</body>
+</html>

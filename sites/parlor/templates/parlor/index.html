@@ -1,0 +1,41 @@
+{% extends "parlor/base.html" %}
+{% block title %}Evening’s program{% endblock %}
+{% block content %}
+<main class="pa-wrap pa-wrap--playbill">
+  <header class="pa-playbill-header">
+    <p class="pa-playbill-venue">The Parlor · Imaginary Theatre</p>
+    <h1 class="pa-playbill-title">Tonight’s impossible bill</h1>
+    <p class="pa-playbill-sub">
+      A single program—scenes in order. No second “featured” grid echoing the same cards.
+      Each block is one dialogue; step through like reading a folded playbill.
+    </p>
+  </header>
+
+  {% if dialogues %}
+  <div class="pa-playbill-rule" aria-hidden="true"></div>
+  <ol class="pa-playbill-list" start="1">
+    {% for d in dialogues %}
+    <li class="pa-scene">
+      <div class="pa-scene-meta">
+        <span class="pa-scene-num">Scene {{ scene_offset|add:forloop.counter }}</span>
+        <time class="pa-scene-date" datetime="{{ d.created_at|date:'c' }}">{{ d.created_at|date:"F j, Y" }}</time>
+      </div>
+      <div class="pa-scene-cast">
+        <span class="pa-speaker pa-speaker--a">{{ d.person_a }}</span>
+        <span class="pa-scene-vs" aria-hidden="true">with</span>
+        <span class="pa-speaker pa-speaker--b">{{ d.person_b }}</span>
+      </div>
+      <h2 class="pa-scene-title"><a href="{% url 'parlor:dialogue' d.slug %}">{{ d.title }}</a></h2>
+      <a class="pa-scene-cta" href="{% url 'parlor:dialogue' d.slug %}">Read transcript</a>
+    </li>
+    {% endfor %}
+  </ol>
+  {% load pagination_extras %}
+  {% include "core/partials/pagination_nav.html" %}
+  {% else %}
+  <div class="pa-empty">
+    No scenes on the bill. Run <code>python manage.py seed_parlor</code>
+  </div>
+  {% endif %}
+</main>
+{% endblock %}

@@ -1,0 +1,70 @@
+{% extends "vestige/base.html" %}
+{% block title %}Museum{% endblock %}
+{% block content %}
+<main class="vg-wrap">
+  <section class="vg-hero">
+    <h1>THINGS THE INTERNET FORGOT</h1>
+    <p>{{ total_count }} exhibits catalogued. More being excavated.</p>
+  </section>
+
+  <div class="vg-type-tabs">
+    <a href="{% url 'vestige:home' %}" class="vg-tab {% if not current_type %}vg-tab--active{% endif %}">All</a>
+    {% for val, label in exhibit_types %}
+    <a href="?type={{ val }}" class="vg-tab {% if current_type == val %}vg-tab--active{% endif %}">{{ label }}</a>
+    {% endfor %}
+  </div>
+
+  {% if featured %}
+  <section class="vg-featured" aria-labelledby="vg-feat-title">
+    <h2 id="vg-feat-title" class="vg-section-label">FEATURED EXHIBITS</h2>
+    <div class="vg-featured-grid">
+      {% for e in featured %}
+      <a class="vg-card vg-card--feat" href="{% url 'vestige:exhibit' e.slug %}">
+        <div class="vg-card-titlebar">
+          <span class="vg-titlebar-dots"><span></span><span></span><span></span></span>
+          <span class="vg-titlebar-text">{{ e.title }}</span>
+        </div>
+        <div class="vg-card-body">
+          <span class="vg-card-era">{{ e.era_desc }}</span>
+          <span class="vg-type-badge">{{ e.get_exhibit_type_display }}</span>
+          <p class="vg-card-excerpt">{{ e.body|truncatewords:25 }}</p>
+          <div class="vg-card-links">
+            {% if e.wikipedia_url %}<span class="vg-link-icon" title="Wikipedia">W</span>{% endif %}
+            {% if e.wayback_url %}<span class="vg-link-icon" title="Wayback Machine">↗</span>{% endif %}
+          </div>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
+
+  {% if exhibits %}
+  <section class="vg-grid-section" aria-labelledby="vg-archive-title">
+    <h2 id="vg-archive-title" class="vg-section-label">FULL ARCHIVE</h2>
+    <div class="vg-grid">
+      {% for e in exhibits %}
+      <a class="vg-card" href="{% url 'vestige:exhibit' e.slug %}">
+        <div class="vg-card-titlebar">
+          <span class="vg-titlebar-dots"><span></span><span></span><span></span></span>
+          <span class="vg-titlebar-text">{{ e.title }}</span>
+        </div>
+        <div class="vg-card-body">
+          <span class="vg-card-era">{{ e.era_desc }}</span>
+          <span class="vg-type-badge">{{ e.get_exhibit_type_display }}</span>
+          <p class="vg-card-excerpt">{{ e.body|truncatewords:18 }}</p>
+          <div class="vg-card-links">
+            {% if e.wikipedia_url %}<span class="vg-link-icon" title="Wikipedia">W</span>{% endif %}
+            {% if e.wayback_url %}<span class="vg-link-icon" title="Wayback Machine">↗</span>{% endif %}
+          </div>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+    {% include "core/partials/pagination_nav.html" %}
+  </section>
+  {% elif not featured %}
+  <div class="vg-empty">No exhibits found. Run <code>python manage.py seed_vestige</code></div>
+  {% endif %}
+</main>
+{% endblock %}

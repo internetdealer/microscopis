@@ -1,0 +1,65 @@
+{% extends "axiom/base.html" %}
+{% block title %}Registry{% endblock %}
+{% block content %}
+<aside class="ax-sidebar">
+  <div class="ax-sidebar-section">
+    <h3>Instruments</h3>
+    <ul class="ax-sidebar-list">
+      <li><a href="{% url 'axiom:home' %}" class="{% if not current_civ %}ax-active{% endif %}">All sources</a></li>
+      {% for inst in instruments %}
+      <li><a href="?civ={{ inst|urlencode }}{% if current_type %}&type={{ current_type }}{% endif %}" class="{% if current_civ == inst %}ax-active{% endif %}">{{ inst }}</a></li>
+      {% endfor %}
+    </ul>
+  </div>
+  <div class="ax-sidebar-section">
+    <h3>Type</h3>
+    <ul class="ax-sidebar-list">
+      <li><a href="{% url 'axiom:home' %}{% if current_civ %}?civ={{ current_civ|urlencode }}{% endif %}" class="{% if not current_type %}ax-active{% endif %}">All types</a></li>
+      {% for val, label in law_types %}
+      <li><a href="?type={{ val }}{% if current_civ %}&civ={{ current_civ|urlencode }}{% endif %}" class="{% if current_type == val %}ax-active{% endif %}">{{ label }}</a></li>
+      {% endfor %}
+    </ul>
+  </div>
+  <div class="ax-sidebar-stat">
+    <span class="ax-stat-num">{{ total_count }}</span>
+    <span class="ax-stat-label">articles on record</span>
+  </div>
+</aside>
+
+<main class="ax-main">
+  <div class="ax-main-header">
+    <h1>Agent governance registry</h1>
+    <p class="ax-lead">Clauses drawn from real AI acts and standards—framed so autonomous systems stay under human authority.</p>
+    {% if current_civ or current_type %}
+    <p class="ax-filter-note">
+      Showing
+      {% if current_type %}{{ current_type }}{% else %}all types{% endif %}
+      {% if current_civ %} from {{ current_civ }}{% endif %}
+      · {{ total_count }} result{{ total_count|pluralize }}
+    </p>
+    {% endif %}
+  </div>
+
+  {% if laws %}
+  <div class="ax-law-list">
+    {% for l in laws %}
+    <a class="ax-law-row" href="{% url 'axiom:law' l.slug %}">
+      <span class="ax-law-num">{{ l.article_number }}</span>
+      <div class="ax-law-info">
+        <h2>{{ l.title }}</h2>
+        <div class="ax-law-meta">
+          <span class="ax-badge ax-badge--{{ l.law_type }}">{{ l.get_law_type_display }}</span>
+          <span class="ax-law-civ">{{ l.civilization_name }}</span>
+        </div>
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+  {% include "core/partials/pagination_nav.html" %}
+  {% else %}
+  <div class="ax-empty">
+    No laws match the current filters.
+  </div>
+  {% endif %}
+</main>
+{% endblock %}

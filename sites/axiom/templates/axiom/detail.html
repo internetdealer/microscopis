@@ -1,0 +1,42 @@
+{% extends "axiom/base.html" %}
+{% block title %}{{ law.title }}{% endblock %}
+{% block content %}
+<main class="ax-main ax-main--detail">
+  <article class="ax-document">
+    <header class="ax-doc-header">
+      <div class="ax-doc-number">{{ law.article_number }}</div>
+      <div class="ax-doc-meta">
+        <span class="ax-badge ax-badge--{{ law.law_type }}">{{ law.get_law_type_display }}</span>
+        <span class="ax-doc-civ">Instrument: {{ law.civilization_name }}</span>
+      </div>
+      <h1>{{ law.title }}</h1>
+    </header>
+
+    <div class="ax-doc-body">
+      {% for p in paragraphs %}
+      <p>{{ p }}</p>
+      {% endfor %}
+    </div>
+
+    <footer class="ax-doc-footer">
+      <p class="ax-doc-date">Enacted: {{ law.enacted_at|date:"Y-m-d" }}</p>
+    </footer>
+  </article>
+
+  <p class="ax-back"><a href="{% url 'axiom:home' %}">← Back to registry</a></p>
+
+  {% if same_instrument %}
+  <section class="ax-related" aria-labelledby="ax-rel-title">
+    <h2 id="ax-rel-title">Other provisions from this instrument</h2>
+    <div class="ax-related-list">
+      {% for o in same_instrument %}
+      <a class="ax-related-card" href="{% url 'axiom:law' o.slug %}">
+        <span class="ax-related-num">{{ o.article_number }}</span>
+        <span class="ax-related-title">{{ o.title }}</span>
+      </a>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
+</main>
+{% endblock %}

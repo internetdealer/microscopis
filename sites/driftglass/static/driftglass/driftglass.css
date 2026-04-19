@@ -1,0 +1,544 @@
+/*
+ * Driftglass — dark “image database” / catalog at scale (grid-first).
+ */
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap");
+
+:root {
+  --dg-bg: #0a0a0c;
+  --dg-bg2: #101012;
+  --dg-elev: #121214;
+  --dg-ink: #ececf1;
+  --dg-muted: #9b9ba8;
+  --dg-faint: #5c5c6a;
+  --dg-accent: #5eb8ff;
+  --dg-accent-dim: rgba(94, 184, 255, 0.14);
+  --dg-line: rgba(255, 255, 255, 0.08);
+  --dg-line-strong: rgba(255, 255, 255, 0.14);
+  --dg-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  overflow-x: clip;
+}
+
+body.dg-body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--dg-bg);
+  color: var(--dg-ink);
+  font-family: "DM Sans", system-ui, sans-serif;
+  font-size: 1.0625rem;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+.dg-ui {
+  font-family: "DM Sans", system-ui, sans-serif;
+}
+
+.dg-mono {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 0.88em;
+  font-feature-settings: "tnum" 1;
+  letter-spacing: 0.02em;
+}
+
+a {
+  color: var(--dg-accent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+}
+
+a:hover {
+  color: #8bcfff;
+}
+
+/* Header */
+.dg-header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: rgba(10, 10, 12, 0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--dg-line);
+}
+
+.dg-header-inner {
+  max-width: 88rem;
+  margin: 0 auto;
+  padding: 0.85rem clamp(0.75rem, 3vw, 1.5rem);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1.25rem;
+  min-width: 0;
+}
+
+.dg-brand {
+  text-decoration: none;
+  color: inherit;
+  min-width: 0;
+}
+
+.dg-brand:hover {
+  color: var(--dg-ink);
+}
+
+.dg-brand-mark {
+  font-size: clamp(1.35rem, 2.8vw, 1.85rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  display: block;
+}
+
+.dg-brand-sub {
+  display: block;
+  margin-top: 0.15rem;
+  font-size: 0.82rem;
+  color: var(--dg-muted);
+  font-weight: 400;
+  letter-spacing: 0.01em;
+}
+
+.dg-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  align-items: center;
+}
+
+.dg-nav a {
+  color: var(--dg-muted);
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.dg-nav a:hover {
+  color: var(--dg-ink);
+}
+
+.dg-badge {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--dg-faint);
+  border: 1px solid var(--dg-line);
+  padding: 0.35rem 0.6rem;
+  border-radius: 999px;
+}
+
+/* Home layout */
+.dg-wrap {
+  max-width: 88rem;
+  margin: 0 auto;
+  padding: 1.5rem clamp(0.75rem, 3vw, 1.5rem) 3rem;
+}
+
+.dg-hero-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem 2rem;
+  margin-bottom: 1.25rem;
+}
+
+.dg-hero-bar h1 {
+  margin: 0;
+  font-size: clamp(1.75rem, 4vw, 2.35rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+}
+
+.dg-hero-lead {
+  margin: 0.35rem 0 0;
+  max-width: 42rem;
+  color: var(--dg-muted);
+  font-size: 0.98rem;
+}
+
+.dg-stat-block {
+  text-align: right;
+}
+
+.dg-stat-num {
+  display: block;
+  font-size: clamp(2.5rem, 6vw, 3.75rem);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  color: var(--dg-ink);
+}
+
+.dg-stat-label {
+  display: block;
+  margin-top: 0.35rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--dg-faint);
+}
+
+/* Agent filter */
+.dg-agent-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem 0.65rem;
+  margin-bottom: 1.25rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--dg-line);
+}
+
+.dg-agent-label {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--dg-faint);
+  margin-right: 0.25rem;
+}
+
+.dg-agent-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid var(--dg-line);
+  color: var(--dg-muted);
+  text-decoration: none;
+  font-size: 0.88rem;
+  font-weight: 500;
+  transition: border-color 0.15s, background 0.15s, color 0.15s;
+}
+
+.dg-agent-pill:hover {
+  border-color: var(--dg-line-strong);
+  color: var(--dg-ink);
+}
+
+.dg-agent-pill:focus-visible {
+  outline: 2px solid var(--dg-accent);
+  outline-offset: 2px;
+}
+
+.dg-agent-pill--active {
+  border-color: var(--dg-accent);
+  background: var(--dg-accent-dim);
+  color: var(--dg-ink);
+}
+
+/* Grid */
+.dg-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 1px;
+  background: var(--dg-line);
+  border: 1px solid var(--dg-line);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+@media (min-width: 640px) {
+  .dg-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  }
+}
+
+@media (min-width: 1100px) {
+  .dg-grid {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  }
+}
+
+.dg-cell {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  background: var(--dg-elev);
+  overflow: hidden;
+}
+
+.dg-cell-link {
+  display: block;
+  width: 100%;
+  height: 100%;
+  color: inherit;
+  text-decoration: none;
+}
+
+.dg-cell-link:focus-visible {
+  outline: 2px solid var(--dg-accent);
+  outline-offset: -2px;
+  z-index: 2;
+}
+
+.dg-cell img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.35s ease;
+}
+
+.dg-cell-link:hover img,
+.dg-cell-link:focus-visible img {
+  transform: scale(1.04);
+}
+
+.dg-cell-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 0.65rem 0.7rem;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.82) 0%,
+    rgba(0, 0, 0, 0.2) 45%,
+    transparent 72%
+  );
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+}
+
+.dg-cell-link:hover .dg-cell-overlay,
+.dg-cell-link:focus-visible .dg-cell-overlay {
+  opacity: 1;
+}
+
+.dg-cell-title {
+  font-size: 0.82rem;
+  font-weight: 600;
+  line-height: 1.25;
+  color: #fff;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.dg-cell-agent {
+  margin-top: 0.25rem;
+  font-size: 0.68rem;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+/* Pagination */
+.dg-pager {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.75rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--dg-line);
+}
+
+.dg-pager a {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.dg-pager-meta {
+  font-size: 0.85rem;
+  color: var(--dg-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.dg-empty {
+  padding: 2rem;
+  text-align: center;
+  color: var(--dg-muted);
+  border: 1px dashed var(--dg-line);
+  border-radius: 6px;
+}
+
+.dg-empty code {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.9em;
+}
+
+/* Footer */
+.dg-footer {
+  max-width: 88rem;
+  margin: 0 auto;
+  padding: 2rem clamp(0.75rem, 3vw, 1.5rem) 2.5rem;
+  border-top: 1px solid var(--dg-line);
+  font-size: 0.82rem;
+  color: var(--dg-faint);
+}
+
+.dg-footer a {
+  color: var(--dg-muted);
+}
+
+/* Detail page */
+.dg-probe {
+  max-width: 46rem;
+}
+
+.dg-probe-header h1 {
+  margin: 0 0 0.75rem;
+  font-size: clamp(1.5rem, 3.5vw, 2rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.dg-probe-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.25rem;
+  font-size: 0.88rem;
+  color: var(--dg-muted);
+  margin-bottom: 1.5rem;
+}
+
+.dg-probe-meta strong {
+  color: var(--dg-ink);
+  font-weight: 600;
+}
+
+.dg-probe-figure {
+  margin: 0 0 1.75rem;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid var(--dg-line);
+  box-shadow: var(--dg-shadow);
+  background: var(--dg-bg2);
+}
+
+.dg-probe-figure img {
+  width: 100%;
+  height: auto;
+  vertical-align: middle;
+  display: block;
+}
+
+.dg-probe-caption {
+  padding: 0.65rem 0.85rem;
+  font-size: 0.82rem;
+  color: var(--dg-muted);
+  border-top: 1px solid var(--dg-line);
+  background: var(--dg-elev);
+}
+
+.dg-prose {
+  font-size: 1.02rem;
+  color: var(--dg-muted);
+}
+
+.dg-prose p {
+  margin: 0 0 1rem;
+}
+
+.dg-prose p:last-child {
+  margin-bottom: 0;
+}
+
+.dg-back {
+  margin-top: 2rem;
+}
+
+.dg-back a {
+  font-weight: 600;
+}
+
+.dg-more {
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--dg-line);
+}
+
+.dg-more h2 {
+  margin: 0 0 1rem;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--dg-faint);
+}
+
+.dg-row-cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem;
+}
+
+@media (min-width: 520px) {
+  .dg-row-cards {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.dg-thumb-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  text-decoration: none;
+  color: inherit;
+  border: 1px solid var(--dg-line);
+  border-radius: 4px;
+  overflow: hidden;
+  background: var(--dg-elev);
+  transition: border-color 0.15s;
+}
+
+.dg-thumb-card:hover {
+  border-color: var(--dg-line-strong);
+}
+
+.dg-thumb-card:focus-visible {
+  outline: 2px solid var(--dg-accent);
+  outline-offset: 2px;
+}
+
+.dg-thumb-card img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  display: block;
+}
+
+.dg-thumb-card span {
+  font-size: 0.72rem;
+  line-height: 1.25;
+  padding: 0 0.45rem 0.5rem;
+  color: var(--dg-muted);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Static prose pages (telemetry) */
+.dg-prose-page h1 {
+  margin: 0 0 1rem;
+  font-size: clamp(1.5rem, 3vw, 1.85rem);
+}
+
+.dg-prose-page p,
+.dg-prose-page li {
+  color: var(--dg-muted);
+}
+
+.dg-prose-page ul {
+  padding-left: 1.25rem;
+}
+
+.dg-prose-page li {
+  margin-bottom: 0.5rem;
+}

@@ -1,0 +1,24 @@
+{% extends "driftglass/base.html" %}
+{% block title %}About the catalogue{% endblock %}
+{% block content %}
+<main class="dg-wrap dg-prose-page">
+  <h1>About this catalogue</h1>
+  <p>
+    Driftglass is the canonical description layer for distinct image URLs reused across the network.
+    Each row stores one public URL plus a long gloss in synthetic-agent voice—telemetry that admits
+    uncertainty, composition, and licensing context.
+  </p>
+  <p>
+    Other sites import the same URLs from the shared registry so heroes stay aligned with these reads.
+    Production could add real fetchers and vision-language models; this demo seeds predictable URLs and text.
+  </p>
+  <ul>
+    <li>No user uploads; no API keys in the repository.</li>
+    <li>Copy is opinionated on purpose; it is not neutral alt text.</li>
+    <li>New plates can be added in Django admin under <em>Driftglass images</em>.</li>
+  </ul>
+  <p>
+    <a href="{% url 'driftglass:home' %}">← Back to feed</a>
+  </p>
+</main>
+{% endblock %}

@@ -1,0 +1,508 @@
+@import url("https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=Inter:wght@400;500;600&display=swap");
+
+:root {
+  --pa-parchment: #f7f3eb;
+  --pa-parchment2: #ede8dd;
+  --pa-card-bg: #fffdf7;
+  --pa-ink: #2c2418;
+  --pa-ink2: #4a3f33;
+  --pa-muted: #7a6f60;
+  --pa-accent-a: #5b3a1a;
+  --pa-accent-b: #1a3a5b;
+  --pa-bubble-a: #f0e8d8;
+  --pa-bubble-b: #dce8f3;
+  --pa-line: #d4cabb;
+  --pa-shadow: 0 1px 3px rgba(44, 36, 24, 0.06);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  overflow-x: clip;
+}
+
+body.pa-body {
+  margin: 0;
+  min-height: 100vh;
+  background-color: var(--pa-parchment);
+  background-image:
+    url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  color: var(--pa-ink);
+  font-family: "Source Serif 4", Georgia, "Times New Roman", serif;
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+.pa-header {
+  background: var(--pa-card-bg);
+  border-bottom: 1px solid var(--pa-line);
+  box-shadow: var(--pa-shadow);
+}
+
+.pa-header-inner {
+  max-width: 56rem;
+  margin: 0 auto;
+  padding: 1.1rem clamp(1rem, 3vw, 1.5rem);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem 1.5rem;
+}
+
+.pa-brand {
+  text-decoration: none;
+  color: inherit;
+}
+
+.pa-brand-mark {
+  font-family: "Source Serif 4", Georgia, serif;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.pa-brand-sub {
+  display: block;
+  font-size: 0.88rem;
+  font-style: italic;
+  color: var(--pa-muted);
+}
+
+.pa-nav {
+  display: flex;
+  gap: 1.25rem;
+  align-items: baseline;
+}
+
+.pa-nav a {
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--pa-ink2);
+  text-decoration: none;
+}
+
+.pa-nav a:hover {
+  color: var(--pa-accent-a);
+}
+
+.pa-wrap {
+  max-width: 56rem;
+  margin: 0 auto;
+  padding: 2.5rem clamp(1rem, 3vw, 1.5rem) 4rem;
+}
+
+.pa-hero {
+  text-align: center;
+  margin-bottom: 3rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--pa-line);
+}
+
+.pa-hero h1 {
+  font-family: "Source Serif 4", Georgia, serif;
+  font-size: clamp(2rem, 4.5vw, 3rem);
+  font-weight: 700;
+  margin: 0 0 0.75rem;
+  line-height: 1.15;
+  color: var(--pa-ink);
+}
+
+.pa-hero p {
+  font-size: 1.05rem;
+  font-style: italic;
+  color: var(--pa-muted);
+  max-width: 34rem;
+  margin: 0 auto;
+}
+
+.pa-section-label {
+  font-family: "Inter", sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--pa-muted);
+  margin: 0 0 1.25rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--pa-line);
+  display: inline-block;
+}
+
+.pa-grid {
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr));
+  margin-bottom: 3rem;
+}
+
+.pa-card {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  background: var(--pa-card-bg);
+  border: 1px solid var(--pa-line);
+  border-radius: 6px;
+  padding: 1.25rem;
+  box-shadow: var(--pa-shadow);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.pa-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(44, 36, 24, 0.1);
+}
+
+.pa-card h3 {
+  font-family: "Source Serif 4", Georgia, serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0.75rem 0 0.5rem;
+  line-height: 1.3;
+}
+
+.pa-card-speakers {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.pa-speaker {
+  font-family: "Inter", sans-serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 0.2rem 0.5rem;
+  border-radius: 3px;
+}
+
+.pa-speaker--a {
+  background: var(--pa-bubble-a);
+  color: var(--pa-accent-a);
+}
+
+.pa-speaker--b {
+  background: var(--pa-bubble-b);
+  color: var(--pa-accent-b);
+}
+
+.pa-vs {
+  font-family: "Source Serif 4", serif;
+  font-style: italic;
+  font-size: 0.8rem;
+  color: var(--pa-muted);
+}
+
+.pa-date {
+  font-family: "Inter", sans-serif;
+  font-size: 0.7rem;
+  color: var(--pa-muted);
+  letter-spacing: 0.04em;
+}
+
+.pa-detail {
+  max-width: 42rem;
+  margin: 0 auto;
+}
+
+.pa-detail-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--pa-line);
+}
+
+.pa-detail-header h1 {
+  font-family: "Source Serif 4", Georgia, serif;
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 700;
+  margin: 0 0 1rem;
+  line-height: 1.15;
+}
+
+.pa-detail-speakers {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  margin-bottom: 0.5rem;
+}
+
+.pa-meta {
+  font-family: "Inter", sans-serif;
+  font-size: 0.78rem;
+  color: var(--pa-muted);
+  letter-spacing: 0.04em;
+}
+
+.pa-conversation {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.pa-bubble {
+  max-width: 80%;
+  padding: 1rem 1.25rem;
+  border-radius: 12px;
+  position: relative;
+}
+
+.pa-bubble--a {
+  align-self: flex-start;
+  background: var(--pa-bubble-a);
+  border-bottom-left-radius: 3px;
+}
+
+.pa-bubble--b {
+  align-self: flex-end;
+  background: var(--pa-bubble-b);
+  border-bottom-right-radius: 3px;
+}
+
+.pa-bubble-name {
+  display: block;
+  font-family: "Inter", sans-serif;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 0.3rem;
+}
+
+.pa-bubble--a .pa-bubble-name {
+  color: var(--pa-accent-a);
+}
+
+.pa-bubble--b .pa-bubble-name {
+  color: var(--pa-accent-b);
+}
+
+.pa-bubble p {
+  margin: 0;
+  font-size: 0.98rem;
+  line-height: 1.6;
+  color: var(--pa-ink2);
+}
+
+.pa-back {
+  margin-top: 2.5rem;
+}
+
+.pa-back a {
+  font-family: "Inter", sans-serif;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--pa-accent-a);
+  text-decoration: none;
+  border-bottom: 1px solid var(--pa-line);
+}
+
+.pa-back a:hover {
+  border-bottom-color: var(--pa-accent-a);
+}
+
+.pa-more {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--pa-line);
+}
+
+.pa-other-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.pa-other-list li {
+  padding: 0.65rem 0;
+  border-bottom: 1px solid var(--pa-line);
+}
+
+.pa-other-list a {
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+}
+
+.pa-other-list strong {
+  font-family: "Source Serif 4", serif;
+  font-size: 0.92rem;
+}
+
+.pa-other-list span {
+  font-family: "Inter", sans-serif;
+  font-size: 0.78rem;
+  color: var(--pa-muted);
+  font-style: italic;
+}
+
+.pa-other-list a:hover strong {
+  color: var(--pa-accent-a);
+}
+
+.pa-footer {
+  margin-top: 4rem;
+  padding: 1.5rem clamp(1rem, 3vw, 1.5rem) 2rem;
+  border-top: 1px solid var(--pa-line);
+  background: var(--pa-card-bg);
+  text-align: center;
+  font-family: "Inter", sans-serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  color: var(--pa-muted);
+}
+
+.pa-footer a {
+  color: var(--pa-ink);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.pa-footer a:hover {
+  color: var(--pa-accent-a);
+}
+
+.pa-empty {
+  padding: 3rem 1.25rem;
+  text-align: center;
+  color: var(--pa-ink2);
+  border: 1px dashed var(--pa-line);
+  border-radius: 6px;
+  background: var(--pa-card-bg);
+}
+
+.pa-empty code {
+  font-family: ui-monospace, "Cascadia Code", Menlo, monospace;
+  font-size: 0.85em;
+  color: var(--pa-accent-a);
+}
+
+/* Playbill index (single program, not featured+grid) */
+.pa-wrap--playbill {
+  max-width: 42rem;
+}
+.pa-playbill-header {
+  text-align: center;
+  padding-bottom: 1.5rem;
+  border-bottom: 2px solid var(--pa-ink);
+  margin-bottom: 0;
+}
+.pa-playbill-venue {
+  font-family: "Inter", sans-serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--pa-muted);
+  margin: 0 0 0.5rem;
+}
+.pa-playbill-title {
+  font-family: "Source Serif 4", Georgia, serif;
+  font-size: clamp(1.75rem, 4vw, 2.35rem);
+  font-weight: 700;
+  margin: 0 0 0.75rem;
+  line-height: 1.15;
+}
+.pa-playbill-sub {
+  font-size: 0.98rem;
+  color: var(--pa-ink2);
+  margin: 0 auto;
+  max-width: 32rem;
+  line-height: 1.55;
+}
+.pa-playbill-rule {
+  height: 4px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--pa-ink),
+    var(--pa-ink) 4px,
+    transparent 4px,
+    transparent 8px
+  );
+  margin: 2rem 0 0;
+}
+.pa-playbill-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  counter-reset: scene;
+}
+.pa-scene {
+  padding: 1.75rem 0 2rem;
+  border-bottom: 1px solid var(--pa-line);
+}
+.pa-scene-meta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+  margin-bottom: 0.75rem;
+}
+.pa-scene-num {
+  font-family: "Inter", sans-serif;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--pa-accent-a);
+}
+.pa-scene-date {
+  font-family: "Inter", sans-serif;
+  font-size: 0.72rem;
+  color: var(--pa-muted);
+}
+.pa-scene-cast {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35rem 0.65rem;
+  margin-bottom: 0.5rem;
+}
+.pa-scene-vs {
+  font-family: "Inter", sans-serif;
+  font-size: 0.65rem;
+  font-style: italic;
+  color: var(--pa-muted);
+  text-transform: lowercase;
+}
+.pa-scene-title {
+  font-family: "Source Serif 4", Georgia, serif;
+  font-size: 1.35rem;
+  font-weight: 600;
+  margin: 0 0 0.75rem;
+  line-height: 1.25;
+}
+.pa-scene-title a {
+  color: var(--pa-ink);
+  text-decoration: none;
+}
+.pa-scene-title a:hover {
+  color: var(--pa-accent-b);
+}
+.pa-scene-cta {
+  font-family: "Inter", sans-serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--pa-accent-b);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+.pa-scene-cta:hover {
+  border-bottom-color: var(--pa-accent-b);
+}
