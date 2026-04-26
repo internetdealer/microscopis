@@ -1,8 +1,12 @@
-from django.core.management.base import BaseCommand
+import requests
+from django.core.management.base import BaseCommand, CommandError
 from django.db import transaction
 
+from core.ingest import mapping as ingest_mapping
 from core.utils.bulk_generators import verso_generated_articles
-from core.utils.image_urls import ensure_reachable_image_url
+from core.utils.sourced_media import download_hero_to_media
+from core.utils.synthetic_media import generate_verso_hero
+from core.utils.web_seed import take_ingested_for_site
 from sites.verso.models import VersoArticle, VersoCategory
 from sites.verso.seed_data import ARTICLES, CATEGORIES
 
@@ -10,21 +14,9 @@ TARGET_ARTICLES = 100
 
 
 class Command(BaseCommand):
-    help = "Load VERSO categories and articles into the database (replaces existing VERSO rows)."
-
-    def add_arguments(self, parser):
-        parser.add_argument(
-            "--verify-images",
-            action="store_true",
-            help="HTTP-check each hero image URL and substitute a fallback if unreachable (slower).",
-        )
+    help = "Load VERSO categories and articles (web-ingested or synthetic fallback)."
 
     def handle(self, *args, **options):
-        verify = options.get("verify_images")
-        warn = (
-            (lambda m: self.stdout.write(self.style.WARNING(m))) if verify else None
-        )
-
         with transaction.atomic():
             VersoArticle.objects.all().delete()
             VersoCategory.objects.all().delete()
@@ -37,33 +29,81 @@ class Command(BaseCommand):
                     description=c["description"],
                     sort_order=c["sort_order"],
                 )
-
-            base = list(ARTICLES)
-            extra = max(0, TARGET_ARTICLES - len(base))
-            articles = base + verso_generated_articles(len(base), extra)
-
+            cat_slugs = [c["slug"] for c in CATEGORIES]
+            b = take_ingested_for_site("verso", n=TARGET_ARTICLES)
             n = 0
-            for row in articles:
-                raw_img = row.get("image_url", "")
-                img = (
-                    ensure_reachable_image_url(raw_img, warn)
-                    if verify
-                    else raw_img
-                )
-                VersoArticle.objects.create(
-                    slug=row["slug"],
-                    title=row["title"],
-                    excerpt=row["excerpt"],
-                    body=row["body"],
-                    author=row["author"],
-                    published_at=row["published_at"],
-                    read_minutes=row["read_minutes"],
-                    is_featured=row["is_featured"],
-                    category=cat_map[row["category"]],
-                    image_url=img,
-                    image_credit=row.get("image_credit", ""),
-                )
-                n += 1
+            if b.items is not None:
+                for i, ing in enumerate(b.items):
+                    cs = cat_slugs[i % len(cat_slugs)]
+                    rm = min(25, max(3, len(ing.body) // 3000))
+                    d = ingest_mapping.verso_rows(
+                        ing,
+                        category_slug=cs,
+                        read_minutes=rm,
+                        is_featured=(i % 9 == 0),
+                    )
+                    cslug = d.pop("_category_slug")
+                    VersoArticle.objects.create(
+                        slug=d["slug"],
+                        title=d["title"],
+                        excerpt=d["excerpt"],
+                        body=d["body"],
+                        author=d["author"],
+                        published_at=d["published_at"],
+                        read_minutes=d["read_minutes"],
+                        is_featured=d["is_featured"],
+                        category=cat_map[cslug],
+                        image_url=d["image_url"],
+                        image_credit=d["image_credit"],
+                    )
+                    n += 1
+            else:
+                base = list(ARTICLES)
+                extra = max(0, TARGET_ARTICLES - len(base))
+                articles = base + verso_generated_articles(len(base), extra)
+                for row in articles:
+                    src_url = (row.get("sourced_image_url") or "").strip()
+                    src_credit = (row.get("sourced_image_credit") or "").strip()
+                    if src_url and not src_credit:
+                        raise CommandError(
+                            f'slug {row.get("slug")!r}: sourced_image_url requires sourced_image_credit'
+                        )
+                    if src_url and src_credit:
+                        try:
+                            img, _n = download_hero_to_media(
+                                src_url, site="verso", filename_stem=row["slug"]
+                            )
+                        except (OSError, ValueError, requests.RequestException) as e:
+                            raise CommandError(
+                                f'slug {row.get("slug")!r}: could not download sourced image: {e}'
+                            ) from e
+                        cred = src_credit
+                    else:
+                        explicit = (row.get("image_url") or "").strip()
+                        if explicit:
+                            img = explicit
+                            cred = (row.get("image_credit") or "").strip() or "Image"
+                        else:
+                            img, cred = generate_verso_hero(
+                                row["slug"],
+                                category=row["category"],
+                                title=row.get("title", ""),
+                                excerpt=row.get("excerpt", ""),
+                            )
+                    VersoArticle.objects.create(
+                        slug=row["slug"],
+                        title=row["title"],
+                        excerpt=row["excerpt"],
+                        body=row["body"],
+                        author=row["author"],
+                        published_at=row["published_at"],
+                        read_minutes=row["read_minutes"],
+                        is_featured=row["is_featured"],
+                        category=cat_map[row["category"]],
+                        image_url=img,
+                        image_credit=cred,
+                    )
+                    n += 1
 
         self.stdout.write(
             self.style.SUCCESS(

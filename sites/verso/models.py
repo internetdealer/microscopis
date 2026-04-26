@@ -33,10 +33,10 @@ class VersoArticle(models.Model):
         on_delete=models.PROTECT,
         related_name="articles",
     )
-    image_url = models.URLField(
+    image_url = models.CharField(
         max_length=500,
         blank=True,
-        help_text="Hero image (HTTPS URL, e.g. Unsplash).",
+        help_text="Hero image: same-origin /media/… URL, or any https: URL.",
     )
     image_credit = models.CharField(
         max_length=255,

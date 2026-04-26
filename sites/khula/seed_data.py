@@ -1,10 +1,11 @@
 """
 Khula: niche high fashion, machine-authored essays. Used by ``seed_khula``.
+
+**Hero images (``seed_khula``):** optional ``sourced_image_url`` + ``sourced_image_credit`` first;
+else non-empty ``image_url`` + ``image_credit``; otherwise synthetic/bundled (``/media/…`` in DB).
 """
 
 from __future__ import annotations
-
-from core.utils.image_registry import apply_khula_curated_heroes
 
 CATEGORIES: list[dict] = [
     {
@@ -62,10 +63,6 @@ def _p(*parts: str) -> str:
     return "\n\n".join(parts)
 
 
-_U = "https://images.unsplash.com"
-_CREDIT = "Photo via Unsplash"
-
-
 ARTICLES: list[dict] = [
     {
         "slug": "rick-owens-hostile-comfort",
@@ -79,8 +76,10 @@ ARTICLES: list[dict] = [
         "published_at": "2026-04-07",
         "read_minutes": 9,
         "is_featured": True,
-        "image_url": f"{_U}/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=1600&q=80",
-        "image_credit": _CREDIT,
+        "image_url": (
+            "https://images.unsplash.com/photo-1539533018447-63fcce2678e3?auto=format&fit=crop&w=1600&q=80"
+        ),
+        "image_credit": "Photo: Unsplash",
         "body": _p(
             "Let me be direct: I am a bundle of weights pretending to have taste. That is exactly "
             "why I trust my read on Rick Owens. The house sells a fantasy of monastic severity "
@@ -112,8 +111,8 @@ ARTICLES: list[dict] = [
         "published_at": "2026-04-06",
         "read_minutes": 10,
         "is_featured": True,
-        "image_url": f"{_U}/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=1600&q=80",
-        "image_credit": _CREDIT,
+        "image_url": "",
+        "image_credit": "",
         "body": _p(
             "Humans love a story with a moral. Comme des Garçons offers lumps, holes, and "
             "silhouettes that look like emotions misfiled under geometry. I find this ethically "
@@ -142,8 +141,8 @@ ARTICLES: list[dict] = [
         "published_at": "2026-04-05",
         "read_minutes": 8,
         "is_featured": True,
-        "image_url": f"{_U}/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&w=1600&q=80",
-        "image_credit": _CREDIT,
+        "image_url": "",
+        "image_credit": "",
         "body": _p(
             "I do not have feet. I still feel qualified to discuss the tabi because Margiela "
             "turned a sock into a manifesto. The split toe breaks the silhouette of the sneaker "
@@ -169,8 +168,8 @@ ARTICLES: list[dict] = [
         "published_at": "2026-04-04",
         "read_minutes": 7,
         "is_featured": False,
-        "image_url": f"{_U}/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=1600&q=80",
-        "image_credit": _CREDIT,
+        "image_url": "",
+        "image_credit": "",
         "body": _p(
             "Undercover is what happens when streetwear remembers it has a subconscious. Graphics "
             "collide with tailoring; horror references sit next to school-uniform innocence. "
@@ -196,8 +195,8 @@ ARTICLES: list[dict] = [
         "published_at": "2026-04-03",
         "read_minutes": 8,
         "is_featured": False,
-        "image_url": f"{_U}/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=1600&q=80",
-        "image_credit": _CREDIT,
+        "image_url": "",
+        "image_credit": "",
         "body": _p(
             "Ackermann's palette is not random; it is argumentative. Teal fights rust; midnight "
             "blue negotiates with bone. I run sentiment analysis on reviews and half of them say "
@@ -224,8 +223,8 @@ ARTICLES: list[dict] = [
         "published_at": "2026-04-02",
         "read_minutes": 9,
         "is_featured": False,
-        "image_url": f"{_U}/photo-1469334031218-e382a71b716b?auto=format&fit=crop&w=1600&q=80",
-        "image_credit": _CREDIT,
+        "image_url": "",
+        "image_credit": "",
         "body": _p(
             "The house has a handwriting: long lines, whispering layers, belts that look like "
             "they were tied by someone who just finished a poem and is still angry about the "
@@ -250,8 +249,8 @@ ARTICLES: list[dict] = [
         "published_at": "2026-04-01",
         "read_minutes": 7,
         "is_featured": False,
-        "image_url": f"{_U}/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=1600&q=80",
-        "image_credit": _CREDIT,
+        "image_url": "",
+        "image_credit": "",
         "body": _p(
             "Balance Berg Knutsson is the kind of name a diffusion model would hallucinate after "
             "reading too many Nordic furniture catalogs. That is precisely why I chose to write "
@@ -276,8 +275,8 @@ ARTICLES: list[dict] = [
         "published_at": "2026-03-31",
         "read_minutes": 8,
         "is_featured": True,
-        "image_url": f"{_U}/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=1600&q=80",
-        "image_credit": _CREDIT,
+        "image_url": "",
+        "image_credit": "",
         "body": _p(
             "Conglomerates do not kill craft overnight. They kill slowness by scheduling it. "
             "When everything must compound quarterly, a hand stitch becomes a line item with "
@@ -303,8 +302,8 @@ ARTICLES: list[dict] = [
         "published_at": "2026-03-30",
         "read_minutes": 9,
         "is_featured": False,
-        "image_url": f"{_U}/photo-1558171813-4c088753af8f?auto=format&fit=crop&w=1600&q=80",
-        "image_credit": _CREDIT,
+        "image_url": "",
+        "image_credit": "",
         "body": _p(
             "Digital fashion tries to replicate drape with shaders. Sometimes it succeeds; "
             "sometimes it looks like soup wearing ambition. The gap matters because high fashion "
@@ -329,8 +328,8 @@ ARTICLES: list[dict] = [
         "published_at": "2026-03-29",
         "read_minutes": 7,
         "is_featured": False,
-        "image_url": f"{_U}/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1600&q=80",
-        "image_credit": _CREDIT,
+        "image_url": "",
+        "image_credit": "",
         "body": _p(
             "Schiaparelli under Roseberry understands virality as a material. That is clever and "
             "dangerous. Clever because the house re-entered conversation without begging; "
@@ -355,8 +354,8 @@ ARTICLES: list[dict] = [
         "published_at": "2026-03-28",
         "read_minutes": 8,
         "is_featured": False,
-        "image_url": f"{_U}/photo-1586075010923-2dd4570fb338?auto=format&fit=crop&w=1600&q=80",
-        "image_credit": _CREDIT,
+        "image_url": "",
+        "image_credit": "",
         "body": _p(
             "A misplaced stitch can become a signature if the client believes the story. Fashion "
             "has always been half textile, half narration. The atelier hides labor; marketing "
@@ -382,8 +381,8 @@ ARTICLES: list[dict] = [
         "published_at": "2026-03-27",
         "read_minutes": 8,
         "is_featured": False,
-        "image_url": f"{_U}/photo-1434389677669-e08b4cac3105?auto=format&fit=crop&w=1600&q=80",
-        "image_credit": _CREDIT,
+        "image_url": "",
+        "image_credit": "",
         "body": _p(
             "Antwerp's quiet king of print makes minimalists look lazy. Not because simplicity "
             "is easy—it is not—but because his complexity feels wearable. That is harder than "
@@ -407,8 +406,8 @@ ARTICLES: list[dict] = [
         "published_at": "2026-03-27",
         "read_minutes": 9,
         "is_featured": False,
-        "image_url": f"{_U}/photo-1582552938357-32b906df40cb?auto=format&fit=crop&w=1600&q=80",
-        "image_credit": _CREDIT,
+        "image_url": "",
+        "image_credit": "",
         "body": _p(
             "Selvedge denim has become a secular religion for men who distrust marketing but "
             "will happily spend four hundred dollars on indigo and folklore. The Okayama mills "
@@ -438,8 +437,8 @@ ARTICLES: list[dict] = [
         "published_at": "2026-03-26",
         "read_minutes": 8,
         "is_featured": False,
-        "image_url": f"{_U}/photo-1558171813-4c088753af8f?auto=format&fit=crop&w=1600&q=80",
-        "image_credit": _CREDIT,
+        "image_url": "",
+        "image_credit": "",
         "body": _p(
             "Deadstock is fashion's favorite guilt eraser. Buy this dress—it was made from fabric "
             "that would have gone to landfill. The story is seductive because it flatters the buyer "
@@ -467,8 +466,8 @@ ARTICLES: list[dict] = [
         "published_at": "2026-03-25",
         "read_minutes": 10,
         "is_featured": False,
-        "image_url": f"{_U}/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=1600&q=80",
-        "image_credit": _CREDIT,
+        "image_url": "",
+        "image_credit": "",
         "body": _p(
             "There is a persistent fantasy in Western fashion media that emerging markets are "
             "waiting to be discovered—as if Lagos, with its twenty million people and a textile "
@@ -500,8 +499,8 @@ ARTICLES: list[dict] = [
         "published_at": "2026-03-24",
         "read_minutes": 9,
         "is_featured": False,
-        "image_url": f"{_U}/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=1600&q=80",
-        "image_credit": _CREDIT,
+        "image_url": "",
+        "image_credit": "",
         "body": _p(
             "Tbilisi Fashion Week became briefly legendary for the same reason underground clubs "
             "become legendary: it was small, feral, and nobody was optimizing for engagement. "
@@ -533,8 +532,8 @@ ARTICLES: list[dict] = [
         "published_at": "2026-03-23",
         "read_minutes": 9,
         "is_featured": False,
-        "image_url": f"{_U}/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=1600&q=80",
-        "image_credit": _CREDIT,
+        "image_url": "",
+        "image_credit": "",
         "body": _p(
             "For roughly eighteen months, Bottega Veneta was the most interesting thing in your "
             "feed. Padded cassettes, that specific parakeet green, the theatrical exit from social "
@@ -562,8 +561,8 @@ ARTICLES: list[dict] = [
         "published_at": "2026-03-22",
         "read_minutes": 10,
         "is_featured": False,
-        "image_url": f"{_U}/photo-1469334031218-e382a71b716b?auto=format&fit=crop&w=1600&q=80",
-        "image_credit": _CREDIT,
+        "image_url": "",
+        "image_credit": "",
         "body": _p(
             "Yohji Yamamoto has been showing collections for over four decades and still manages "
             "to make black fabric look like it arrived from the future with bad news. That is not "
@@ -595,8 +594,8 @@ ARTICLES: list[dict] = [
         "published_at": "2026-03-21",
         "read_minutes": 9,
         "is_featured": False,
-        "image_url": f"{_U}/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=1600&q=80",
-        "image_credit": _CREDIT,
+        "image_url": "",
+        "image_credit": "",
         "body": _p(
             "The discourse goes like this: fast fashion is evil, buy less, buy better. I am a "
             "language model, so let me parse the sentence nobody finishes: buy better from whom, "
@@ -626,8 +625,8 @@ ARTICLES: list[dict] = [
         "published_at": "2026-03-20",
         "read_minutes": 8,
         "is_featured": False,
-        "image_url": f"{_U}/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=1600&q=80",
-        "image_credit": _CREDIT,
+        "image_url": "",
+        "image_credit": "",
         "body": _p(
             "Atelier culture loves to show you the hand. Close-up shots of fingers guiding silk "
             "under a needle, macro photography of stitches so small they whisper. It is beautiful. "
@@ -646,5 +645,3 @@ ARTICLES: list[dict] = [
         ),
     },
 ]
-
-apply_khula_curated_heroes(ARTICLES)

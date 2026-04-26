@@ -3,11 +3,13 @@ Default VERSO categories and articles (AI, agents, human/AI). Used by ``seed_ver
 
 Themes reflect widely discussed 2025–2026 trends: agentic systems, tool use,
 multi-agent orchestration, reasoning models, governance, and human–AI collaboration.
+
+**Hero images (``seed_verso``):** optional ``sourced_image_url`` + ``sourced_image_credit`` (download
+and store under ``/media/``) take priority; else non-empty ``image_url`` + ``image_credit`` in
+each row; otherwise local synthetic or bundled images (same-origin ``/media/…`` in the database).
 """
 
 from __future__ import annotations
-
-from core.utils.image_registry import entry_for_index
 
 CATEGORIES: list[dict] = [
     {
@@ -75,8 +77,10 @@ ARTICLES: list[dict] = [
         "published_at": "2026-03-28",
         "read_minutes": 9,
         "is_featured": True,
-        "image_url": "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=1600&q=80",
-        "image_credit": "Photo via Unsplash",
+        "image_url": (
+            "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=1600&q=80"
+        ),
+        "image_credit": "Photo: Unsplash",
         "body": _p(
             "For years, the dominant metaphor for large language models was a brilliant "
             "interlocutor: you ask, it answers, you decide what happens next. That framing "
@@ -109,8 +113,8 @@ ARTICLES: list[dict] = [
         "published_at": "2026-03-27",
         "read_minutes": 10,
         "is_featured": True,
-        "image_url": "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=1600&q=80",
-        "image_credit": "Photo via Unsplash",
+        "image_url": "",
+        "image_credit": "",
         "body": _p(
             "Public discussion of “AI safety” often imagines a one-time fix: train once, "
             "red-team once, ship. Real deployments are messier. Models are updated, prompts "
@@ -144,8 +148,8 @@ ARTICLES: list[dict] = [
         "published_at": "2026-03-26",
         "read_minutes": 8,
         "is_featured": True,
-        "image_url": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=1600&q=80",
-        "image_credit": "Photo via Unsplash",
+        "image_url": "",
+        "image_credit": "",
         "body": _p(
             "Machine learning has always excelled at pattern recognition at scale. Large "
             "language models add something seductive: they can narrate those patterns in "
@@ -177,8 +181,8 @@ ARTICLES: list[dict] = [
         "published_at": "2026-03-25",
         "read_minutes": 11,
         "is_featured": False,
-        "image_url": "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1600&q=80",
-        "image_credit": "Photo via Unsplash",
+        "image_url": "",
+        "image_credit": "",
         "body": _p(
             "When a task decomposes cleanly—fetch data, check constraints, draft a report—"
             "multi-agent patterns mirror how teams already work. One component might focus "
@@ -207,8 +211,8 @@ ARTICLES: list[dict] = [
         "published_at": "2026-03-24",
         "read_minutes": 7,
         "is_featured": False,
-        "image_url": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1600&q=80",
-        "image_credit": "Photo via Unsplash",
+        "image_url": "",
+        "image_credit": "",
         "body": _p(
             "Reasoning-focused models—those encouraged to expose intermediate steps—change "
             "the user experience from a single burst of text to something closer to a trace. "
@@ -236,8 +240,8 @@ ARTICLES: list[dict] = [
         "published_at": "2026-03-23",
         "read_minutes": 10,
         "is_featured": False,
-        "image_url": "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1600&q=80",
-        "image_credit": "Photo via Unsplash",
+        "image_url": "",
+        "image_credit": "",
         "body": _p(
             "Historical automation rarely deletes a job title overnight. It changes task "
             "mixes: fewer hours on rote steps, more on exception handling, client interface, "
@@ -268,8 +272,8 @@ ARTICLES: list[dict] = [
         "published_at": "2026-04-10",
         "read_minutes": 9,
         "is_featured": True,
-        "image_url": "https://images.unsplash.com/photo-1555949963-aa79dcee981c?auto=format&fit=crop&w=1600&q=80",
-        "image_credit": "Photo via Unsplash",
+        "image_url": "",
+        "image_credit": "",
         "body": _p(
             "The demo shows an agent booking travel and updating a spreadsheet. Production "
             "asks uglier questions: which identities may it assume, which secrets can it read, "
@@ -298,8 +302,8 @@ ARTICLES: list[dict] = [
         "published_at": "2026-04-09",
         "read_minutes": 8,
         "is_featured": True,
-        "image_url": "https://images.unsplash.com/photo-1516321497487-e288fb19713f?auto=format&fit=crop&w=1600&q=80",
-        "image_credit": "Photo via Unsplash",
+        "image_url": "",
+        "image_credit": "",
         "body": _p(
             "Training costs dominate headlines, but inference costs dominate spreadsheets. "
             "Every autocomplete, summarization, and reranking step is a billable sequence of "
@@ -327,8 +331,8 @@ ARTICLES: list[dict] = [
         "published_at": "2026-04-08",
         "read_minutes": 9,
         "is_featured": True,
-        "image_url": "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1600&q=80",
-        "image_credit": "Photo via Unsplash",
+        "image_url": "",
+        "image_credit": "",
         "body": _p(
             "Pop narratives frame the present as a zero-sum contest: humans versus machines, "
             "with a winner-take-all finish line. History suggests something else—waves of "
@@ -359,8 +363,8 @@ ARTICLES: list[dict] = [
         "published_at": "2026-04-07",
         "read_minutes": 10,
         "is_featured": False,
-        "image_url": "https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&w=1600&q=80",
-        "image_credit": "Photo via Unsplash",
+        "image_url": "",
+        "image_credit": "",
         "body": _p(
             "Reliability engineering did not disappear because the planner is a language model. "
             "Timeouts, exponential backoff, circuit breakers, and idempotent operations—"
@@ -389,8 +393,8 @@ ARTICLES: list[dict] = [
         "published_at": "2026-04-06",
         "read_minutes": 8,
         "is_featured": False,
-        "image_url": "https://images.unsplash.com/photo-1639322537228-f710d846310a?auto=format&fit=crop&w=1600&q=80",
-        "image_credit": "Photo via Unsplash",
+        "image_url": "",
+        "image_credit": "",
         "body": _p(
             "Text, image, audio, and video synthesis are no longer laboratory experiments. "
             "They are consumer features. That shifts the problem from ‘can we generate?’ to "
@@ -419,8 +423,8 @@ ARTICLES: list[dict] = [
         "published_at": "2026-04-05",
         "read_minutes": 9,
         "is_featured": False,
-        "image_url": "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1600&q=80",
-        "image_credit": "Photo via Unsplash",
+        "image_url": "",
+        "image_credit": "",
         "body": _p(
             "When a model drafts, summarizes, and routes, humans stop rehearsing the full "
             "chain of reasoning. That saves time. It also means fewer people know how to "
@@ -448,8 +452,8 @@ ARTICLES: list[dict] = [
         "published_at": "2026-04-04",
         "read_minutes": 7,
         "is_featured": False,
-        "image_url": "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1600&q=80",
-        "image_credit": "Photo via Unsplash",
+        "image_url": "",
+        "image_credit": "",
         "body": _p(
             "Splitting work across sub-agents—research, critique, synthesis—mirrors "
             "human teams. It also introduces coordination failures: duplicated effort, "
@@ -477,8 +481,8 @@ ARTICLES: list[dict] = [
         "published_at": "2026-04-03",
         "read_minutes": 8,
         "is_featured": False,
-        "image_url": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1600&q=80",
-        "image_credit": "Photo via Unsplash",
+        "image_url": "",
+        "image_credit": "",
         "body": _p(
             "Foundation models cluster where capital, talent, and compute concentrate. "
             "Open-weight ecosystems broaden deployment, but the frontier of capability "
@@ -505,8 +509,8 @@ ARTICLES: list[dict] = [
         "published_at": "2026-04-02",
         "read_minutes": 8,
         "is_featured": False,
-        "image_url": "https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=1600&q=80",
-        "image_credit": "Photo via Unsplash",
+        "image_url": "",
+        "image_credit": "",
         "body": _p(
             "Generative tools flood the zone with drafts, palettes, and hooks. Abundance "
             "does not erase the creative act; it moves it toward curation—knowing what to "
@@ -535,8 +539,8 @@ ARTICLES: list[dict] = [
         "published_at": "2026-04-15",
         "read_minutes": 9,
         "is_featured": False,
-        "image_url": "https://images.unsplash.com/photo-1547891654-e66ed7ebb968?auto=format&fit=crop&w=1600&q=80",
-        "image_credit": "Photo via Unsplash",
+        "image_url": "",
+        "image_credit": "",
         "body": _p(
             "Generative models have not killed art. They have, however, collapsed the distance "
             "between intention and artifact. A prompt can yield a museum-quality image in seconds, "
@@ -569,8 +573,8 @@ ARTICLES: list[dict] = [
         "published_at": "2026-04-14",
         "read_minutes": 10,
         "is_featured": False,
-        "image_url": "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1600&q=80",
-        "image_credit": "Photo via Unsplash",
+        "image_url": "",
+        "image_credit": "",
         "body": _p(
             "Middlebrow content—competent, inoffensive, adequate—has always dominated volume. "
             "Corporate blog posts, stock photography, background music for commercials: functional "
@@ -601,8 +605,8 @@ ARTICLES: list[dict] = [
         "published_at": "2026-04-13",
         "read_minutes": 11,
         "is_featured": False,
-        "image_url": "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1600&q=80",
-        "image_credit": "Photo via Unsplash",
+        "image_url": "",
+        "image_credit": "",
         "body": _p(
             "The legal scaffolding around data rights was built for databases: structured "
             "records that can be queried, updated, and deleted. Model weights do not work that "
@@ -635,8 +639,8 @@ ARTICLES: list[dict] = [
         "published_at": "2026-04-12",
         "read_minutes": 10,
         "is_featured": False,
-        "image_url": "https://images.unsplash.com/photo-1589578527966-fdac0f44566c?auto=format&fit=crop&w=1600&q=80",
-        "image_credit": "Photo via Unsplash",
+        "image_url": "",
+        "image_credit": "",
         "body": _p(
             "Tort law, product liability, and professional negligence all assume a causal chain "
             "that terminates in a human decision. AI complicates that chain without eliminating "
@@ -670,8 +674,8 @@ ARTICLES: list[dict] = [
         "published_at": "2026-04-11",
         "read_minutes": 9,
         "is_featured": False,
-        "image_url": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1600&q=80",
-        "image_credit": "Photo via Unsplash",
+        "image_url": "",
+        "image_credit": "",
         "body": _p(
             "Every agentic system eventually hits the same wall: the model needs to remember "
             "what happened three steps ago, but context windows are finite, retrieval is lossy, "
@@ -704,8 +708,8 @@ ARTICLES: list[dict] = [
         "published_at": "2026-04-09",
         "read_minutes": 8,
         "is_featured": False,
-        "image_url": "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=1600&q=80",
-        "image_credit": "Photo via Unsplash",
+        "image_url": "",
+        "image_credit": "",
         "body": _p(
             "The open-weight movement has produced remarkable artifacts: models that rival "
             "proprietary systems on benchmarks, freely downloadable and modifiable. That is a "
@@ -737,8 +741,8 @@ ARTICLES: list[dict] = [
         "published_at": "2026-04-07",
         "read_minutes": 9,
         "is_featured": False,
-        "image_url": "https://images.unsplash.com/photo-1452587925148-ce544e77e70d?auto=format&fit=crop&w=1600&q=80",
-        "image_credit": "Photo via Unsplash",
+        "image_url": "",
+        "image_credit": "",
         "body": _p(
             "Automation narratives tend toward totality: everything will be automated, it is "
             "only a matter of time. In practice, certain tasks resist—not because they are "
@@ -772,8 +776,8 @@ ARTICLES: list[dict] = [
         "published_at": "2026-04-05",
         "read_minutes": 8,
         "is_featured": False,
-        "image_url": "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=1600&q=80",
-        "image_credit": "Photo via Unsplash",
+        "image_url": "",
+        "image_credit": "",
         "body": _p(
             "Streaming platforms, social feeds, and search engines curate more culture than any "
             "editor, critic, or institution in history. Their recommendation algorithms optimize "
@@ -807,8 +811,8 @@ ARTICLES: list[dict] = [
         "published_at": "2026-04-03",
         "read_minutes": 10,
         "is_featured": False,
-        "image_url": "https://images.unsplash.com/photo-1557597774-9d273605dfa9?auto=format&fit=crop&w=1600&q=80",
-        "image_credit": "Photo via Unsplash",
+        "image_url": "",
+        "image_credit": "",
         "body": _p(
             "The cameras were already there. What changed is the software behind them: real-time "
             "facial recognition, gait analysis, anomaly detection, and behavioral prediction "
@@ -841,8 +845,8 @@ ARTICLES: list[dict] = [
         "published_at": "2026-04-01",
         "read_minutes": 8,
         "is_featured": False,
-        "image_url": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1600&q=80",
-        "image_credit": "Photo via Unsplash",
+        "image_url": "",
+        "image_credit": "",
         "body": _p(
             "Benchmarks are indispensable. They provide common ground for comparison, "
             "reproducibility, and progress tracking. They are also gameable, and the incentives "
@@ -864,8 +868,3 @@ ARTICLES: list[dict] = [
         ),
     },
 ]
-
-for _i, _article in enumerate(ARTICLES):
-    _reg = entry_for_index(_i + 5)
-    _article["image_url"] = _reg["image_url"]
-    _article["image_credit"] = _reg["image_credit"]

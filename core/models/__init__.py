@@ -1,5 +1,6 @@
 from core.models.search_models import SearchIndex
 from core.models.content_models import WebsiteContent
+from core.models.ingest_models import IngestedArticle
 
 from sites.axiom.models import AxiomLaw
 from sites.codex.models import CodexEntry

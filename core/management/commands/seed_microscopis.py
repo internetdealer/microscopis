@@ -1,11 +1,33 @@
+from __future__ import annotations
+
+import contextlib
+
 from django.core.cache import cache
 from django.core.management import call_command
 from django.core.management.base import BaseCommand
+from django.db import connection
 
 from core.models.content_models import WebsiteContent
 from core.models.search_models import SearchIndex
 
-# Driftglass runs last so the DB reflects the full image registry after other seeds are defined in code.
+# One global seed at a time (Docker entrypoint + manual `exec` on the same DB).
+_PG_SEED_LOCK = 0x4D53_4350  # "MScP" in hex
+
+
+@contextlib.contextmanager
+def _db_seed_lock():
+    if connection.vendor != "postgresql":
+        yield
+        return
+    with connection.cursor() as c:
+        c.execute("SELECT pg_advisory_lock(%s)", [_PG_SEED_LOCK])
+    try:
+        yield
+    finally:
+        with connection.cursor() as c:
+            c.execute("SELECT pg_advisory_unlock(%s)", [_PG_SEED_LOCK])
+
+# Driftglass runs last so the DB has remote catalog images after article seeds (local /media) are written.
 ALL_SLUGS = [
     "verso",
     "chronicle",
@@ -44,7 +66,22 @@ SITES = [
 class Command(BaseCommand):
     help = "Seed SearchIndex for all sites, clear legacy content, run all site seeds."
 
+    def add_arguments(self, parser):
+        parser.add_argument(
+            "--skip-image-check",
+            action="store_true",
+            help="Deprecated. Article heroes are generated locally; this flag is ignored.",
+        )
+
     def handle(self, *args, **options):
+        with _db_seed_lock():
+            if connection.vendor == "postgresql":
+                self.stdout.write(
+                    "Postgres: seed lock held; concurrent `seed_microscopis` calls wait (Docker entrypoint + exec)."
+                )
+            self._run_seed()
+
+    def _run_seed(self) -> None:
         cache.clear()
         SearchIndex.objects.exclude(website_slug__in=ALL_SLUGS).delete()
 

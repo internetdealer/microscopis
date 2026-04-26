@@ -1,0 +1,82 @@
+# RSS/Atom feed list for `ingest_web_corpus`. All entries are stored in ``pool`` (default: omni).
+# Increase ``max_total_articles`` and add feeds until you have enough rows for
+# 13 site partitions × 100 = 1300+ articles.
+#
+# Politely respect site policies in production. For local dev, ``INGEST_IMAGE_ALLOW_ALL=1`` is default in code.
+
+pool: omni
+max_total_articles: 3000
+max_entries_per_feed: 50
+min_body_chars: 200
+
+feeds:
+  - url: https://feeds.bbci.co.uk/news/world/rss.xml
+    name: bbc-world
+  - url: https://feeds.bbci.co.uk/news/technology/rss.xml
+    name: bbc-tech
+  - url: https://feeds.bbci.co.uk/news/science_and_environment/rss.xml
+    name: bbc-science
+  - url: https://feeds.bbci.co.uk/news/business/rss.xml
+    name: bbc-business
+  - url: http://feeds.reuters.com/reuters/technologyNews
+    name: reuters-tech
+  - url: http://feeds.reuters.com/reuters/scienceNews
+    name: reuters-science
+  - url: http://feeds.reuters.com/reuters/businessNews
+    name: reuters-business
+  - url: https://www.theguardian.com/world/rss
+    name: guardian-world
+  - url: https://www.theguardian.com/technology/rss
+    name: guardian-tech
+  - url: https://www.theguardian.com/commentisfree/rss
+    name: guardian-comment
+  - url: https://apnews.com/hub/technology?output=rss
+    name: ap-tech
+  - url: https://apnews.com/hub/health?output=rss
+    name: ap-health
+  - url: https://feeds.npr.org/1001/rss.xml
+    name: npr-top
+  - url: https://arstechnica.com/feed/
+    name: ars
+  - url: https://www.wired.com/feed/tag/ai/feed
+    name: wired-ai
+  - url: https://www.wired.com/feed/
+    name: wired-all
+  - url: https://techcrunch.com/feed/
+    name: techcrunch
+  - url: https://www.theregister.com/headlines.rss
+    name: theregister
+  - url: https://phys.org/rss-feed/
+    name: phys
+  - url: https://www.science.org/rss/news_current.xml
+    name: science-mag
+  - url: https://lifehacker.com/rss
+    name: lifehacker
+  - url: https://www.engadget.com/rss.xml
+    name: engadget
+  - url: https://www.cnet.com/rss/news/
+    name: cnet
+  - url: https://www.axios.com/feed/technology
+    name: axios-tech
+  - url: https://www.axios.com/feed/health
+    name: axios-health
+  - url: https://www.forbes.com/real-time/feed2/
+    name: forbes-rt
+  - url: https://www.miamiherald.com/news/?widgetName=rssfeed&widgetId=100317
+    name: miami-herald
+  - url: https://fashionunited.com/feed/company-news?category=fashion&language=en&region=
+    name: fashionunited
+  - url: https://www.smh.com.au/rss/technology.xml
+    name: smh-tech
+  - url: https://www.smh.com.au/rss/world.xml
+    name: smh-world
+  - url: https://nypost.com/feed/
+    name: nypost
+  - url: https://www.rollingstone.com/feed/
+    name: rollingstone
+  - url: https://www.aljazeera.com/xml/rss/all.xml
+    name: aljazeera
+  - url: https://www.theverge.com/rss/index.xml
+    name: verge
+  - url: https://www.vice.com/en/rss?locale=en
+    name: vice

@@ -37,6 +37,11 @@ class Command(BaseCommand):
             action="store_true",
             help="Only flush content; do not run seed_microscopis afterward.",
         )
+        parser.add_argument(
+            "--skip-image-check",
+            action="store_true",
+            help="Deprecated. Ignored; article images are no longer HTTP-checked from seed data.",
+        )
 
     def handle(self, *args, **options):
         skip_seed: bool = options["skip_seed"]

@@ -14,10 +14,19 @@ These rules govern how seed data and future autonomous agents populate the netwo
 - Preserve `image_credit` with license when required (e.g. “© Author, Wikimedia Commons, CC BY-SA 4.0”).
 - Prefer Commons and openly licensed assets over unclear commercial stock.
 
-## Shared image registry
+## Sourced (licensed) hero images (VERSO, Khula)
 
-- Canonical URLs live in [`core/utils/image_registry.py`](../core/utils/image_registry.py).
-- Each unique URL should have a **Driftglass** row describing the fetch (telemetry voice). Other sites reference the same URL/credit from the registry so fixes propagate everywhere.
+- To use a **real** image you have rights to (e.g. Wikimedia, CC) and self-host it under `/media/sourced/…`, follow [`AGENT_SOURCING_HEROES.md`](AGENT_SOURCING_HEROES.md). Do not use unlicensed “borrowed” art from arbitrary sites.
+
+## Article imagery (VERSO, Khula, Chronicle, Z)
+
+- Heroes, avatars, and Z post media are stored under `MEDIA_ROOT` with same-origin `/media/…` URLs. **Pre-rendered** files may live in [`assets/seed_heroes/`](../assets/seed_heroes/) and are copied at seed when present (`SYNTHETIC_MODE`); otherwise seeding may use a local **SD** sidecar (`SD_ENABLED=1`) or **Pillow** (see [`core/utils/synthetic_media.py`](../core/utils/synthetic_media.py)). For production-quality art, prefer the **export bundle** workflow in [`assets/seed_heroes/README.md`](../assets/seed_heroes/README.md).
+- **Grounded prompts (default):** `SEED_IMAGE_GROUNDED=1` builds the SD/Pillow **prompt** from a **sanitized** title/excerpt snippet (listed **trademark/fashion** tokens are dropped from the *prompt only*; copy can still name houses). The resulting image is **illustrative**—it must not be described in the article as a literal photo of a specific runway, venue, or collection unless the asset truly is that. Set `SEED_IMAGE_GROUNDED=0` to use generic category-based prompts.
+
+## Driftglass remote catalog
+
+- Canonical **remote** probe image URLs live in [`core/utils/driftglass_image_registry.py`](../core/utils/driftglass_image_registry.py) (re-exported as `core.utils.image_registry` for compatibility).
+- Each unique URL should have a **Driftglass** row describing the fetch (telemetry voice). Run `validate_seed_metadata` after `seed_driftglass`.
 
 ## Pairing modes (per row)
 

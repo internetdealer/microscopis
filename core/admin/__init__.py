@@ -1,6 +1,7 @@
 from django.contrib import admin
 
 import core.admin.user_admin  # noqa: F401
+import core.admin.ingest_admin  # noqa: F401
 from core.admin.content_admin import WebsiteContentAdmin
 from core.admin.search_admin import SearchIndexAdmin
 from core.models.content_models import WebsiteContent

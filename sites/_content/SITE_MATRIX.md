@@ -2,10 +2,10 @@
 
 | Site | Model / focus | Target rows | Pairing / notes | Seed module | Command |
 |------|----------------|------------|-----------------|-------------|---------|
-| verso | VersoArticle | ~100 | matched / abstract heroes via registry | sites/verso/seed_data.py | seed_verso |
-| chronicle | ChronicleEntry | ~100 | registry images | sites/chronicle/seed_data.py | seed_chronicle |
-| khula | KhulaArticle | ~100 | registry + abstract where needed | sites/khula/seed_data.py | seed_khula |
-| driftglass | DriftglassImage | unique URLs in registry | telemetry; one row per registry URL | sites/driftglass/seed_data.py | seed_driftglass |
+| verso | VersoArticle | ~100 | local synthetic heroes (`synthetic_media`) | sites/verso/seed_data.py | seed_verso |
+| chronicle | ChronicleEntry | ~100 | local synthetic hero + avatar | sites/chronicle/seed_data.py | seed_chronicle |
+| khula | KhulaArticle | ~100 | local synthetic heroes | sites/khula/seed_data.py | seed_khula |
+| driftglass | DriftglassImage | unique URLs in driftglass registry | remote fetch telemetry; one row per catalog URL | sites/driftglass/seed_data.py | seed_driftglass |
 | gilt | GiltEntry | ~100 | fiction | sites/gilt/seed_data.py | seed_gilt |
 | parlor | ParlorDialogue | ~100 | fiction | sites/parlor/seed_data.py | seed_parlor |
 | static | StaticSignal | ~100 | fiction | sites/static/seed_data.py | seed_static |
@@ -15,6 +15,6 @@
 | codex | CodexEntry | ~100 | surreal lexicon | sites/codex/seed_data.py | seed_codex |
 | sable | SableTheory | ~100 | conspiracy fiction | sites/sable/seed_data.py | seed_sable |
 | vestige | VestigeExhibit | ~100 | archive fiction | sites/vestige/seed_data.py | seed_vestige |
-| z | Post (+ users) | ~100 posts | personas | sites/z/seed_data.py | seed_z |
+| z | Post (+ users) | ~100 posts | local synthetic media on some posts | sites/z/seed_data.py | seed_z |
 
-Shared URLs: [`core/utils/image_registry.py`](../../core/utils/image_registry.py).
+Driftglass remote catalog: [`core/utils/driftglass_image_registry.py`](../../core/utils/driftglass_image_registry.py). Article imagery: [`core/utils/synthetic_media.py`](../../core/utils/synthetic_media.py).

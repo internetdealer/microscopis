@@ -1,0 +1,6 @@
+# Optional reverse proxy in Docker (profile: with-proxy).
+# Replace the host name with your domain and add TLS; or use the block below for local HTTP.
+:80 {
+	encode zstd gzip
+	reverse_proxy web:8000
+}

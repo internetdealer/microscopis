@@ -19,7 +19,8 @@ Cache:
 
 Optional:
   SECURE_HSTS_SECONDS (default 3600; set 0 to disable HSTS)
-  DJANGO_SECURE_SSL_REDIRECT (default true; set false only behind TLS-terminating proxy that does not set X-Forwarded-Proto)
+  DJANGO_SECURE_SSL_REDIRECT (default true; set false for plain HTTP e.g. local Docker)
+  SESSION_COOKIE_SECURE / CSRF_COOKIE_SECURE (default true; set false for plain HTTP)
   PUBLIC_CACHE_MAX_AGE (default 300; HTML Cache-Control for anonymous GETs)
 """
 
@@ -82,6 +83,22 @@ else:
         }
     }
 
+# Celery: use Redis for broker/result when REDIS_URL is set (aligns with cache).
+if REDIS_URL:
+    CELERY_BROKER_URL = REDIS_URL
+    CELERY_RESULT_BACKEND = os.environ.get("CELERY_RESULT_BACKEND", REDIS_URL)
+
+# Shared server-side sessions when Redis is available (multi-worker Gunicorn).
+if REDIS_URL:
+    SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+    SESSION_CACHE_ALIAS = "default"
+
+# Set `SERVE_MEDIA_THROUGH_DJANGO=1` so Gunicorn serves `/media/` (e.g. Docker). On a real VPS,
+# prefer Nginx/Caddy `alias` to `MEDIA_ROOT` instead of serving user files through the app process.
+SERVE_MEDIA_THROUGH_DJANGO = os.environ.get(
+    "SERVE_MEDIA_THROUGH_DJANGO", "false"
+).lower() in ("1", "true", "yes")
+
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STORAGES = {
     "default": {
@@ -113,8 +130,17 @@ SECURE_SSL_REDIRECT = os.environ.get("DJANGO_SECURE_SSL_REDIRECT", "true").lower
     "true",
     "yes",
 )
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
+# Default True (real HTTPS). Set false for plain HTTP (e.g. local Docker on :8000).
+SESSION_COOKIE_SECURE = os.environ.get("SESSION_COOKIE_SECURE", "true").lower() in (
+    "1",
+    "true",
+    "yes",
+)
+CSRF_COOKIE_SECURE = os.environ.get("CSRF_COOKIE_SECURE", "true").lower() in (
+    "1",
+    "true",
+    "yes",
+)
 CSRF_COOKIE_HTTPONLY = True
 SESSION_COOKIE_HTTPONLY = True
 SESSION_COOKIE_SAMESITE = "Lax"
@@ -146,6 +172,9 @@ CONTENT_SECURITY_POLICY = {
         "img-src": ["'self'", "data:", "https:"],
         "font-src": ["'self'", *_GOOGLE_STATIC_FONTS],
         "connect-src": ["'self'"],
+        # Static site: Internet Archive audio embeds (e.g. sites/static/detail.html iframe).
+        # default-src is 'self' only, so without frame-src the browser blocks the embed.
+        "frame-src": ["'self'", "https://archive.org", "https://www.archive.org"],
         "base-uri": ["'self'"],
         "form-action": ["'self'"],
     },

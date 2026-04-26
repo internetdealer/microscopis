@@ -17,8 +17,12 @@ class ZProfile(models.Model):
     bio = models.TextField(blank=True)
     location = models.CharField(max_length=100, blank=True)
     website = models.URLField(blank=True)
-    avatar_url = models.URLField(max_length=500, blank=True)
-    banner_url = models.URLField(max_length=500, blank=True)
+    avatar_url = models.CharField(
+        max_length=500, blank=True, help_text="Same-origin /media/… or https: URL."
+    )
+    banner_url = models.CharField(
+        max_length=500, blank=True, help_text="Same-origin /media/… or https: URL."
+    )
     created_at = models.DateTimeField(default=timezone.now, db_index=True)
     followers_count = models.PositiveIntegerField(default=0)
     following_count = models.PositiveIntegerField(default=0)
@@ -53,7 +57,9 @@ class Post(models.Model):
         on_delete=models.SET_NULL,
         related_name="quotes",
     )
-    media_url = models.URLField(max_length=500, blank=True)
+    media_url = models.CharField(
+        max_length=500, blank=True, help_text="Same-origin /media/… or https: URL."
+    )
     is_deleted = models.BooleanField(default=False, db_index=True)
     edited = models.BooleanField(default=False)
     created_at = models.DateTimeField(default=timezone.now, db_index=True)

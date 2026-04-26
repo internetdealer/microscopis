@@ -1,0 +1,151 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-microscopis}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-microscopis}
+      POSTGRES_DB: ${POSTGRES_DB:-microscopis}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-microscopis} -d ${POSTGRES_DB:-microscopis}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  redis:
+    image: redis:7-alpine
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - redisdata:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  # Optional: local Stable Diffusion (large download). `docker compose --profile with-sd up -d --build`
+  imagegen:
+    build:
+      context: .
+      dockerfile: Dockerfile.imagegen
+    environment:
+      SD_MODEL: ${SD_MODEL:-runwayml/stable-diffusion-v1-5}
+      SD_INFERENCE_STEPS: ${SD_INFERENCE_STEPS:-18}
+    volumes:
+      - sd_models:/root/.cache/huggingface
+    expose:
+      - "8080"
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:8080/health"]
+      interval: 20s
+      timeout: 15s
+      retries: 8
+      start_period: 300s
+    restart: "no"
+    profiles:
+      - with-sd
+
+  web:
+    build: .
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-microscopis}:${POSTGRES_PASSWORD:-microscopis}@db:5432/${POSTGRES_DB:-microscopis}
+      REDIS_URL: redis://redis:6379/0
+      MEDIA_ROOT: /app/media
+      SERVE_MEDIA_THROUGH_DJANGO: ${SERVE_MEDIA_THROUGH_DJANGO:-1}
+      SD_URL: ${SD_URL:-http://imagegen:8080}
+      SD_ENABLED: ${SD_ENABLED:-0}
+      PUBLIC_BASE_URL: ${PUBLIC_BASE_URL:-http://127.0.0.1:8000}
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    ports:
+      - "8000:8000"
+    volumes:
+      - media_data:/app/media
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:8000/health/"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 50s
+    restart: unless-stopped
+
+  celery:
+    build: .
+    command: ["celery", "-A", "microscopis", "worker", "-l", "info"]
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-microscopis}:${POSTGRES_PASSWORD:-microscopis}@db:5432/${POSTGRES_DB:-microscopis}
+      REDIS_URL: redis://redis:6379/0
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+
+  beat:
+    build: .
+    command: ["celery", "-A", "microscopis", "beat", "-l", "info", "--schedule=/tmp/celerybeat-schedule"]
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-microscopis}:${POSTGRES_PASSWORD:-microscopis}@db:5432/${POSTGRES_DB:-microscopis}
+      REDIS_URL: redis://redis:6379/0
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - web
+    profiles:
+      - with-proxy
+
+  flower:
+    build: .
+    command:
+      - celery
+      - -A
+      - microscopis
+      - flower
+      - --address=0.0.0.0
+      - --port=5555
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-microscopis}:${POSTGRES_PASSWORD:-microscopis}@db:5432/${POSTGRES_DB:-microscopis}
+      REDIS_URL: redis://redis:6379/0
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    ports:
+      - "127.0.0.1:5555:5555"
+    restart: unless-stopped
+    profiles:
+      - flower
+
+volumes:
+  pgdata:
+  redisdata:
+  caddy_data:
+  caddy_config:
+  media_data:
+  sd_models:

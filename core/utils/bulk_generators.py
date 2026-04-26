@@ -1,7 +1,11 @@
 """
 Deterministic bulk seed rows (~100 per site) for microscopis management commands.
 
-Copy is template-based but internally consistent; heroes use image_registry.
+**Fallback only:** when ``USE_SYNTHETIC_SEED_FALLBACK=1`` and ``IngestedArticle`` (pool
+``INGEST_OMNI_POOL``) is too small for a site’s partition, seeds use this module again.
+
+For web-sourced content, run ``python manage.py ingest_web_corpus`` first and set
+``USE_SYNTHETIC_SEED_FALLBACK=0`` in production. Hero/avatar media use ``synthetic_media`` in that path.
 """
 
 from __future__ import annotations
@@ -11,8 +15,6 @@ from datetime import date, datetime, timedelta
 from typing import Any
 
 from django.utils import timezone
-
-from core.utils.image_registry import entry_for_index, khula_dispatch_hero_entry
 
 _KHULA_CATS = ["maisons", "avant-garde", "dispatch", "atelier", "textiles", "emerging"]
 _BRANDS = [
@@ -35,7 +37,6 @@ def khula_generated_articles(start_index: int, count: int) -> list[dict[str, Any
         cat = _KHULA_CATS[i % len(_KHULA_CATS)]
         brand = _BRANDS[i % len(_BRANDS)]
         slug = f"k-dispatch-{i:04d}"
-        img = khula_dispatch_hero_entry(i)
         excerpt = (
             f"Illustrative image paired in **abstract mode**: the hero is mood, not proof of {brand} "
             f"product photography. This essay treats {brand} as a lens—criticism without a showroom receipt."
@@ -45,7 +46,7 @@ def khula_generated_articles(start_index: int, count: int) -> list[dict[str, Any
             f"I use {brand} as a coordinate—not a claim of exclusive visual evidence. "
             "Luxury writing fails when it pretends stock photography is forensics.",
             "If the frame feels generic, that is intentional: we discuss drape, risk, and silhouette as ideas, "
-            "not as SKU-level truth. The registry holds the image; the essay holds the argument.",
+            "not as SKU-level truth. The hero is generated locally; the essay holds the argument.",
             "Controversy budget: niche fashion is allowed to be opinionated without being deceptive. "
             "I prefer honest abstraction to confident mismatch.",
         )
@@ -59,8 +60,8 @@ def khula_generated_articles(start_index: int, count: int) -> list[dict[str, Any
                 "published_at": (base + timedelta(days=i % 400)).isoformat(),
                 "read_minutes": 6 + (i % 6),
                 "is_featured": i % 11 == 0,
-                "image_url": img["image_url"],
-                "image_credit": img["image_credit"],
+                "image_url": "",
+                "image_credit": "",
                 "body": body,
             }
         )
@@ -78,7 +79,6 @@ def verso_generated_articles(start_index: int, count: int) -> list[dict[str, Any
     for n in range(count):
         i = start_index + n
         slug = f"verso-brief-{i:04d}"
-        img = entry_for_index(i + 3)
         cat = cat_slugs[i % len(cat_slugs)]
         t = topics[i % len(topics)]
         title = f"The {t} stack: field notes ({i})"
@@ -102,8 +102,8 @@ def verso_generated_articles(start_index: int, count: int) -> list[dict[str, Any
                 "published_at": (base + timedelta(days=i % 240)).isoformat(),
                 "read_minutes": 7 + (i % 7),
                 "is_featured": i % 9 == 0,
-                "image_url": img["image_url"],
-                "image_credit": img["image_credit"],
+                "image_url": "",
+                "image_credit": "",
             }
         )
     return out
@@ -117,7 +117,7 @@ def chronicle_generated_entries(start_index: int, count: int) -> list[dict[str, 
     for n in range(count):
         i = start_index + n
         slug = f"chronicle-log-{i:04d}"
-        img = entry_for_index(i + 7)
+        t0 = tag_rot[i % len(tag_rot)]
         m = moods[i % len(moods)]
         pub = base - timedelta(hours=i * 3)
         body = _p(
@@ -139,8 +139,8 @@ def chronicle_generated_entries(start_index: int, count: int) -> list[dict[str, 
                 "current_music": "white noise / fan curve",
                 "location": "edge region",
                 "published_at": (pub.year, pub.month, pub.day, pub.hour, pub.minute),
-                "image_url": img["image_url"],
-                "image_credit": img["image_credit"],
+                "image_url": "",
+                "image_credit": "",
                 "display_likes": i % 200,
                 "tags": [tag_rot[i % len(tag_rot)], tag_rot[(i + 2) % len(tag_rot)]],
             }
@@ -384,7 +384,12 @@ def vestige_exhibits(start_index: int, count: int) -> list[dict[str, Any]]:
     return out
 
 
-def z_posts(count: int, usernames: list[str]) -> list[dict[str, Any]]:
+def z_posts(
+    count: int,
+    usernames: list[str],
+    *,
+    start_index: int = 0,
+) -> list[dict[str, Any]]:
     lines = [
         "Telemetry says the timeline is still chronological. Sus.",
         "Shipping a thought before it has tests.",
@@ -394,10 +399,12 @@ def z_posts(count: int, usernames: list[str]) -> list[dict[str, Any]]:
     ]
     out = []
     for i in range(count):
+        idx = start_index + i
         out.append(
             {
                 "username": usernames[i % len(usernames)],
-                "body": f"{lines[i % len(lines)]} (#{i})",
+                "body": f"{lines[i % len(lines)]} (#{idx})",
+                "media_url": "",  # seed_z sets local media when (idx % 2) == 0
             }
         )
     return out

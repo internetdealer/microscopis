@@ -7,3 +7,4 @@ class CoreConfig(AppConfig):
 
     def ready(self):
         import core.admin  # noqa: F401
+        import core.tasks  # noqa: F401
